@@ -56,11 +56,11 @@
 
         <!-- Main content -->
         <main class="flex-1 overflow-y-auto p-6">
-            <div class="text-lg font-medium text-white">Content Goes here</div>
+            <div class="text-lg font-medium text-white">{{ $slot }}</div>
         </main>
 
     </div>
-        {{-- {{ $slot }} --}}
+
 
         @livewireScripts
     </body>
