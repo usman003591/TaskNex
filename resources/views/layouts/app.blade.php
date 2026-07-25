@@ -40,17 +40,22 @@
                         </svg>
                         Dashboard
                     </a>
-                    <a href="{{ route('starred') }}"
-                        class="flex items-center gap-x-3.5 py-2 px-2.5 bg-sidebar-nav-active text-sm text-sidebar-nav-foreground rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus {{ request()->routeIs('starred') ? 'bg-white/10 text-white'
-                : 'text-gray-300 hover:bg-white/5 hover:text-white' }}"
-                        wire:navigate>
+                    <a href="{{ route('starred') }}" class="flex items-center gap-x-3.5 py-2 px-2.5 bg-sidebar-nav-active text-sm text-sidebar-nav-foreground rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus {{ request()->routeIs('starred') ? 'bg-white/10 text-white'
+                : 'text-gray-300 hover:bg-white/5 hover:text-white' }}" wire:navigate>
                         <i class="fa-regular fa-star" width="24" height="24"></i>
                         Starred
                     </a>
                 </div>
 
                 <div>
-                    <p class="px-3 mb-1 text-xs font-medium uppercase tracking-wide text-gray-500">Lists</p>
+                    <div
+                        class="flex items-center justify-between rounded-lg focus:outline-hidden focus:bg-sidebar-nav-focus px-3 mb-1 text-xs font-medium uppercase w-full h-4 text-gray-500">
+                        <div class="flex items-center gap-x-3.5">
+                            <i class="fa-solid fa-list-ul"></i>
+                            <p class="mb-0.5">Lists</p>
+                        </div>
+                    </div>
+
                     <div class="space-y-1">
                         <a href="#"
                             class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white text-sidebar-nav-foreground rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus"
