@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role_id',
+        'picture',
+        'status',
+        'last_login_at',
     ];
 
     /**
@@ -45,5 +49,18 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //Relationships
+    public function role(){
+        return $this->belongsTo(Role::class);
+    }
+
+    public function lists(){
+        return $this->hasMany(TaskList::class, 'user_id');
+    }
+
+    public static function current(): self{
+        return static::first();
     }
 }

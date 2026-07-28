@@ -47,28 +47,8 @@
                     </a>
                 </div>
 
-                <div>
-                    <div
-                        class="flex items-center justify-between rounded-lg focus:outline-hidden focus:bg-sidebar-nav-focus px-3 mb-1 text-xs font-medium uppercase w-full h-4 text-gray-500">
-                        <div class="flex items-center gap-x-3.5">
-                            <i class="fa-solid fa-list-ul"></i>
-                            <p class="mb-0.5">Lists</p>
-                        </div>
-                    </div>
 
-                    <div class="space-y-1">
-                        <a href="#"
-                            class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white text-sidebar-nav-foreground rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus"
-                            wire:navigate>
-                            Work
-                        </a>
-                        <a href="#"
-                            class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white text-sidebar-nav-foreground rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus"
-                            wire:navigate>
-                            Personal
-                        </a>
-                    </div>
-                </div>
+                    <livewire:lists />
 
             </nav>
         </aside>
@@ -82,11 +62,6 @@
 
 
     @livewireScripts
-    <script>
-        const el = document.querySelector('.fa-star');
-const style = getComputedStyle(el, '::before');
-console.log('content:', style.content, '| font-family:', style.fontFamily);
-    </script>
 </body>
 
 </html>
