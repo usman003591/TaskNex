@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,6 +20,10 @@ class TaskList extends Model
     //Relationships
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function tasks(){
+        return $this->hasMany(Task::class, 'list_id');
     }
 }
 
