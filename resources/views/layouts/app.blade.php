@@ -7,6 +7,7 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3/air-datepicker.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
@@ -68,7 +69,7 @@
                         Lists
                     </p>
                     <livewire:lists />
-                    
+
                 </div>
 
                 <!-- Collapse toggle -->
@@ -92,6 +93,7 @@
 
 
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.4.0/air-datepicker.js"></script>
 </body>
 
 </html>

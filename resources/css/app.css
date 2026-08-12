@@ -1,8 +1,8 @@
 @import 'tailwindcss';
 /* Preline UI */
 @import "@fortawesome/fontawesome-free/css/all.min.css";
-@import "../../node_modules/preline/variants.css";
 @source "../../node_modules/preline/dist/*.js";
+@import "../../node_modules/preline/variants.css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -10,9 +10,9 @@
 @source '../**/*.js';
 
 /* Plugins */
-/* @plugin "@tailwindcss/forms"; */
-/* Preline Themes */
-/* @import "./themes/theme.css"; */
+@plugin "@tailwindcss/forms";
+/* Preline Themes
+@import "./themes/theme.css"; */
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -26,4 +26,64 @@
     --color-text-primary: #e4e4e7;
     --color-text-secondary: #9a9aa4;
     --color-text-muted: #6a6a74;
+}
+
+.air-datepicker {
+    /* Font */
+    --adp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --adp-font-size: 12px;
+    --adp-mobile-font-size: 13px;
+    --adp-background-color: #111827;
+    --adp-color: #e5e7eb;
+    --adp-accent-color: #3182ce;
+    --adp-color-current-date: #3182ce;
+    --adp-cell-background-color-hover: rgba(255, 255, 255, 0.075);
+    --adp-cell-background-color-selected: #3182ce;
+    --adp-cell-background-color-selected-hover: #4299e1;
+    --adp-cell-background-color-in-range: rgba(255, 255, 255, 0.075);
+    --adp-cell-background-color-in-range-hover: rgba(255, 255, 255, 0.075);
+    --adp-border-color: rgba(255, 255, 255, 0.1);
+    --adp-border-color-inner: rgba(255, 255, 255, 0.08);
+    --adp-border-radius: 0.5rem;
+    --adp-day-name-color: #6b7280;
+    --adp-day-name-color-hover: #9ca3af;
+    --adp-background-color-hover: rgba(255, 255, 255, 0.075);
+    --adp-background-color-active: rgba(255, 255, 255, 0.075);
+    --adp-btn-color: #3182ce;
+    --adp-btn-color-hover: #4299e1;
+    --adp-time-track-color: rgba(255, 255, 255, 0.15);
+    --adp-time-track-color-hover: rgba(255, 255, 255, 0.075);
+    --adp-cell-border-radius: 15px;
+    --adp-cell-mobile-font-size: 10px;
+
+    --adp-nav-height: 32px;
+    --adp-mobile-nav-height: 30px;
+    --adp-nav-action-size: 32px;
+
+    --adp-width: 246px;
+    --adp-mobile-width: 320px;
+    --adp-padding: 15px;
+    --adp-z-index: 100;
+    --adp-grid-areas: "nav" "body" "timepicker" "buttons";
+
+    --adp-day-cell-width: 1fr;
+    --adp-day-cell-height: 50px;
+    --adp-month-cell-height: 42px;
+    --adp-year-cell-height: 56px;
+    --adp-mobile-day-cell-height: 40px;
+    --adp-mobile-month-cell-height: 48px;
+    --adp-mobile-year-cell-height: 64px;
+
+    --adp-transition-duration: 0.2s;
+    --adp-transition-ease: ease-out;
+    --adp-transition-offset: 8px;
+}
+
+.air-datepicker-body--day-name {
+    font-size: 12px;   /* apni pasand ka size daal do */
+    color: rgba(255, 166, 0, 0.753)
+}
+.air-datepicker-cell.-day- {
+    font-size: 11px;
+    border-radius: 50%;
 }
