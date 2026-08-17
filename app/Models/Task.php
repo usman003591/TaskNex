@@ -21,8 +21,13 @@ class Task extends Model
         'due_at'
     ];
 
+    protected $casts = [
+        'scheduled_at' => 'datetime',
+    ];
+
     //relationships
-    public function list(){
+    public function list()
+    {
         return $this->belongsTo(TaskList::class, 'list_id');
     }
 }

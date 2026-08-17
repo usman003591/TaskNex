@@ -11,16 +11,17 @@ new class extends Component
 {
     public TaskList $list;
     public bool $open = false;
-    public bool $showDetailsInput = false;
 
     #[Validate('required|string|max:255')]
     public string $name;
     #[Validate('nullable|string|max:255')]
     public string $details;
     #[Validate('nullable|date')]
+    public ?string $scheduled_at = null;
+    #[Validate('nullable|date')]
     public ?string $due_at = null;
-    // public bool $starred = false;
-    // public bool $is_completed = false;
+    #[Validate('nullable|integer|in:1,2,3')]
+    public ?int $priority = null;
 
 
     public function mount(TaskList $list): void
@@ -34,14 +35,26 @@ new class extends Component
         return $this->list->tasks()->orderBy('is_completed')->latest()->get();
     }
 
-    #[Computed]
-    public function formattedDueAt(): ?string
+
+    public function formattedDateTime(?string $dateTime): ?string
     {
-        if (!$this->due_at) {
+        if (!$dateTime) {
             return null;
         }
 
-        return Carbon::parse($this->due_at)->format('D j M Y, g:i A');
+        return Carbon::parse($dateTime)->format('D j M Y, g:i A');
+    }
+
+    #[Computed]
+    public function formattedScheduledAt(): ?string
+    {
+        return $this->formattedDateTime($this->scheduled_at);
+    }
+
+    #[Computed]
+    public function formattedDueAt(): ?string
+    {
+        return $this->formattedDateTime($this->due_at);
     }
 
     public function openModal()
@@ -49,20 +62,22 @@ new class extends Component
         $this->open = true;
     }
 
-    public function showDetailsTextArea()
-    {
-        $this->showDetailsInput = true;
+    public function closeModal(){
+        $this->reset(['open', 'name', 'details', 'scheduled_at', 'due_at', 'priority']);
+        $this->resetValidation();
     }
 
-    public function closeModal(){
-        $this->reset(['open', 'name', 'details', 'showDetailsInput', 'due_at']);
-        $this->resetValidation();
+    public function clearScheduledDate(): void
+    {
+        $this->scheduled_at = null;
     }
 
     public function clearDueDate(): void
     {
         $this->due_at = null;
     }
+
+
 
     public function countTasks(): int
     {
@@ -98,9 +113,9 @@ new class extends Component
         $this->list->tasks()->create([
             'name' => $this->name,
             'details' => $this->details ?? null,
+            'scheduled_at' => $this->scheduled_at ?? null,
             'due_at' => $this->due_at ?? null,
-            // 'starred' => $this->starred ?: null,
-            // 'is_completed' => $this->is_completed ?: null,
+            'priority' => $this->priority ?: null,
         ]);
 
         $this->closeModal();
@@ -194,7 +209,7 @@ new class extends Component
             show = true;
             requestAnimationFrame(() => requestAnimationFrame(() => $refs.nameInput.focus()))})"
             x-on:keydown.escape.window="show = false; setTimeout(() => $wire.closeModal(), 300)"
-            class="fixed inset-0 z-50">
+            class="flex inset-0 z-50">
 
             <div x-show="show" x-transition:enter="transition-opacity ease-out duration-300"
                 x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -214,7 +229,8 @@ new class extends Component
                     <!-- Header -->
                     <div class="flex items-center justify-between px-5 pt-5 pb-1">
                         <div class="flex items-center gap-2.5">
-                            <div class="flex items-center justify-center size-7 rounded-lg bg-gray-500/15 text-gray-500">
+                            <div
+                                class="flex items-center justify-center size-7 rounded-lg bg-gray-500/15 text-gray-500">
                                 <i class="fa-solid fa-plus text-xs"></i>
                             </div>
                             <h2 class="text-sm font-medium text-white">New task</h2>
@@ -226,8 +242,10 @@ new class extends Component
                         </button>
                     </div>
 
+                    {{-- create form --}}
                     <form wire:submit="save" class="px-5 pb-5 pt-3 space-y-3">
 
+                        {{-- name field --}}
                         <div>
                             <input type="text" wire:model="name" x-ref="nameInput"
                                 x-on:input="taskName = $event.target.value"
@@ -238,68 +256,89 @@ new class extends Component
                             @enderror
                         </div>
 
-                        @if($showDetailsInput)
+                        {{-- details field --}}
                         <div>
                             <textarea wire:model="details" rows="2" placeholder="Add details (optional)"
-                                class="w-full bg-transparent rounded-md border border-white/10 px-3.5 py-3 text-sm font-normal text-gray-300 placeholder:text-gray-500 focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 transition-shadow resize-none"></textarea>
+                                class="w-full bg-transparent rounded-md border border-white/10 px-3.5 py-3 text-sm font-normal text-gray-300 placeholder:text-gray-500 focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 transition-shadow"></textarea>
                         </div>
-                        @endif
 
-                        {{-- Due date chip --}}
-                        @if($due_at)
+
                         <div>
+                            <button type="button" x-on:click.prevent=""
+                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <i class="fa-regular fa-flag text-[14px] text-blue-500"></i>
+                                <p class="text-gray-500">Select priority</p>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
+                            </button>
+                        </div>
+
+                        {{-- schedule date field --}}
+                        <div x-data="datepickerComponent('scheduledDate', 'scheduled_at')" x-init="initDatepicker()">
+                            @if(!$scheduled_at)
+                            <button type="button" x-on:click.prevent="datepicker.show()"
+                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <i class="fa-regular fa-clock text-[14px] text-blue-500"></i>
+                                <p class="text-gray-500">Add Schedule date/time</p>
+                            </button>
+                            @else
                             <span
-                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 text-gray-300">
-                                <i class="fa-regular fa-clock text-[12px] text-blue-500"></i>
+                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 text-gray-300 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <i class="fa-regular fa-clock text-[14px] text-blue-500 cursor-pointer"
+                                    x-on:click.prevent="datepicker.show()"></i>
+                                {{ $this->formattedScheduledAt }}
+                                <button type="button" wire:click="clearScheduledDate"
+                                    class="text-gray-500 hover:text-gray-300 transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-xmark text-[10px]"></i>
+                                </button>
+                            </span>
+                            @endif
+                        </div>
+                        <input type="text" id="scheduledDate" hidden wire:model="scheduled_at">
+
+                        {{-- due date field --}}
+                        <div x-data="datepickerComponent('dueDate', 'due_at')" x-init="initDatepicker()">
+                            @if(!$due_at)
+                            <button type="button" x-on:click.prevent="datepicker.show()"
+                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <i class="fa-regular fa-calendar-check text-[14px] text-blue-500"></i>
+                                <p class="text-gray-500">Add deadline</p>
+                            </button>
+                            @else
+                            <span
+                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 text-gray-300 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <i class="fa-regular fa-clock text-[14px] text-blue-500 cursor-pointer"
+                                    x-on:click.prevent="datepicker.show()"></i>
                                 {{ $this->formattedDueAt }}
                                 <button type="button" wire:click="clearDueDate"
                                     class="text-gray-500 hover:text-gray-300 transition-colors cursor-pointer">
                                     <i class="fa-solid fa-xmark text-[10px]"></i>
                                 </button>
                             </span>
+                            @endif
                         </div>
-                        @endif
+                        <input type="text" id="dueDate" hidden wire:model="due_at">
 
-                        <div x-data="{
-                                datepicker: null,
-                                initDatepicker() {
-                                    this.datepicker = new AirDatepicker('#dueDate', {
-                                        timepicker: true,
-                                        autoClose: false,
-                                        isMobile: true,
-                                        locale: airDatepickerLocaleEn,
-                                        showOtherMonths: false,
-                                        onSelect: function (params) {
-                                            $wire.set('due_at', params.formattedDate ? params.formattedDate : null);
-                                        }
-                                    });
-                                }
-                             }" x-init="initDatepicker()">
+                        <div class="flex items-center justify-between pt-2 mt-1 pt-3">
+                            <div class="ps-1 flex gap-4 text-gray-400 ">
+                                {{-- <button type="button" wire:click.stop="toggleStarred({{ $task->id }})"
+                                    wire:loading.class="animate-pulse" wire:target="toggleStarred({{ $task->id }})"
+                                    class="shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-125">
+                                    @if($task->starred)
+                                    <i
+                                        class="fa-solid fa-star text-base text-yellow-500 transition-all duration-300 ease-out scale-110"></i>
+                                    @else
+                                    <i
+                                        class="fa-regular fa-star text-base flex items-center justify-center text-yellow-500 transition-all duration-300 ease-out scale-100"></i>
+                                    @endif
+                                </button> --}}
 
-                            <input type="text" id="dueDate" hidden wire:model="due_at">
-
-                            <div class="flex items-center justify-between pt-2 mt-1 pt-3">
-                                <div class="ps-1 flex gap-4 text-gray-400 ">
-                                    <button class="cursor-pointer hover:text-gray-300 transition-colors" title="Add details"
-                                        wire:click.prevent="showDetailsTextArea">
-                                        <i class="fa-solid fa-bars-staggered"></i>
-                                    </button>
-                                    <button type="button" x-on:click.prevent="datepicker.show()" title="Set deadline"
-                                        class="cursor-pointer hover:text-gray-300 transition-colors">
-                                        <i class="fa-regular fa-clock"></i>
-                                    </button>
-                                    <button type="button" title="Schedule task"
-                                        class="cursor-pointer hover:text-gray-300 transition-colors">
-                                        <i class="fa-regular fa-calendar-check"></i>
-                                    </button>
-                                </div>
-                                <button type="submit" x-bind:disabled="!taskName.trim()" :class="taskName.trim()
-                                        ? 'text-blue-500 hover:text-blue-400 cursor-pointer'
-                                        : 'text-gray-600 cursor-not-allowed'"
-                                    class="rounded-lg px-4 py-2 text-sm font-medium text-blue-500 cursor-pointer hover:text-blue-400 transition-colors">
-                                    Save
-                                </button>
                             </div>
+                            <button type="submit" x-bind:disabled="!taskName.trim()" :class="taskName.trim()
+                                        ? 'text-blue-500 hover:text-blue-400 cursor-pointer'
+                                        : 'text-gray-600'"
+                                class="rounded-lg px-4 py-2 text-sm font-medium transition-colors">
+                                Save
+                            </button>
                         </div>
 
                     </form>
