@@ -11,6 +11,7 @@ new class extends Component
 {
     public TaskList $list;
     public bool $open = false;
+    public bool $starred = false;
 
     #[Validate('required|string|max:255')]
     public string $name;
@@ -63,7 +64,7 @@ new class extends Component
     }
 
     public function closeModal(){
-        $this->reset(['open', 'name', 'details', 'scheduled_at', 'due_at', 'priority']);
+        $this->reset(['open', 'name', 'details', 'scheduled_at', 'due_at', 'priority', 'starred']);
         $this->resetValidation();
     }
 
@@ -77,7 +78,15 @@ new class extends Component
         $this->due_at = null;
     }
 
-
+    #[Computed]
+    public function priorityMeta(): array
+    {
+        return [
+                1 => ['label' => 'Urgent', 'color' => 'text-red-400'],
+                2 => ['label' => 'Medium', 'color' => 'text-amber-400'],
+                3 => ['label' => 'Low', 'color' => 'text-emerald-400']
+            ];
+    }
 
     public function countTasks(): int
     {
@@ -115,7 +124,8 @@ new class extends Component
             'details' => $this->details ?? null,
             'scheduled_at' => $this->scheduled_at ?? null,
             'due_at' => $this->due_at ?? null,
-            'priority' => $this->priority ?: null,
+            'priority' => $this->priority ?? null,
+            'starred' => $this->starred ?? null,
         ]);
 
         $this->closeModal();
@@ -262,14 +272,46 @@ new class extends Component
                                 class="w-full bg-transparent rounded-md border border-white/10 px-3.5 py-3 text-sm font-normal text-gray-300 placeholder:text-gray-500 focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 transition-shadow"></textarea>
                         </div>
 
+                        {{-- priority field --}}
+                        <div x-data="{priorityDropdownOpen: false}" class="relative inline-block">
 
-                        <div>
-                            <button type="button" x-on:click.prevent=""
-                                class="inline-flex items-center gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
-                                <i class="fa-regular fa-flag text-[14px] text-blue-500"></i>
-                                <p class="text-gray-500">Select priority</p>
-                                <i class="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
+                            <button type="button" x-on:click.prevent="priorityDropdownOpen = !priorityDropdownOpen"
+                                class="inline-flex items-center justify-between w-36 gap-2 text-xs font-normal px-3 py-1.5 rounded-lg bg-transparent border border-white/10 cursor-pointer focus:outline-none focus:border-gray-600 focus:ring-0 focus:ring-gray-500/20 hover:outline-none hover:border-gray-600 hover:ring-0 hover:ring-gray-500/20">
+                                <span class="flex items-center gap-2">
+                                    <i class="fa-regular fa-flag text-[14px] {{ $priority ? $this->priorityMeta[
+                                        $priority]['color'] : 'text-blue-500' }}"></i>
+                                    <p class="{{ $priority ? $this->priorityMeta[
+                                        $priority]['color'] : 'text-gray-500' }}">{{ $priority ? $this->priorityMeta[
+                                        $priority]['label'] : 'Select priority' }}</p>
+                                </span>
+                                <i class="fa-solid fa-chevron-down text-[10px] text-gray-500 transition-colors shrink-0"
+                                    :class="priorityDropdownOpen && 'rotate-180'"></i>
                             </button>
+
+                            <div x-show="priorityDropdownOpen" x-on:click.outside="priorityDropdownOpen = false"
+                                x-transition:enter="transition ease-out duration-150"
+                                x-transition:enter-start="opacity-0 -translate-y-1"
+                                x-transition:enter-end="opacity-100 translate-y-0"
+                                class="absolute z-10 mt-1.5 bg-gray-900 border border-white/10 rounded-lg w-35 shadow-xl overflow-hidden"
+                                style="display: none">
+
+                                {{-- @if($priority) --}}
+                                <button type="button" wire:click="$set('priority', null)"
+                                    x-on:click="priorityDropdownOpen = false"
+                                    class="flex items-center gap-2 w-full px-3 py-2 text-xs text-gray-500 hover:bg-white/5 border-white/10 transition-colors cursor-pointer">
+                                    {{-- <i class="fa-solid fa-xmark text-[10px]"></i> --}}
+                                    Select Priority
+                                </button>
+                                {{-- @endif --}}
+                                @foreach ($this->priorityMeta as $key => $value)
+                                <button type="button" wire:click="$set('priority', {{ $key }})"
+                                    x-on:click="priorityDropdownOpen = false"
+                                    class="flex items-center text-xs font-normal {{ $value['color'] }} gap-2 w-full py-1.5 px-3 hover:bg-white/5 transition-colors cursor-pointer">
+                                    {{ $value['label'] }}
+                                </button>
+                                @endforeach
+
+                            </div>
                         </div>
 
                         {{-- schedule date field --}}
@@ -320,17 +362,17 @@ new class extends Component
 
                         <div class="flex items-center justify-between pt-2 mt-1 pt-3">
                             <div class="ps-1 flex gap-4 text-gray-400 ">
-                                {{-- <button type="button" wire:click.stop="toggleStarred({{ $task->id }})"
-                                    wire:loading.class="animate-pulse" wire:target="toggleStarred({{ $task->id }})"
+                                <button type="button" wire:click.stop="$toggle('starred')"
+                                    wire:loading.class="animate-pulse"
                                     class="shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-125">
-                                    @if($task->starred)
+                                    @if($starred)
                                     <i
                                         class="fa-solid fa-star text-base text-yellow-500 transition-all duration-300 ease-out scale-110"></i>
                                     @else
                                     <i
                                         class="fa-regular fa-star text-base flex items-center justify-center text-yellow-500 transition-all duration-300 ease-out scale-100"></i>
                                     @endif
-                                </button> --}}
+                                </button>
 
                             </div>
                             <button type="submit" x-bind:disabled="!taskName.trim()" :class="taskName.trim()
