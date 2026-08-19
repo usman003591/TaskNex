@@ -4,6 +4,7 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
 use App\Models\TaskList;
+use Carbon\Carbon;
 
 new class extends Component
 {
@@ -95,25 +96,32 @@ new class extends Component
                     </button>
                 </div>
 
-                {{-- @if($task->due_at || $task->subtasks_count || $task->priority)
+                @if($task->due_at || $task->scheduled_at || $task->priority)
                 <div class="flex items-center gap-2 mt-2 ml-7">
-                    @if($task->due_at)
-                    <span class="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-gray-400">
-                        <i class="fa-regular fa-calendar text-[10px]"></i>
-                        {{ $task->due_at->format('d-m-y') }}
+                    @if($task->scheduled_at)
+                    <span class="flex items-center gap-2 text-[11px] px-2 py-0.5 text-gray-400">
+                        <i class="fa-regular fa-clock pt-0.5"></i>
+                        {{ $task->scheduled_at->diffForHumans(['short' => true]) }}
                     </span>
                     @endif
 
-                    @if($task->subtasks_count)
+                    @if($task->due_at)
+                    <span class="flex items-center gap-2 text-[11px] px-2 py-0.5 {{ $task->due_status['color'] }}">
+                        <i class="fa-regular fa-calendar-days pt-0.5"></i>
+                        {{ $task->due_status['label'] }}
+                    </span>
+                    @endif
+
+                    {{-- @if($task->subtasks_count)
                     <span class="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-gray-400">
                         <i class="fa-solid fa-list-check text-[10px]"></i>
                         {{ $task->subtasks_count }} Subtasks
                     </span>
-                    @endif
+                    @endif --}}
 
-                    @if($task->priority)
+                    {{-- @if($task->priority)
                     @php
-                    $labels = [1 => 'Low', 2 => 'Medium', 3 => 'High'];
+                    $labels = [1 => 'Low', 2 => 'Medium', 3 => 'Urgent'];
                     $classes = [
                     1 => 'bg-priority-low-bg text-priority-low-text',
                     2 => 'bg-priority-medium-bg text-priority-medium-text',
@@ -123,9 +131,9 @@ new class extends Component
                     <span class="text-[11px] px-2 py-0.5 rounded-md {{ $classes[$task->priority] }}">
                         {{ $labels[$task->priority] }}
                     </span>
-                    @endif
+                    @endif --}}
                 </div>
-                @endif --}}
+                @endif
             </div>
             @empty
             <div class="px-4 py-10 text-center text-sm text-gray-500">
