@@ -259,7 +259,7 @@ new class extends Component
                             <button type="submit" x-bind:disabled="!taskName.trim()" :class="taskName.trim()
                                         ? 'text-blue-500 hover:text-blue-400 cursor-pointer'
                                         : 'text-gray-600'"
-                                class="rounded-lg px-4 py-2 text-sm font-medium transition-colors">
+                                class="rounded-lg pl-4 py-2 text-sm font-medium transition-colors">
                                 Save
                             </button>
                         </div>

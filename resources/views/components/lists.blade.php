@@ -2,6 +2,7 @@
 
 use Livewire\Component;
 use App\Models\User;
+use Livewire\Attributes\On;
 
 new class extends Component
 {
@@ -25,6 +26,11 @@ new class extends Component
         $this->lists = User::current()->lists()->latest()->get();
         $this->listName = '';
         $this->isCreating = false;
+    }
+
+    #[On('list-renamed')]
+    public function refreshLists(){
+        $this->mount();
     }
 };
 ?>
