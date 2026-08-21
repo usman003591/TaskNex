@@ -66,6 +66,11 @@ new class extends Component
         $this->redirect(route('dashboard'), navigate:true);
     }
 
+    public function deleteCompletedTasks()
+    {
+        $this->list->tasks()->where('is_completed', true)->delete();
+    }
+
     #[On('task-created')]               //adding a listener for the child component
     public function refreshTasks(){
         unset($this->tasks);            //computed property cache clear
@@ -81,25 +86,29 @@ new class extends Component
                 <small class="text-xs text-gray-500 leading-tight">{{ $this->countTasks() }} tasks, {{
                     $this->countCompletedTasks() }} completed</small>
             </div>
-            <div class="flex ml-auto me-4 ">
+            <div class="flex ml-auto">
                 <div x-data="{optionsDropdown: false}" class="relative inline-block">
                     <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="hover:scale-110 active:scale-125 cursor-pointer transition-all duration-300 ease-out">
-                        <i class="fa-solid fa-ellipsis-vertical scale-100"></i>
+                        <i class="fa-solid fa-ellipsis-vertical scale-100 p-2"></i>
                     </button>
                     <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
                         x-transition:enter="transition ease-out duration-150"
                         x-transition:enter-start="opacity-0 -translate-y-1"
                         x-transition:enter-end="opacity-100 translate-y-0"
-                        class="absolute right-0 z-10 mt-1.5 bg-gray-900 border border-white/10 rounded-lg w-36 max-w-[calc(100vw-2rem)] shadow-xl overflow-hidden"
+                        class="absolute right-0 z-10 mt-1.5 bg-gray-900 border border-white/10 rounded-lg w-47 max-w-[calc(100vw-2rem)] shadow-xl overflow-hidden"
                         style="display: none">
 
                         <button type="button" wire:click="deleteList" wire:confirm='Are you sure you want to delete this list?' x-on:click="optionsDropdown = false"
                             class="flex items-center gap-2 w-full px-3 py-2 text-xs font-normal text-gray-300 hover:bg-white/5 transition-colors cursor-pointer">
-                            Delete List
+                            <i class="fa-solid fa-trash text-xs"></i> Delete List
                         </button>
                         <button type="button" wire:click="" x-on:click="optionsDropdown = false"
                             class="flex items-center gap-2 w-full py-2 px-3 text-xs font-normal text-gray-300 hover:bg-white/5 transition-colors cursor-pointer">
-                            Rename List
+                            <i class="fa-solid fa-edit text-xs"></i> Rename List
+                        </button>
+                        <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
+                            class="flex items-center gap-2 w-full py-2 px-3 text-xs font-normal text-gray-300 hover:bg-white/5 transition-colors cursor-pointer">
+                            <i class="fa-solid fa-trash-arrow-up text-xs"></i> Delete all completed tasks
                         </button>
 
                     </div>

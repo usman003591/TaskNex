@@ -44,7 +44,7 @@ new class extends Component
         <button type="button" wire:click="$set('isCreating', true)"
             class="flex items-center gap-x-3.5 py-2 mt-2.5 px-2.5 w-full text-sm text-gray-300 rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus">
             <i class="fa-solid fa-plus text-xs"></i>
-            New list
+            <span x-show="!collapsed" x-transition.opacity.duration.150ms>New list</span>
         </button>
         @endif
     </div>
