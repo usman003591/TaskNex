@@ -47,9 +47,9 @@ class Task extends Model
         }
 
         if ($this->due_at->isTomorrow()) {
-            return ['label' => 'Due Tomorrow ' . $this->due_at->format('g:i A'), 'color' => 'text-green-300/70'];
+            return ['label' => 'Due Tomorrow ' . $this->due_at->format('g:i A'), 'color' => 'text-gray-400'];
         }
 
-        return ['label' => 'Due ' . $this->due_at->format('j M Y, g:i A'), 'color' => 'text-green-300/70'];
+        return ['label' => 'Due ' . $this->due_at->format('j M Y, g:i A'), 'color' => 'text-gray-400'];
     }
 }

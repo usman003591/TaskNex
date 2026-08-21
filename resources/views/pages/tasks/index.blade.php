@@ -16,6 +16,16 @@ new class extends Component
     }
 
     #[Computed]
+    public function priorityMeta(): array
+    {
+        return [
+            1 => ['label' => 'Urgent', 'color' => 'text-red-400 bg-red-500/10'],
+            2 => ['label' => 'Medium', 'color' => 'text-amber-400 bg-amber-500/10'],
+            3 => ['label' => 'Low', 'color' => 'text-emerald-400 bg-emerald-500/10']
+        ];
+    }
+
+    #[Computed]
     public function tasks()
     {
         return $this->list->tasks()->orderBy('is_completed')->latest()->get();
@@ -83,6 +93,12 @@ new class extends Component
                         {{ $task->name }}
                     </span>
 
+                    @if($task->priority)
+                    <span class="flex text-[11px] px-2 py-0.5 rounded-md {{ $this->priorityMeta[$task->priority]['color'] }}">
+                        {{ $this->priorityMeta[$task->priority]['label'] }}
+                    </span>
+                    @endif
+
                     <button type="button" wire:click.stop="toggleStarred({{ $task->id }})"
                         wire:loading.class="animate-pulse" wire:target="toggleStarred({{ $task->id }})"
                         class="shrink-0 cursor-pointer transition-transform duration-200 hover:scale-110 active:scale-125">
@@ -98,6 +114,7 @@ new class extends Component
 
                 @if($task->due_at || $task->scheduled_at || $task->priority)
                 <div class="flex items-center gap-2 mt-2 ml-7">
+
                     @if($task->scheduled_at)
                     <span class="flex items-center gap-2 text-[11px] px-2 py-0.5 text-gray-400">
                         <i class="fa-regular fa-clock pt-0.5"></i>
@@ -112,6 +129,8 @@ new class extends Component
                     </span>
                     @endif
 
+
+
                     {{-- @if($task->subtasks_count)
                     <span class="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-gray-400">
                         <i class="fa-solid fa-list-check text-[10px]"></i>
@@ -119,19 +138,7 @@ new class extends Component
                     </span>
                     @endif --}}
 
-                    {{-- @if($task->priority)
-                    @php
-                    $labels = [1 => 'Low', 2 => 'Medium', 3 => 'Urgent'];
-                    $classes = [
-                    1 => 'bg-priority-low-bg text-priority-low-text',
-                    2 => 'bg-priority-medium-bg text-priority-medium-text',
-                    3 => 'bg-priority-high-bg text-priority-high-text',
-                    ];
-                    @endphp
-                    <span class="text-[11px] px-2 py-0.5 rounded-md {{ $classes[$task->priority] }}">
-                        {{ $labels[$task->priority] }}
-                    </span>
-                    @endif --}}
+
                 </div>
                 @endif
             </div>
