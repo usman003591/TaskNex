@@ -115,7 +115,10 @@ new class extends Component
                             class="flex items-center gap-2 w-full py-2 px-3 text-xs font-normal text-gray-300 hover:bg-white/5 transition-colors cursor-pointer">
                             <i class="fa-solid fa-edit text-xs"></i> Rename List
                         </button>
-                        <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
+                        <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false" @if ($this->countCompletedTasks() <= 0)
+                            hidden
+                            disabled
+                        @endif
                             class="flex items-center gap-2 w-full py-2 px-3 text-xs font-normal text-gray-300 hover:bg-white/5 transition-colors cursor-pointer">
                             <i class="fa-solid fa-trash-arrow-up text-xs"></i> Delete all completed tasks
                         </button>
