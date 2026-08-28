@@ -112,7 +112,7 @@ new class extends Component
                     --tn-modal-line: #383a50;
                     --tn-modal-muted: #85899f;
                     --tn-modal-dim: #666b85;
-                    --tn-modal-ink: #f5f4ef;
+                    --tn-modal-ink: #e0e0dd;
                     --tn-modal-lime: #c7f36b;
                     --tn-modal-coral: #ff896f;
                     font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
@@ -138,22 +138,21 @@ new class extends Component
                     color: var(--tn-modal-ink);
                     background: rgb(23 25 37 / 82%);
                     border: 1px solid #3d4058;
-                    border-radius: .85rem;
+                    border-radius: .75rem;
                     outline: none;
                     transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
                 }
 
                 .tn-create-modal__input {
-                    padding: .9rem 1rem;
-                    font-size: .875rem;
-                    font-weight: 600;
+                    padding: .5rem 1rem;
+                    font-size: .8rem;
                 }
 
                 .tn-create-modal__textarea {
                     min-height: 5rem;
                     resize: vertical;
                     padding: .85rem 1rem;
-                    font-size: .75rem;
+                    font-size: .8rem;
                     line-height: 1.5;
                 }
 
@@ -182,12 +181,12 @@ new class extends Component
 
                 .tn-create-modal__chip {
                     display: inline-flex;
-                    min-height: 2.2rem;
+                    min-height: 2rem;
                     align-items: center;
                     gap: .5rem;
-                    padding: .55rem .75rem;
+                    padding: .25rem .75rem;
                     color: var(--tn-modal-muted);
-                    font-size: .6875rem;
+                    font-size: .7rem;
                     font-weight: 600;
                     background: rgb(23 25 37 / 62%);
                     border: 1px solid #3d4058;
@@ -201,22 +200,16 @@ new class extends Component
                     border-color: #565a76;
                 }
 
-                .tn-create-modal__chip--active {
-                    color: var(--tn-modal-lime);
-                    background: rgb(199 243 107 / 9%);
-                    border-color: rgb(199 243 107 / 34%);
-                }
-
                 .tn-create-modal__footer {
                     border-top: 1px solid rgb(56 58 80 / 72%);
                 }
 
                 .tn-create-modal__save {
                     display: inline-flex;
-                    min-height: 2.55rem;
+                    min-height: 2rem;
                     align-items: center;
                     gap: .5rem;
-                    padding: .65rem 1rem;
+                    padding: .5rem 1rem;
                     color: #171825;
                     font-size: .75rem;
                     font-weight: 800;
@@ -238,8 +231,8 @@ new class extends Component
 
                 .tn-create-modal__close {
                     display: grid;
-                    width: 2.25rem;
-                    height: 2.25rem;
+                    width: 2rem;
+                    height: 2rem;
                     place-items: center;
                     color: var(--tn-modal-muted);
                     background: transparent;
@@ -251,7 +244,7 @@ new class extends Component
                 .tn-create-modal__close:hover {
                     color: var(--tn-modal-ink);
                     background: var(--tn-modal-raised);
-                    border-color: var(--tn-modal-line);
+                    /* border-color: var(--tn-modal-line); */
                 }
 
                 .tn-create-modal input:focus,
@@ -304,10 +297,10 @@ new class extends Component
                     aria-modal="true"
                     aria-labelledby="create-task-title"
                 >
-                    <div class="px-5 pb-4 pt-5 sm:px-6 sm:pt-6">
+                    <div class="px-5 pb-7 pt-5 sm:px-6 sm:pt-6">
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex items-start gap-3">
-                                <div class="grid mt-1 h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#84CC16]/10 text-[#84CC16]">
+                                <div class="grid mt-1 h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#c7f36b]/10 text-[#c7f36b]">
                                     <i class="fa-solid fa-plus text-sm"></i>
                                 </div>
                                 <div>
@@ -324,7 +317,7 @@ new class extends Component
                                 type="button"
                                 x-on:click="show = false; setTimeout(() => $wire.closeModal(), 300)"
                                 aria-label="Close create task dialog"
-                                class="tn-create-modal__close"
+                                class="tn-create-modal__close cursor-pointer"
                             >
                                 <i class="fa-solid fa-xmark text-sm"></i>
                             </button>
@@ -341,8 +334,8 @@ new class extends Component
                                 wire:model="name"
                                 x-ref="nameInput"
                                 x-on:input="taskName = $event.target.value"
-                                class="tn-create-modal__input"
-                                placeholder="New Task"
+                                class="tn-create-modal__input font-thin"
+                                placeholder="What's new on your mind?"
                                 autocomplete="off"
                             >
                             @error('name')
@@ -446,19 +439,16 @@ new class extends Component
                                 type="button"
                                 wire:click.stop="$toggle('starred')"
                                 wire:loading.class="animate-pulse"
-                                class="flex items-center gap-2 rounded-lg px-2 py-2 text-[11px] font-semibold text-[#85899f] transition hover:bg-[#222438] hover:text-[#c7f36b]"
-                            >
-                                <i class="{{ $starred ? 'fa-solid text-[#c7f36b]' : 'fa-regular text-[#737890]' }} fa-star text-[15px]"></i>
+                                class="flex items-center gap-2 rounded-lg px-2 py-2 text-[11px] font-semibold text-[#85899f] transition hover:bg-[#222438] hover:text-[#e0e0dd] cursor-pointer">
+                                <i class="{{ $starred ? 'fa-solid text-amber-300' : 'fa-regular text-[#737890]' }} fa-star text-[15px]"></i>
                                 <span>{{ $starred ? 'Starred' : 'Add to starred' }}</span>
                             </button>
 
                             <button
                                 type="submit"
                                 x-bind:disabled="!taskName.trim()"
-                                class="tn-create-modal__save"
-                            >
+                                class="tn-create-modal__save">
                                 <span>Save</span>
-                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                             </button>
                         </div>
                     </form>

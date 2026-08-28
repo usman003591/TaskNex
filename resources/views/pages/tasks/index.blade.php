@@ -381,7 +381,7 @@ new class extends Component
                             class="tn-icon-button cursor-pointer"
                             aria-label="{{ $task->starred ? 'Remove task from starred' : 'Add task to starred' }}"
                         >
-                            <i class="{{ $task->starred ? 'fa-solid' : 'fa-regular' }} fa-star text-[14px] {{ $task->starred ? 'text-[#c7f36b]' : 'text-[#737890]' }}"></i>
+                            <i class="{{ $task->starred ? 'fa-solid' : 'fa-regular' }} fa-star text-[14px] {{ $task->starred ? 'text-amber-300' : 'text-[#737890]' }}"></i>
                         </button>
                     </div>
                 </div>
