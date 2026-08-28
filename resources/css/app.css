@@ -29,39 +29,53 @@
 }
 
 .air-datepicker {
-    /* Font */
-    --adp-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    /* TaskNex dark navy / electric blue theme */
+    --adp-font-family: "DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --adp-font-size: 12px;
     --adp-mobile-font-size: 13px;
-    --adp-background-color: #111827;
+    --adp-background-color: #202338;
     --adp-color: #e5e7eb;
+    --adp-color-secondary: #85899f;
     --adp-accent-color: #3182ce;
-    --adp-color-current-date: #3182ce;
-    --adp-cell-background-color-hover: rgba(255, 255, 255, 0.075);
-    --adp-cell-background-color-selected: #3182ce;
+    --adp-color-current-date: #60a5fa;
+    --adp-cell-background-color-hover: rgba(160, 185, 216, 0.13);
+    --adp-cell-background-color-selected: #3182ced0;
     --adp-cell-background-color-selected-hover: #4299e1;
     --adp-cell-background-color-in-range: rgba(255, 255, 255, 0.075);
     --adp-cell-background-color-in-range-hover: rgba(255, 255, 255, 0.075);
-    --adp-border-color: rgba(255, 255, 255, 0.1);
-    --adp-border-color-inner: rgba(255, 255, 255, 0.08);
-    --adp-border-radius: 0.5rem;
-    --adp-day-name-color: #6b7280;
-    --adp-day-name-color-hover: #9ca3af;
-    --adp-background-color-hover: rgba(255, 255, 255, 0.075);
-    --adp-background-color-active: rgba(255, 255, 255, 0.075);
-    --adp-btn-color: #3182ce;
-    --adp-btn-color-hover: #4299e1;
+    --adp-background-color-hover: rgb(96 165 250 / 10%);
+    --adp-background-color-active: rgb(96 165 250 / 16%);
+    --adp-day-name-color: rgba(255, 166, 0, 0.842);
+    /* --adp-day-name-color-hover: #60a5fa; */
+    --adp-btn-color: #60a5fa;
+    --adp-btn-color-hover: #93c5fd;
+
     --adp-time-track-color: rgba(255, 255, 255, 0.15);
     --adp-time-track-color-hover: rgba(255, 255, 255, 0.075);
-    --adp-cell-border-radius: 15px;
+    --adp-border-radius: 0.5rem;
+    --adp-cell-border-radius: 0.9rem;
     --adp-cell-mobile-font-size: 10px;
 
     --adp-nav-height: 32px;
     --adp-mobile-nav-height: 30px;
     --adp-nav-action-size: 32px;
 
+    --adp-cell-color-selected: #0e1726;
+    --adp-cell-color-selected-hover: #0e1726;
+    --adp-cell-color-in-range: #dbeafe;
+    --adp-cell-color-in-range-hover: #f5f4ef;
+    --adp-cell-background-color-disabled: transparent;
+    --adp-cell-color-disabled: #565a76;
+
+    --adp-border-color: rgba(255, 255, 255, 0.1);
+    --adp-border-color-inner: rgba(255, 255, 255, 0.08);
+    --adp-btn-background-color-hover: rgb(96 165 250 / 10%);
+    --adp-btn-background-color-active: rgb(96 165 250 / 16%);
+
+
+
     --adp-width: 246px;
-    --adp-mobile-width: 320px;
+    --adp-mobile-width: min(320px, calc(100vw - 2rem));
     --adp-padding: 15px;
     --adp-z-index: 100;
     --adp-grid-areas: "nav" "body" "timepicker" "buttons";
@@ -77,15 +91,66 @@
     --adp-transition-duration: 0.2s;
     --adp-transition-ease: ease-out;
     --adp-transition-offset: 8px;
+
+    box-shadow: 50px;
+    overflow: hidden;
+}
+
+.air-datepicker-nav {
+    border-bottom: 1px solid var(--adp-border-color-inner);
+}
+
+.air-datepicker-nav--title {
+    color: var(--adp-color);
+}
+
+.air-datepicker-nav--title:hover,
+.air-datepicker-nav--action:hover {
+    background-color: var(--adp-cell-background-color-hover);
+}
+
+.air-datepicker-nav--action {
+    border-radius: .6rem;
 }
 
 .air-datepicker-body--day-name {
-    font-size: 12px;   /* apni pasand ka size daal do */
-    color: rgba(255, 166, 0, 0.753)
+    font-size: 12px;
+    text-transform: uppercase;
 }
+
+.air-datepicker-cell {
+    transition: color var(--adp-transition-duration) var(--adp-transition-ease);
+    background-color: var(--adp-transition-duration) var(--adp-transition-ease);
+}
+
 .air-datepicker-cell.-day- {
-    font-size: 11px;
     border-radius: 50%;
+    font-size: 11px;
+}
+
+.air-datepicker-cell.-current- {
+    color: var(--adp-color-current-date);
+}
+
+.air-datepicker--pointer {
+    background: var(--adp-background-color);
+    border-color: var(--adp-border-color);
+}
+
+.air-datepicker-button {
+    border-radius: .6rem;
+}
+
+.air-datepicker--buttons {
+    border-top: 1px solid var(--adp-border-color-inner);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .air-datepicker,
+    .air-datepicker * {
+        transition-duration: .01ms !important;
+    }
 }
 
 /* TaskNex navigation layer
