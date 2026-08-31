@@ -96,7 +96,7 @@ new class extends Component
             </h1>
             <p class="mt-4 text-[13px] text-[#85899f]">
                 {{ $this->countTasks() }} {{ Str::plural('task', $this->countTasks()) }}
-                <span class="px-1 text-[#4f536b]">·</span>
+                <span class="px-1 text-[#4f536b]">|</span>
                 {{ $this->countCompletedTasks() }} completed
             </p>
         </div>
