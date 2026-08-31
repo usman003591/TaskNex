@@ -124,7 +124,6 @@ new class extends Component
                         var(--tn-modal-bg);
                     border: 1px solid #454860;
                     border-radius: 0.75rem;
-                    box-shadow: 0 28px 80px rgb(4 5 10 / 48%), 0 0 0 1px rgb(255 255 255 / 2%);
                 }
 
                 .tn-create-modal__title {

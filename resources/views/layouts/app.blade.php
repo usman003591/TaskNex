@@ -71,17 +71,17 @@
                     aria-label="Close sidebar"
                     x-on:click="closeMobile()"
                 >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    {{-- <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m15 18-6-6 6-6"/>
-                    </svg>
+                    </svg> --}}
                 </button>
 
-                <span class="tn-icon-button hidden md:grid" aria-hidden="true">
+                {{-- <span class="tn-icon-button hidden md:grid" aria-hidden="true">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="m12 3 1.7 5.3L19 10l-5.3 1.7L12 17l-1.7-5.3L5 10l5.3-1.7L12 3Z"/>
                         <path d="m19 16 .7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7L19 16Z"/>
                     </svg>
-                </span>
+                </span> --}}
             </div>
 
             <div class="tn-sidebar__section">
@@ -213,7 +213,6 @@
                             <circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>
                         </svg>
                         <span>Jump to anything</span>
-                        <kbd>⌘ K</kbd>
                     </button>
                 </div>
 
@@ -224,14 +223,14 @@
                         </svg>
                     </button>
 
-                    <div class="tn-navbar__divider"></div>
+                    {{-- <div class="tn-navbar__divider"></div> --}}
 
-                    <button type="button" class="tn-share-button">
+                    {{-- <button type="button" class="tn-share-button">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                             <path d="M12 5v14M5 12h14"/>
                         </svg>
                         <span>Share space</span>
-                    </button>
+                    </button> --}}
                 </div>
             </header>
 
