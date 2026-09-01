@@ -3,6 +3,7 @@
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use App\Models\TaskList;
 use Carbon\Carbon;
 
@@ -33,6 +34,7 @@ new class extends Component
             ];
     }
 
+    #[On('open-create-task-modal')]
     public function openModal()
     {
         $this->open = true;
@@ -457,7 +459,7 @@ new class extends Component
     @endif
 
     {{-- Floating add button --}}
-    <button
+    {{-- <button
         type="button"
         wire:click="openModal"
         aria-label="New task"
@@ -465,5 +467,5 @@ new class extends Component
         class="fixed bottom-6 right-6 z-40 grid h-13 w-13 place-items-center rounded-full bg-lime-300 text-[#171825] shadow-[0_10px_28px_rgba(199,243,107,.2)] transition-all duration-150 hover:-translate-y-1 hover:bg-[#d6fa87] active:scale-95"
     >
         <i class="fa-solid fa-plus text-lg"></i>
-    </button>
+    </button> --}}
 </div>

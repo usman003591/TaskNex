@@ -224,7 +224,7 @@ new class extends Component
     <button
         type="button"
         wire:click="$dispatch('open-create-task-modal')"
-        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-[#c7f36b]/40 hover:bg-[#1b1d2a] hover:text-[#c7f36b]"
+        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-[#c7f36b]/40 hover:bg-[#1b1d2a] hover:text-[#c7f36b] cursor-pointer"
     >
         <span class="grid h-6 w-6 place-items-center rounded-lg border border-current">
             <i class="fa-solid fa-plus text-[11px]"></i>
