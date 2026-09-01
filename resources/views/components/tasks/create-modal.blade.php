@@ -382,12 +382,12 @@ new class extends Component
                                         class="absolute left-0 top-11 z-30 min-w-36 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] py-1.5 shadow-2xl"
                                         style="display: none"
                                     >
-                                        <button type="button" wire:click="$set('priority', null)" x-on:click="priorityDropdownOpen = false" class="tn-menu-item">
+                                        <button type="button" wire:click="$set('priority', null)" x-on:click="priorityDropdownOpen = false" class="flex w-full items-center gap-2.5 px-3.5 py-[0.6rem] text-xs transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] cursor-pointer">
                                             <i class="fa-regular fa-flag text-[11px] text-[#666b85]"></i>
                                             No priority
                                         </button>
                                         @foreach ($this->priorityMeta as $key => $value)
-                                            <button type="button" wire:click="$set('priority', {{ $key }})" x-on:click="priorityDropdownOpen = false" class="tn-menu-item {{ $value['color'] }}">
+                                            <button type="button" wire:click="$set('priority', {{ $key }})" x-on:click="priorityDropdownOpen = false" class="flex w-full items-center gap-2.5 px-3.5 py-[0.6rem] text-xs transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] {{ $value['color'] }} cursor-pointer">
                                                 <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
                                                 {{ $value['label'] }}
                                             </button>
