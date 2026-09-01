@@ -215,7 +215,7 @@ new class extends Component
     {{-- Task list --}}
     <div class="space-y-2">
         @forelse($this->tasks as $task)
-            <x-task-card :task="$task"/>
+            <x-task-card :task="$task" checkIconColor="#c7f36b"/>
         @empty
             <x-empty-list-state icon="fa-solid fa-circle-down" title="This list is ready for its first task" subtitle="Tap the add button to capture what's next."/>
         @endforelse
@@ -233,7 +233,6 @@ new class extends Component
     </button>
 
     <div class="mt-7 flex items-center justify-between text-[10px] text-[#5e637a]">
-        <span>List updated just now</span>
         <span class="flex items-center gap-1.5">
             <span class="h-1.5 w-1.5 rounded-full bg-[#c7f36b]"></span>
             Everything is up to date

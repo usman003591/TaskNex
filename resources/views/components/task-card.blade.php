@@ -1,4 +1,4 @@
-@props(['task'])
+@props(['task', 'checkIconColor'])
 
 <article {{ $attributes->merge(['class' => 'group rounded-2xl border border-[#2d3044] bg-[#1b1d2a]/[0.88] px-4 py-4
     transition-[background-color,border-color,transform,box-shadow] duration-[180ms] motion-reduce:transition-none
@@ -9,7 +9,8 @@
     <div class="flex items-start gap-3 sm:items-center sm:gap-4">
         <button type="button" wire:click.stop="toggleComplete({{ $task->id }})" wire:loading.class="animate-pulse"
             wire:target="toggleComplete({{ $task->id }})"
-            class="mt-0.5 grid h-[1.375rem] w-[1.375rem] flex-none place-items-center rounded-full border-[1.5px] border-[#596079] text-[#171825] transition-colors duration-[180ms] motion-reduce:transition-none hover:scale-[1.06] hover:border-[#c7f36b] hover:bg-[#c7f36b]/[0.12] data-[completed=true]:border-[#c7f36b] data-[completed=true]:bg-[#c7f36b]"
+            style="--check-icon-color: {{ $checkIconColor }}"
+            class="mt-0.5 grid h-[1.375rem] w-[1.375rem] flex-none place-items-center rounded-full border-[1.5px] border-[#596079] text-[#171825] transition-colors duration-[180ms] motion-reduce:transition-none hover:scale-[1.06] hover:border-[var(--check-icon-color)] hover:bg-[var(--check-icon-color)/0.12] data-[completed=true]:border-[var(--check-icon-color)] data-[completed=true]:bg-[var(--check-icon-color)] cursor-pointer"
             data-completed="{{ $task->is_completed ? 'true' : 'false' }}"
             aria-label="{{ $task->is_completed ? 'Mark task incomplete' : 'Mark task complete' }}">
             @if($task->is_completed)

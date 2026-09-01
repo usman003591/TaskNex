@@ -41,7 +41,7 @@ new class extends Component
 
     public function countStarredTasks(): int
     {
-        return Task::where('starred', true)->where('is_completed', false)->count();
+        return Task::where('starred', true)->count();
     }
     public function countCompletedStarredTasks(): int
     {
@@ -62,7 +62,7 @@ new class extends Component
                 Starred<span class="text-[#f5c451]">.</span>
             </h1>
             <p class="mt-4 text-[13px] text-[#85899f]">
-                {{ $this->countStarredTasks() }} {{ Str::plural('task', $this->countStarredTasks()) }}
+                {{ $this->countStarredTasks() }} starred {{ Str::plural('task', $this->countStarredTasks()) }}
                 <span class="px-1 text-[#4f536b]">|</span>
                 {{ $this->countCompletedStarredTasks() }} completed
             </p>
@@ -79,7 +79,7 @@ new class extends Component
         </div>
     </div>
 
-    <div class="mb-6 grid gap-3 sm:grid-cols-[1.4fr_1fr]">
+    <div class="mb-6 grid gap-3">
         <div class="relative overflow-hidden rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
             <div class="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-[#c7f36b]/10 blur-3xl"></div>
             <div class="relative">
@@ -88,7 +88,6 @@ new class extends Component
                         <i class="fa-solid fa-wand-magic-sparkles text-[#f5c451]"></i>
                         Collection pulse
                     </span>
-                    <span class="rounded-full bg-[#f5c451]/10 px-2 py-1 text-[10px] font-bold text-[#f5c451]">TODAY</span>
                 </div>
                 <div class="flex items-end gap-3">
                     <span class="font-['Space_Grotesk'] text-4xl font-semibold tracking-[-.06em] text-[#f6f2ea]">
@@ -105,7 +104,7 @@ new class extends Component
             </div>
         </div>
 
-        <div class="rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
+        {{-- <div class="rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
             <div class="mb-4 flex items-center justify-between">
                 <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
                 <i class="fa-solid fa-bolt text-[#ff896f]"></i>
@@ -113,8 +112,8 @@ new class extends Component
             <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-[#f5f4ef]">
                 {{ $this->countStarredTasks() - $this->countCompletedStarredTasks() }}
             </div>
-            <div class="mt-1 text-[11px] text-[#85899f]">tasks still waiting for you</div>
-        </div>
+            <div class="mt-1 text-[11px] text-[#85899f]">important tasks still waiting for you</div>
+        </div> --}}
     </div>
 
     <div class="mb-4 flex items-center justify-between">
@@ -128,27 +127,15 @@ new class extends Component
     {{-- Task list --}}
     <div class="space-y-2">
         @forelse($this->starredTasks as $task)
-            <x-task-card :task="$task"/>
+            <x-task-card :task="$task" checkIconColor="#f5c451"/>
         @empty
-            <x-empty-list-state icon="fa-solid fa-circle-down" title="This list is ready for its first task" subtitle="Tap the add button to capture what's next."/>
+            <x-empty-list-state icon="fa-solid fa-circle-down" title="No starred task yet" subtitle="Tap the add button in a list to create one."/>
         @endforelse
     </div>
 
-    <button
-        type="button"
-        wire:click="$dispatch('open-create-task-modal')"
-        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-[#c7f36b]/40 hover:bg-[#1b1d2a] hover:text-[#c7f36b]"
-    >
-        <span class="grid h-6 w-6 place-items-center rounded-lg border border-current">
-            <i class="fa-solid fa-plus text-[11px]"></i>
-        </span>
-        Add another task
-    </button>
-
     <div class="mt-7 flex items-center justify-between text-[10px] text-[#5e637a]">
-        <span>List updated just now</span>
         <span class="flex items-center gap-1.5">
-            <span class="h-1.5 w-1.5 rounded-full bg-[#c7f36b]"></span>
+            <span class="h-1.5 w-1.5 rounded-full bg-[#f5c451]"></span>
             Everything is up to date
         </span>
     </div>
