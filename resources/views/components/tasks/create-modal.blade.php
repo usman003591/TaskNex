@@ -294,7 +294,6 @@ new class extends Component
                     x-transition:leave="transition-all ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 scale-[.98]"
-                    {{-- x-on:click.stop --}}
                     class="tn-create-modal__panel relative my-auto w-full max-w-lg overflow-visible"
                     role="dialog"
                     aria-modal="true"

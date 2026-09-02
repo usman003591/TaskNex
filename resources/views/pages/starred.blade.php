@@ -128,7 +128,7 @@ new class extends Component
         @forelse($this->starredTasks as $task)
             <x-task-card :task="$task" checkIconColor="#f5c451"/>
         @empty
-            <x-empty-list-state icon="fa-solid fa-circle-down" title="No starred task yet" subtitle="Tap the add button in a list to create one."/>
+            <x-empty-list-state icon="fa-solid fa-angles-down" title="No starred task yet" subtitle="Tap the add button in a list to create one."/>
         @endforelse
     </div>
 

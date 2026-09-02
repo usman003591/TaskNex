@@ -216,7 +216,7 @@ new class extends Component
         @forelse($this->tasks as $task)
             <x-task-card :task="$task" checkIconColor="#c7f36b"/>
         @empty
-            <x-empty-list-state icon="fa-solid fa-circle-down" title="This list is ready for its first task" subtitle="Tap the add button to capture what's next."/>
+            <x-empty-list-state icon="fa-solid fa-angles-down" title="This list is ready for its first task" subtitle="Tap the add button to capture what's next."/>
         @endforelse
     </div>
 
