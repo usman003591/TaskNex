@@ -193,6 +193,10 @@
                             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>
                         </svg>
                     </button>
+                    <div class="tn-navbar__divider hidden sm:block"></div>
+                    <button type="button" class="tn-icon-button" aria-label="Notifications">
+                        <i class="fa-regular fa-moon"></i>
+                    </button>
 
                     {{-- <div class="tn-navbar__divider"></div> --}}
 

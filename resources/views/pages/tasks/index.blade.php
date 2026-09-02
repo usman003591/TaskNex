@@ -83,7 +83,7 @@ new class extends Component
 };
 ?>
 
-<div class="mx-auto w-full max-w-[1100px] pb-24 text-[#f5f4ef] font-['DM_Sans']">
+<div class="mx-auto w-full max-w-[1200px] pb-24 text-[#f5f4ef] font-['DM_Sans']">
 
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
