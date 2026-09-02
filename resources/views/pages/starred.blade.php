@@ -16,9 +16,9 @@ new class extends Component
     public function priorityMeta(): array
     {
         return [
-            1 => ['label' => 'Urgent', 'color' => 'text-red-400 bg-red-500/10'],
-            2 => ['label' => 'Medium', 'color' => 'text-amber-400 bg-amber-500/10'],
-            3 => ['label' => 'Low', 'color' => 'text-emerald-400 bg-emerald-500/10']
+            1 => ['label' => 'Urgent', 'color' => 'text-red-400 bg-red-500/10', 'border' => 'border-red-500/20'],
+            2 => ['label' => 'Medium', 'color' => 'text-amber-400 bg-amber-500/10', 'border' => 'border-amber-500/20'],
+            3 => ['label' => 'Low', 'color' => 'text-emerald-400 bg-emerald-500/10', 'border' => 'border-emerald-500/20']
         ];
     }
 

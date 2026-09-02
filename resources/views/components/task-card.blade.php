@@ -46,7 +46,7 @@
         <div class="flex shrink-0 items-center gap-1.5">
             @if($task->priority)
             <span
-                class="hidden rounded-md border border-[#ff896f]/20 bg-[#ff896f]/10 px-2 py-1 text-[10px] font-semibold text-[#ff9b87] sm:inline-flex">
+                class="hidden rounded-md border {{ $this->priorityMeta[$task->priority]['border'] }} px-2 py-1 text-[10px] font-semibold tracking-[0.015rem]  {{ $this->priorityMeta[$task->priority]['color'] }} sm:inline-flex">
                 {{ $this->priorityMeta[$task->priority]['label'] }}
             </span>
             @endif
