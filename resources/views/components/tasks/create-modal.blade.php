@@ -294,7 +294,7 @@ new class extends Component
                     x-transition:leave="transition-all ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 scale-[.98]"
-                    x-on:click.stop
+                    {{-- x-on:click.stop --}}
                     class="tn-create-modal__panel relative my-auto w-full max-w-lg overflow-visible"
                     role="dialog"
                     aria-modal="true"
@@ -382,8 +382,7 @@ new class extends Component
                                         x-transition:enter-start="opacity-0 -translate-y-1"
                                         x-transition:enter-end="opacity-100 translate-y-0"
                                         class="absolute left-0 top-11 z-30 min-w-36 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] py-1.5 shadow-2xl"
-                                        style="display: none"
-                                    >
+                                        style="display: none">
                                         <button type="button" wire:click="$set('priority', null)" x-on:click="priorityDropdownOpen = false" class="flex w-full items-center gap-2.5 px-3.5 py-[0.6rem] text-xs transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] cursor-pointer">
                                             <i class="fa-regular fa-flag text-[11px] text-[#666b85]"></i>
                                             No priority
