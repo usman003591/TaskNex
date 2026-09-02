@@ -21,17 +21,17 @@
     <div
         class="min-h-screen"
         x-data="{
-            collapsed: localStorage.getItem('sidebar-collapsed') === 'true',
+            {{-- collapsed: localStorage.getItem('sidebar-collapsed') === 'true', --}}
             mobileOpen: false,
-            toggle() {
+            {{-- toggle() {
                 this.collapsed = !this.collapsed;
                 localStorage.setItem('sidebar-collapsed', this.collapsed);
-            },
+            }, --}}
             closeMobile() {
                 this.mobileOpen = false;
             }
         }"
-        :style="{ '--tn-sidebar-width': collapsed ? '76px' : '280px' }"
+        {{-- :style="{ '--tn-sidebar-width': collapsed ? '76px' : '280px' }" --}}
     >
         {{-- Mobile backdrop --}}
         <button
@@ -60,7 +60,7 @@
                             <path d="M12 3v18M3 12h18"/>
                         </svg>
                     </span>
-                    <span x-show="!collapsed" x-transition.opacity.duration.150ms>
+                    <span x-transition.opacity.duration.150ms>
                         tasknex<span class="text-[#c7f36b]">.</span>
                     </span>
                 </a>
@@ -86,7 +86,7 @@
 
             <div class="tn-sidebar__section">
                 <div class="tn-sidebar__label">
-                    <span x-show="!collapsed" x-transition.opacity.duration.150ms>Workspace</span>
+                    <span x-transition.opacity.duration.150ms>Workspace</span>
                 </div>
 
                 <nav class="tn-sidebar__nav" aria-label="Workspace">
@@ -103,7 +103,7 @@
                                 <path d="M9 22V12h6v10"/>
                             </svg>
                         </span>
-                        <span class="tn-nav-link__text" x-show="!collapsed" x-transition.opacity.duration.150ms>Dashboard</span>
+                        <span class="tn-nav-link__text" x-transition.opacity.duration.150ms>Dashboard</span>
                     </a>
 
                     <a
@@ -118,18 +118,17 @@
                                 <path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/>
                             </svg>
                         </span>
-                        <span class="tn-nav-link__text" x-show="!collapsed" x-transition.opacity.duration.150ms>Starred</span>
+                        <span class="tn-nav-link__text" x-transition.opacity.duration.150ms>Starred</span>
                     </a>
                 </nav>
             </div>
 
             <div class="tn-sidebar__section flex-1 overflow-y-auto">
                 <div class="tn-sidebar__label">
-                    <span x-show="!collapsed" x-transition.opacity.duration.150ms>Lists</span>
+                    <span x-transition.opacity.duration.150ms>Lists</span>
                     <button
                         type="button"
                         class="tn-sidebar__add"
-                        x-show="!collapsed"
                         aria-label="Create list"
                     >
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
@@ -147,10 +146,10 @@
                         <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/>
                         <path d="m19.4 15 .1.1a2 2 0 0 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.2a2 2 0 0 1-4 0v-.2a2 2 0 0 0-3.4-1.4l-.1.1A2 2 0 0 1 3 15.1l.1-.1a2 2 0 0 0-1.4-3.4h-.2a2 2 0 0 1 0-4h.2a2 2 0 0 0 1.4-3.4L3 4.1a2 2 0 0 1 2.8-2.8l.1.1a2 2 0 0 0 3.4-1.4v-.2a2 2 0 0 1 4 0V0a2 2 0 0 0 3.4 1.4l.1-.1A2 2 0 0 1 19.6 4l-.1.1a2 2 0 0 0 1.4 3.4h.2a2 2 0 0 1 0 4h-.2a2 2 0 0 0-1.5 3.5Z" transform="translate(1 1) scale(.92)"/>
                     </svg>
-                    <span x-show="!collapsed" x-transition.opacity.duration.150ms>Settings</span>
+                    <span x-transition.opacity.duration.150ms>Settings</span>
                 </a>
 
-                <button
+                {{-- <button
                     type="button"
                     class="tn-sidebar__footer-link"
                     x-on:click="toggle()"
@@ -171,17 +170,17 @@
                         <path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/>
                     </svg>
                     <span x-show="!collapsed" x-transition.opacity.duration.150ms>Collapse</span>
-                </button>
+                </button> --}}
 
                 <div class="tn-profile">
                     <div class="tn-profile__avatar" aria-hidden="true">
                         {{ strtoupper(substr(auth()->user()->name ?? 'MC', 0, 2)) }}
                     </div>
-                    <div class="min-w-0 flex-1" x-show="!collapsed" x-transition.opacity.duration.150ms>
+                    <div class="min-w-0 flex-1" x-transition.opacity.duration.150ms>
                         <div class="tn-profile__name">{{ auth()->user()->name ?? 'Maya Chen' }}</div>
                         <div class="tn-profile__meta">Personal workspace</div>
                     </div>
-                    <button type="button" class="tn-icon-button" aria-label="Open profile menu" x-show="!collapsed">
+                    <button type="button" class="tn-icon-button" aria-label="Open profile menu">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                             <circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/>
                         </svg>

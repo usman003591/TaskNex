@@ -50,7 +50,7 @@ new class extends Component
         <button type="button" wire:click="$set('isCreating', true)"
             class="flex items-center gap-x-3.5 py-2 mt-2.5 px-2.5 w-full text-sm text-gray-300 rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus">
             <i class="fa-solid fa-plus text-xs"></i>
-            <span x-show="!collapsed" x-transition.opacity.duration.150ms>New list</span>
+            <span x-transition.opacity.duration.150ms>New list</span>
         </button>
         @endif
     </div>
@@ -63,7 +63,7 @@ new class extends Component
                             ? 'bg-[#292b42] text-white'
                             : 'text-gray-400 hover:bg-[#222438] hover:text-white' }}">
             <span class="size-1.5 rounded-full bg-accent shrink-0"></span>
-            <span x-show="!collapsed" x-transition.opacity.duration.150ms class="truncate">
+            <span x-transition.opacity.duration.150ms class="truncate">
                 {{ $list->name }}</span>
         </a>
         @endforeach

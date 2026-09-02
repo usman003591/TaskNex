@@ -81,7 +81,6 @@ new class extends Component
 
     <div class="mb-6 grid gap-3">
         <div class="relative overflow-hidden rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
-            <div class="absolute -right-8 -top-10 h-32 w-32 rounded-full bg-[#c7f36b]/10 blur-3xl"></div>
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <span class="flex items-center gap-2 text-[11px] font-semibold text-[#a8abbc]">
@@ -140,6 +139,4 @@ new class extends Component
         </span>
     </div>
 
-    {{-- <livewire:lists.edit-modal :list="$list" />
-    <livewire:tasks.create-modal :list="$list" /> --}}
 </div>
