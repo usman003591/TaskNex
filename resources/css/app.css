@@ -523,6 +523,33 @@
     font-size: .6875rem;
 }
 
+html,
+.tn-shell,
+.tn-sidebar__section{
+    scrollbar-width: thin;
+    scrollbar-color: var(--tn-line) transparent;
+}
+
+/* browser scroll bar customization */
+html::-webkit-scrollbar{
+    width: 5px;
+    /* display: none; */
+}
+
+html::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+html::-webkit-scrollbar-thumb{
+    background-color: var(--tn-line);
+    border-radius: 999px;
+}
+
+html::-webkit-scrollbar-thumb:hover{
+    /* display:flex; */
+    background-color: var(--tn-line-strong);
+}
+
 @media (min-width: 768px) {
     .tn-main {
         padding-left: var(--tn-sidebar-width);

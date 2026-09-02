@@ -21,17 +21,12 @@
     <div
         class="min-h-screen"
         x-data="{
-            {{-- collapsed: localStorage.getItem('sidebar-collapsed') === 'true', --}}
             mobileOpen: false,
-            {{-- toggle() {
-                this.collapsed = !this.collapsed;
-                localStorage.setItem('sidebar-collapsed', this.collapsed);
-            }, --}}
+
             closeMobile() {
                 this.mobileOpen = false;
             }
         }"
-        {{-- :style="{ '--tn-sidebar-width': collapsed ? '76px' : '280px' }" --}}
     >
         {{-- Mobile backdrop --}}
         <button
@@ -148,29 +143,6 @@
                     </svg>
                     <span x-transition.opacity.duration.150ms>Settings</span>
                 </a>
-
-                {{-- <button
-                    type="button"
-                    class="tn-sidebar__footer-link"
-                    x-on:click="toggle()"
-                    :aria-label="collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
-                >
-                    <svg
-                        width="17"
-                        height="17"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="transition-transform duration-200"
-                        :class="{ 'rotate-180': collapsed }"
-                    >
-                        <path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/>
-                    </svg>
-                    <span x-show="!collapsed" x-transition.opacity.duration.150ms>Collapse</span>
-                </button> --}}
 
                 <div class="tn-profile">
                     <div class="tn-profile__avatar" aria-hidden="true">

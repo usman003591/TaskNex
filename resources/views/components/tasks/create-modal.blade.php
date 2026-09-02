@@ -151,10 +151,12 @@ new class extends Component
 
                 .tn-create-modal__textarea {
                     min-height: 5rem;
-                    resize: vertical;
+                    resize: none;
                     padding: .85rem 1rem;
                     font-size: .8rem;
                     line-height: 1.5;
+                    scrollbar-width: thin;
+                    scrollbar-color: #2b2d42 transparent;
                 }
 
                 .tn-create-modal__input::placeholder,
