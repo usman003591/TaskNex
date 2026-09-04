@@ -209,7 +209,7 @@
                 </div>
             </header>
 
-            <main class="px-5 pb-20 pt-8 sm:px-8 lg:px-12 lg:pt-12">
+            <main class="px-5 pb-10 pt-8 sm:px-8 lg:px-12 lg:pt-12">
                 {{ $slot }}
             </main>
         </div>

@@ -1,10 +1,10 @@
 @props(['task', 'checkIconColor'])
 
-<article {{ $attributes->merge(['class' => 'group rounded-2xl border border-[#2d3044] bg-[#1b1d2a]/[0.88] px-4 py-4
+<article {{ $attributes->merge(['class' => 'group rounded-2xl border border-[#2d3044] bg-[#1b1d2a]/[0.88] px-4 py-4 cursor-pointer
     transition-[background-color,border-color,transform,box-shadow] duration-[180ms] motion-reduce:transition-none
     hover:-translate-y-0.5 hover:border-[#494b62] hover:bg-[#202238] hover:shadow-[0_12px_30px_rgb(7_8_14_/_0.12)]
     data-[completed=true]:border-[#2b2d40] data-[completed=true]:bg-[#1b1d2a]/[0.72] sm:px-5']) }}
-    data-completed="{{ $task->is_completed ? 'true' : 'false' }}" wire:key="task-{{ $task->id }}">
+    data-completed="{{ $task->is_completed ? 'true' : 'false' }}" wire:key="task-{{ $task->id }}" wire:navigate href="{{ route('tasks.details', ['list' => $task->list_id, 'task' => $task->id]) }}">
 
     <div class="flex items-start gap-3 sm:items-center sm:gap-4">
         <button type="button" wire:click.stop="toggleComplete({{ $task->id }})" wire:loading.class="animate-pulse"
@@ -46,7 +46,7 @@
         <div class="flex shrink-0 items-center gap-1.5">
             @if($task->priority)
             <span
-                class="hidden rounded-md border {{ $this->priorityMeta[$task->priority]['border'] }} px-2 py-1 text-[10px] font-semibold tracking-[0.015rem]  {{ $this->priorityMeta[$task->priority]['color'] }} sm:inline-flex">
+                class="hidden rounded-full border {{ $this->priorityMeta[$task->priority]['border'] }} px-2 py-1 text-[10px] font-semibold tracking-[0.015rem]  {{ $this->priorityMeta[$task->priority]['color'] }} sm:inline-flex">
                 {{ $this->priorityMeta[$task->priority]['label'] }}
             </span>
             @endif

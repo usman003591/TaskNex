@@ -347,7 +347,7 @@ new class extends Component
 
                         {{-- Details --}}
                         <div>
-                            <label for="task-details" class="tn-create-modal__label">Details <span class="font-normal normal-case tracking-normal text-[#666b85]">(optional)</span></label>
+                            <label for="task-details" class="tn-create-modal__label">Description <span class="font-normal normal-case tracking-normal text-[#666b85]">(optional)</span></label>
                             <textarea
                                 id="task-details"
                                 wire:model="details"
@@ -418,12 +418,12 @@ new class extends Component
                                 <div x-data="datepickerComponent('dueDate', 'due_at')" x-init="initDatepicker()">
                                     @if(!$due_at)
                                         <button type="button" x-on:click.prevent="datepicker.show()" class="tn-create-modal__chip">
-                                            <i class="fa-regular fa-calendar-check text-[13px] text-[#ff896f]"></i>
+                                            <i class="fa-regular fa-calendar-days text-[13px] text-[#ff896f]"></i>
                                             <span>Deadline</span>
                                         </button>
                                     @else
                                         <span class="tn-create-modal__chip tn-create-modal__chip--active">
-                                            <i class="fa-regular fa-calendar-check cursor-pointer text-[13px] text-[#ff896f]" x-on:click.prevent="datepicker.show()"></i>
+                                            <i class="fa-regular fa-calendar-days cursor-pointer text-[13px] text-[#ff896f]" x-on:click.prevent="datepicker.show()"></i>
                                             <span>{{ $this->formattedDueAt }}</span>
                                             <button type="button" wire:click="clearDueDate" class="ml-1 text-[#666b85] transition hover:text-[#f5f4ef]" aria-label="Clear deadline">
                                                 <i class="fa-solid fa-xmark text-[10px]"></i>
