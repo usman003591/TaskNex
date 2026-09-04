@@ -4,21 +4,13 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Models\TaskList;
 use App\Models\Task;
+use App\Livewire\Traits\HasPriority;
 
 new class extends Component
 {
+    use hasPriority;
     public TaskList $list;
     public Task $task;
-
-    #[Computed]
-    public function priorityMeta(): array
-    {
-        return [
-            1 => ['label' => 'Urgent', 'classes' => 'bg-red-500/10 text-red-400 border border-rose-500/20'],
-            2 => ['label' => 'Medium', 'classes' => 'bg-amber-500/10 text-amber-500 border border-amber-500/20'],
-            3 => ['label' => 'Low', 'classes' => 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'],
-        ];
-    }
 
     #[Computed]
     public function status(): array
