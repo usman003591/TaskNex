@@ -1,15 +1,17 @@
 @props(['task', 'checkIconColor'])
 
-<article {{ $attributes->merge(['class' => 'group rounded-2xl border border-[#2d3044] bg-[#1b1d2a]/[0.88] px-4 py-4 cursor-pointer
+<article {{ $attributes->merge(['class' => 'group rounded-2xl border border-[#2d3044] bg-[#1b1d2a]/[0.88] px-4 py-4
+    cursor-pointer
     transition-[background-color,border-color,transform,box-shadow] duration-[180ms] motion-reduce:transition-none
     hover:-translate-y-0.5 hover:border-[#494b62] hover:bg-[#202238] hover:shadow-[0_12px_30px_rgb(7_8_14_/_0.12)]
     data-[completed=true]:border-[#2b2d40] data-[completed=true]:bg-[#1b1d2a]/[0.72] sm:px-5']) }}
-    data-completed="{{ $task->is_completed ? 'true' : 'false' }}" wire:key="task-{{ $task->id }}" wire:navigate href="{{ route('tasks.details', ['list' => $task->list_id, 'task' => $task->id]) }}">
+    data-completed="{{ $task->is_completed ? 'true' : 'false' }}" wire:key="task-{{ $task->id }}">
 
-    <div class="flex items-start gap-3 sm:items-center sm:gap-4">
+    <div class="flex items-start gap-3 sm:items-center sm:gap-4"
+        x-data="{ goTo() { Livewire.navigate('{{ route('tasks.details', ['list' => $task->list_id, 'task' => $task->id]) }}') } }"
+        x-on:click="goTo()">
         <button type="button" wire:click.stop="toggleComplete({{ $task->id }})" wire:loading.class="animate-pulse"
-            wire:target="toggleComplete({{ $task->id }})"
-            style="--check-icon-color: {{ $checkIconColor }}"
+            wire:target="toggleComplete({{ $task->id }})" style="--check-icon-color: {{ $checkIconColor }}"
             class="mt-0.5 grid h-[1.375rem] w-[1.375rem] flex-none place-items-center rounded-full border-[1.5px] border-[#596079] text-[#171825] transition-colors duration-[180ms] motion-reduce:transition-none hover:scale-[1.06] hover:border-[var(--check-icon-color)] hover:bg-[var(--check-icon-color)/0.12] data-[completed=true]:border-[var(--check-icon-color)] data-[completed=true]:bg-[var(--check-icon-color)] cursor-pointer"
             data-completed="{{ $task->is_completed ? 'true' : 'false' }}"
             aria-label="{{ $task->is_completed ? 'Mark task incomplete' : 'Mark task complete' }}">
@@ -46,7 +48,7 @@
         <div class="flex shrink-0 items-center gap-1.5">
             @if($task->priority)
             <span
-                class="hidden rounded-full border {{ $this->priorityMeta[$task->priority]['border'] }} px-2 py-1 text-[10px] font-semibold tracking-[0.015rem]  {{ $this->priorityMeta[$task->priority]['color'] }} sm:inline-flex">
+                class="hidden rounded-full border {{ $this->priorityMeta[$task->priority]['border'] }} px-2 py-1 text-[11px] font-medium tracking-[0.015rem]  {{ $this->priorityMeta[$task->priority]['color'] }} sm:inline-flex">
                 {{ $this->priorityMeta[$task->priority]['label'] }}
             </span>
             @endif

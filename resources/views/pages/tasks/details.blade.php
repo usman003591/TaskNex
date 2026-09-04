@@ -1,6 +1,7 @@
 <?php
 
 use Livewire\Component;
+use Livewire\Attributes\Computed;
 use App\Models\TaskList;
 use App\Models\Task;
 
@@ -8,6 +9,26 @@ new class extends Component
 {
     public TaskList $list;
     public Task $task;
+
+    #[Computed]
+    public function priorityMeta(): array
+    {
+        return [
+            1 => ['label' => 'Urgent', 'classes' => 'bg-red-500/10 text-red-400 border border-rose-500/20'],
+            2 => ['label' => 'Medium', 'classes' => 'bg-amber-500/10 text-amber-500 border border-amber-500/20'],
+            3 => ['label' => 'Low', 'classes' => 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'],
+        ];
+    }
+
+    #[Computed]
+    public function status(): array
+    {
+        if ($this->task->is_completed) {
+            return ['label' => 'Completed', 'classes' => 'bg-lime-500/10 text-lime-500 border border-green-500/20'];
+        }
+
+        return ['label' => 'In Progress', 'classes' => 'bg-[#1C293F] text-[#7BD0FF] border border-[#2B4063]'];
+    }
 };
 ?>
 
@@ -20,17 +41,21 @@ new class extends Component
             </div>
             <h1
                 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
-                {{-- {{ ucfirst($list->name) }} --}}
-                Tekken<span class="text-[#c7f36b]">.</span>
+                {{ ucfirst($task->name) }}
+                <span class="text-[#c7f36b]">.</span>
             </h1>
             <p class="mt-4 flex items-center gap-2 text-[12px] text-[#85899f]">
-                <i class="fa-regular fa-clock"></i>
-                Created 1 mo ago
-                {{-- {{ $this->countTasks() }} {{ Str::plural('task', $this->countTasks()) }} --}}
+                <i class="fa-regular fa-calendar-check"></i>
+                @if ($task->created_at)
+                Created on {{ $task->created_at->format('d M, Y').' at '.$task->created_at->format('g:i A') }}
+                @endif
                 <span class="px-1 text-[#4f536b]">|</span>
-                {{-- {{ $this->countCompletedTasks() }} completed --}}
-                <i class="fa-regular fa-calendar-check text-[#ff896f]"></i>
-                Due 1 Dec, 2026
+                <i class="fa-solid fa-arrow-rotate-right fa-rotate-180"></i>
+                @if ($task->updated_at)
+                Updated on {{ $task->updated_at->format('d M, Y').' at '.$task->updated_at->format('g:i A') }}
+                @else
+                Updated just now
+                @endif
             </p>
         </div>
 
@@ -127,8 +152,7 @@ new class extends Component
                         <p class="text-xs text-gray-400 font-medium mt-0.5">3 of 5 subtasks completed</p>
                     </div>
                     <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-[#303249]">
-                        <div class="h-full rounded-full bg-[#c7f36b] transition-all duration-500"
-                            style="width: 60%">
+                        <div class="h-full rounded-full bg-[#c7f36b] transition-all duration-500" style="width: 60%">
                         </div>
                     </div>
                 </div>
@@ -137,13 +161,21 @@ new class extends Component
                 <div class="relative">
                     <div class="mb-2 flex items-center justify-between">
                         <span class="flex items-center gap-2 text-[11px] font-medium text-gray-400">
-                            <i class="fa-solid fa-wand-magic-sparkles text-[#c7f36b]"></i>
+                            <i class="fa-solid fa-align-left text-[#81c7ff]"></i>
                             Description
                         </span>
                     </div>
-                    <div class="mt-2 overflow-y-auto h-[100px] scrollbar-thin scroll-smooth scrollbar-thumb-[#4f536b]/30 scrollbar-track-transparent scrollbar-thumb-rounded-full">
-                        <p class="text-xs text-gray-400 font-medium mt-0.5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ratione omnis quas tempore itaque provident nisi ipsa esse laborum dicta labore, soluta ex sequi vitae. Nobis debitis ex, aliquid omnis dolore deserunt numquam harum quidem laborum sequi maiores vel unde mollitia iure, in doloribus, facere corporis quia. Iste quis accusantium dicta repellendus delectus consequatur vero quibusdam, voluptas quos nobis saepe at harum architecto asperiores. Illo ullam, culpa, magni voluptatum, ab in fuga animi voluptatibus enim veniam sed eligendi ad nostrum odit id eos pariatur officia dignissimos nesciunt consequatur! Tempore omnis necessitatibus minima, vel a quasi quae aliquam, optio, nobis magnam labore.</p>
+                    @if($task->details)
+                    <div
+                        class="mt-2 h-[110px] overflow-y-auto scrollbar-thin scroll-smooth scrollbar-thumb-[#4f536b]/30 scrollbar-track-transparent scrollbar-thumb-rounded-full">
+                        <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
                     </div>
+                    @else
+                    <div
+                        class="mt-2 h-[110px] rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-[#666b85] cursor-text transition-colors hover:border-[#5a5e7d]">
+                        No description yet — click to add one.
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -163,8 +195,8 @@ new class extends Component
                             Status
                         </span>
                         <span
-                            class="px-2 py-1 rounded-full text-xs font-normal bg-[#1C293F] text-[#7BD0FF] border border-[#2B4063]">
-                            In Progress
+                            class="px-2 py-1 rounded-full text-xs font-normal {{ $this->status['classes'] }}">
+                            {{ $this->status['label'] }}
                         </span>
                     </div>
                     <!-- Priority -->
@@ -173,9 +205,16 @@ new class extends Component
                             <i class="fa-regular fa-flag"></i>
                             Priority
                         </span>
-                        <span class="font-normal text-rose-400 flex items-center px-2 py-1 rounded-full bg-rose-400/10 border border-rose-400/20 text-xs">
-                            Urgent
+                        @if ($task->priority && isset($this->priorityMeta[$task->priority]))
+                        <span
+                            class="font-normal text-xs flex items-center px-2 py-1 rounded-full {{ $this->priorityMeta[$task->priority]['classes'] }}">
+                            {{ $this->priorityMeta[$task->priority]['label'] }}
                         </span>
+                        @else
+                        <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                            Not set
+                        </span>
+                        @endif
                     </div>
                     <!-- Due Date -->
                     <div class="flex items-center justify-between py-1.5 border-b border-dotted border-[#1C2638]">
@@ -183,9 +222,17 @@ new class extends Component
                             <i class="fa-regular fa-calendar-days"></i>
                             Deadline
                         </span>
-                        <div class="text-right">
-                            <p class="font-normal text-slate-200">Sep 1, 2026</p>
-                        </div>
+                        <span class="font-normal text-slate-200">
+                            @if ($task->due_at)
+                            <span class="font-medium flex text-xs items-center py-1">
+                                {{ $task->due_at->format('d M, Y g:i A') }}
+                            </span>
+                            @else
+                            <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                                No deadline
+                            </span>
+                            @endif
+                        </span>
                     </div>
 
                     <!-- Scheduled at -->
@@ -195,7 +242,15 @@ new class extends Component
                             Scheduled at
                         </span>
                         <span class="font-normal text-slate-200">
-                            1 Sep, 2026
+                            @if ($task->scheduled_at)
+                            <span class="font-medium flex text-xs items-center py-1">
+                                {{ $task->scheduled_at->format('d M, Y g:i A') }}
+                            </span>
+                            @else
+                            <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                                Not scheduled
+                            </span>
+                            @endif
                         </span>
                     </div>
                     <!-- List / Collection -->
@@ -209,8 +264,8 @@ new class extends Component
                             List
                         </span>
                         <span
-                            class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-normal bg-[#c7f36b]/10 text-[#c7f36b] border border-[#c7f36b]/20">
-                            Games
+                            class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-normal bg-yellow-300/10 text-yellow-300 border border-yellow-300/20">
+                            {{ $task->list->name }}
                         </span>
                     </div>
                 </div>
