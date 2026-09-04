@@ -153,6 +153,14 @@
     }
 }
 
+
+/*Tailwind CSS custom classes*/
+.custom-scrollbar{
+    @apply scrollbar-thin scroll-smooth scrollbar-thumb-[#4f536b]/30 scrollbar-track-transparent;
+}
+
+
+
 /* TaskNex navigation layer
    Add these classes to the Blade navbar/sidebar wrappers.
    The classes are scoped so they can coexist with Preline and Livewire. */
@@ -334,7 +342,6 @@
     width: var(--tn-sidebar-width);
     flex-direction: column;
     padding: 1.5rem 1.25rem;
-    overflow-y: auto;
     color: var(--tn-ink-soft);
     background: rgb(23 24 37 / 94%);
     border-right: 1px solid var(--tn-line);

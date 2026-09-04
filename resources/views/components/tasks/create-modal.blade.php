@@ -155,8 +155,6 @@ new class extends Component
                     padding: .85rem 1rem;
                     font-size: .8rem;
                     line-height: 1.5;
-                    scrollbar-width: thin;
-                    scrollbar-color: #2b2d42 transparent;
                 }
 
                 .tn-create-modal__input::placeholder,
@@ -352,7 +350,7 @@ new class extends Component
                                 id="task-details"
                                 wire:model="details"
                                 rows="2"
-                                class="tn-create-modal__textarea"
+                                class="tn-create-modal__textarea custom-scrollbar"
                                 placeholder="Add a little context so future-you knows where to begin."
                             ></textarea>
                         </div>

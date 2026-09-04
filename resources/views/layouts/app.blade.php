@@ -118,7 +118,7 @@
                 </nav>
             </div>
 
-            <div class="tn-sidebar__section flex-1 overflow-y-auto">
+            <div class="tn-sidebar__section flex flex-1 min-h-0 flex-col">
                 <div class="tn-sidebar__label">
                     <span x-transition.opacity.duration.150ms>Lists</span>
                     <button

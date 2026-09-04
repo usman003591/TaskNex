@@ -87,14 +87,6 @@ new class extends Component
                         stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
                 </svg>
             </button>
-            {{-- <div class="hidden text-right sm:block">
-                <div class="font-['Space_Grotesk'] text-lg font-semibold text-[#f5f4ef]">
-                    {{ $this->countTasks() - $this->countCompletedTasks() }}
-                    <span class="text-[#666b85]">/ {{ $this->countTasks() }}</span>
-                </div>
-                <div class="text-[10px] uppercase tracking-[.14em] text-[#666b85]">in progress</div>
-            </div> --}}
-
             <div class="hidden h-10 w-px bg-[#303249] sm:block"></div>
 
             <div x-data="{ optionsDropdown: false }" class="relative">
@@ -121,21 +113,12 @@ new class extends Component
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
                     </button>
-                    {{-- <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
-                        @if($this->countCompletedTasks() <= 0) hidden disabled @endif
-                            class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#f5f4ef]">
-                            <i class="fa-solid fa-broom text-[11px]"></i>
-                            Clear completed tasks
-                    </button> --}}
                 </div>
             </div>
         </div>
     </div>
-    <!-- Multi-Column Layout: Main Content (Left) + Properties Sidebar (Right) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <!-- ==================== LEFT / PRIMARY COLUMN ==================== -->
         <div class="lg:col-span-8 space-y-3">
-            <!-- Pulse & Rhythm Summary Metrics (Side by Side matching Tasknex cards) -->
             <div class="relative overflow-hidden rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
                 <div class="relative">
                     <div class="mb-2 flex items-center justify-between">
@@ -167,7 +150,7 @@ new class extends Component
                     </div>
                     @if($task->details)
                     <div
-                        class="mt-2 h-[110px] overflow-y-auto scrollbar-thin scroll-smooth scrollbar-thumb-[#4f536b]/30 scrollbar-track-transparent scrollbar-thumb-rounded-full">
+                        class="mt-2 h-[110px] overflow-y-auto custom-scrollbar">
                         <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
                     </div>
                     @else

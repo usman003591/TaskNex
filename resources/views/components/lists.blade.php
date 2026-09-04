@@ -35,7 +35,7 @@ new class extends Component
 };
 ?>
 
-<div>
+<div class="flex flex-1 min-h-0 flex-col">
 
     <!-- New list toggle: button <-> input -->
     <div x-data x-on:click.outside="$wire.set('isCreating', false)" class="px-0.5 mb-1 flex">
@@ -56,7 +56,7 @@ new class extends Component
     </div>
 
     <!-- Created lists -->
-    <div class="space-y-1">
+    <div class="space-y-1 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
         @foreach($lists as $list)
         <a href="{{ route('tasks.index', $list->id) }}" wire:navigate class="flex items-center gap-x-3.5 py-2 pl-3 px-2.5 text-sm rounded-lg focus:outline-hidden transition-colors
                        {{ request()->route('list')?->id === $list->id
