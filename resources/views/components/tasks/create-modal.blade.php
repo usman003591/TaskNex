@@ -104,170 +104,8 @@ new class extends Component
                 requestAnimationFrame(() => requestAnimationFrame(() => $refs.nameInput.focus()));
             })"
             x-on:keydown.escape.window="show = false; setTimeout(() => $wire.closeModal(), 300)"
-            class="tn-create-modal fixed inset-0 z-50"
+            class="fixed inset-0 z-50 font-['DM_Sans',_ui-sans-serif,_system-ui,_sans-serif]"
         >
-            <style>
-                .tn-create-modal {
-                    --tn-modal-bg: #1c1d2b;
-                    --tn-modal-raised: #222438;
-                    --tn-modal-input: #171925;
-                    --tn-modal-line: #383a50;
-                    --tn-modal-muted: #85899f;
-                    --tn-modal-dim: #666b85;
-                    --tn-modal-ink: #e0e0dd;
-                    --tn-modal-lime: #c7f36b;
-                    --tn-modal-coral: #ff896f;
-                    font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-                }
-
-                .tn-create-modal__panel {
-                    background:
-                        radial-gradient(circle at 96% 0%, rgb(199 243 107 / 0%), transparent 13rem),
-                        var(--tn-modal-bg);
-                    border: 1px solid #454860;
-                    border-radius: 0.75rem;
-                }
-
-                .tn-create-modal__title {
-                    font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
-                    letter-spacing: -.04em;
-                }
-
-                .tn-create-modal__input,
-                .tn-create-modal__textarea {
-                    width: 100%;
-                    color: var(--tn-modal-ink);
-                    background: rgb(23 25 37 / 82%);
-                    border: 1px solid #3d4058;
-                    border-radius: .75rem;
-                    outline: none;
-                    transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
-                }
-
-                .tn-create-modal__input {
-                    padding: .5rem 1rem;
-                    font-size: .8rem;
-                }
-
-                .tn-create-modal__textarea {
-                    min-height: 5rem;
-                    resize: none;
-                    padding: .85rem 1rem;
-                    font-size: .8rem;
-                    line-height: 1.5;
-                }
-
-                .tn-create-modal__input::placeholder,
-                .tn-create-modal__textarea::placeholder {
-                    color: var(--tn-modal-dim);
-                }
-
-                .tn-create-modal__input:focus,
-                .tn-create-modal__textarea:focus {
-                    background: var(--tn-modal-input);
-                    border-color: #3d4058;
-                    outline: none;
-                    box-shadow: none;
-                }
-
-                .tn-create-modal__label {
-                    display: block;
-                    margin: 0 0 .5rem .15rem;
-                    color: var(--tn-modal-muted);
-                    font-size: .625rem;
-                    font-weight: 800;
-                    letter-spacing: .16em;
-                    text-transform: uppercase;
-                }
-
-                .tn-create-modal__chip {
-                    display: inline-flex;
-                    min-height: 2rem;
-                    align-items: center;
-                    gap: .5rem;
-                    padding: .25rem .75rem;
-                    color: var(--tn-modal-muted);
-                    font-size: .7rem;
-                    font-weight: 600;
-                    background: rgb(23 25 37 / 62%);
-                    border: 1px solid #3d4058;
-                    border-radius: .7rem;
-                    transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
-                }
-
-                .tn-create-modal__chip:hover {
-                    color: var(--tn-modal-ink);
-                    background: var(--tn-modal-raised);
-                    border-color: #565a76;
-                }
-
-                .tn-create-modal__footer {
-                    border-top: 1px solid rgb(56 58 80 / 72%);
-                }
-
-                .tn-create-modal__save {
-                    display: inline-flex;
-                    min-height: 2rem;
-                    align-items: center;
-                    gap: .5rem;
-                    padding: .5rem 1rem;
-                    color: #171825;
-                    font-size: .75rem;
-                    font-weight: 800;
-                    background: var(--tn-modal-lime);
-                    border-radius: .75rem;
-                    box-shadow: 0 8px 22px rgb(199 243 107 / 12%);
-                    transition: background-color 180ms ease, transform 180ms ease, opacity 180ms ease;
-                }
-
-                .tn-create-modal__save:hover:not(:disabled) {
-                    background: #d6fa87;
-                    transform: translateY(-1px);
-                }
-
-                .tn-create-modal__save:disabled {
-                    cursor: not-allowed;
-                    opacity: .35;
-                }
-
-                .tn-create-modal__close {
-                    display: grid;
-                    width: 2rem;
-                    height: 2rem;
-                    place-items: center;
-                    color: var(--tn-modal-muted);
-                    background: transparent;
-                    border: 1px solid transparent;
-                    border-radius: .7rem;
-                    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease;
-                }
-
-                .tn-create-modal__close:hover {
-                    color: var(--tn-modal-ink);
-                    background: var(--tn-modal-raised);
-                    /* border-color: var(--tn-modal-line); */
-                }
-
-                .tn-create-modal input:focus,
-                .tn-create-modal input:focus-visible,
-                .tn-create-modal textarea:focus,
-                .tn-create-modal textarea:focus-visible {
-                    outline: none;
-                    box-shadow: none;
-                }
-
-                @media (prefers-reduced-motion: reduce) {
-                    .tn-create-modal *,
-                    .tn-create-modal__input,
-                    .tn-create-modal__textarea,
-                    .tn-create-modal__chip,
-                    .tn-create-modal__save,
-                    .tn-create-modal__close {
-                        transition-duration: .01ms !important;
-                    }
-                }
-            </style>
-
             {{-- Backdrop --}}
             <div
                 x-show="show"
@@ -292,7 +130,7 @@ new class extends Component
                     x-transition:leave="transition-all ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
                     x-transition:leave-end="opacity-0 translate-y-4 scale-[.98]"
-                    class="tn-create-modal__panel relative my-auto w-full max-w-lg overflow-visible"
+                    class="relative my-auto w-full max-w-lg overflow-visible bg-[#1c1d2b] border border-[#454860] rounded-xl"
                     role="dialog"
                     aria-modal="true"
                     aria-labelledby="create-task-title"
@@ -304,7 +142,7 @@ new class extends Component
                                     <i class="fa-solid fa-plus text-sm"></i>
                                 </div>
                                 <div>
-                                    <h2 id="create-task-title" class="tn-create-modal__title text-xl font-semibold text-[#f5f4ef]">
+                                    <h2 id="create-task-title" class="text-xl font-semibold text-[#f5f4ef] font-['Space_Grotesk',_ui-sans-serif,_system-ui,_sans-serif] tracking-[-0.04em]">
                                         New task
                                     </h2>
                                     <p class="mt-1 text-[11px] text-[#85899f]">
@@ -317,7 +155,7 @@ new class extends Component
                                 type="button"
                                 x-on:click="show = false; setTimeout(() => $wire.closeModal(), 300)"
                                 aria-label="Close create task dialog"
-                                class="tn-create-modal__close cursor-pointer"
+                                class="tn-icon-button cursor-pointer"
                             >
                                 <i class="fa-solid fa-xmark text-sm"></i>
                             </button>
@@ -327,14 +165,14 @@ new class extends Component
                     <form wire:submit="save" class="space-y-5 px-5 pb-5 sm:px-6 sm:pb-6">
                         {{-- Name --}}
                         <div>
-                            <label for="task-name" class="tn-create-modal__label">Task name</label>
+                            <label for="task-name" class="block mb-2 ml-[0.15rem] text-[#85899f] text-[0.625rem] font-extrabold tracking-[0.16em] uppercase">Task name</label>
                             <input
                                 id="task-name"
                                 type="text"
                                 wire:model="name"
                                 x-ref="nameInput"
                                 x-on:input="taskName = $event.target.value"
-                                class="tn-create-modal__input font-thin"
+                                class="font-thin w-full text-[#e0e0dd] bg-[#171925]/[0.82] border border-[#3d4058] rounded-xl outline-none py-2 px-4 text-[0.8rem] placeholder:text-[#666b85] transition-colors duration-[180ms] motion-reduce:transition-none focus:bg-[#171925] focus:border-[#3d4058] focus:outline-none focus:shadow-none focus:ring-0"
                                 placeholder="What's new on your mind?"
                                 autocomplete="off"
                             >
@@ -345,26 +183,26 @@ new class extends Component
 
                         {{-- Details --}}
                         <div>
-                            <label for="task-details" class="tn-create-modal__label">Description <span class="font-normal normal-case tracking-normal text-[#666b85]">(optional)</span></label>
+                            <label for="task-details" class="block mb-2 ml-[0.15rem] text-[#85899f] text-[0.625rem] font-extrabold tracking-[0.16em] uppercase">Description <span class="font-normal normal-case tracking-normal text-[#666b85]">(optional)</span></label>
                             <textarea
                                 id="task-details"
                                 wire:model="details"
                                 rows="2"
-                                class="tn-create-modal__textarea custom-scrollbar"
+                                class="custom-scrollbar w-full text-[#e0e0dd] bg-[#171925]/[0.82] border border-[#3d4058] rounded-xl outline-none min-h-[5rem] resize-none py-[0.85rem] px-4 text-[0.8rem] leading-[1.5] placeholder:text-[#666b85] transition-colors duration-[180ms] motion-reduce:transition-none focus:bg-[#171925] focus:border-[#3d4058] focus:outline-none focus:shadow-none focus:ring-0"
                                 placeholder="Add a little context so future-you knows where to begin."
                             ></textarea>
                         </div>
 
                         {{-- Task options --}}
                         <div>
-                            <div class="tn-create-modal__label">Task options</div>
+                            <div class="block mb-2 ml-[0.15rem] text-[#85899f] text-[0.625rem] font-extrabold tracking-[0.16em] uppercase">Task options</div>
                             <div class="flex flex-wrap gap-2">
                                 {{-- Priority --}}
                                 <div x-data="{ priorityDropdownOpen: false }" class="relative">
                                     <button
                                         type="button"
                                         x-on:click.prevent="priorityDropdownOpen = !priorityDropdownOpen"
-                                        class="tn-create-modal__chip {{ $priority ? 'tn-create-modal__chip--active' : '' }}"
+                                        class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/[0.62] border border-[#3d4058] rounded-[0.7rem] transition-colors duration-[180ms] motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer {{ $priority ? 'tn-create-modal__chip--active' : '' }}"
                                         :aria-expanded="priorityDropdownOpen"
                                     >
                                         <i class="fa-regular fa-flag text-[13px] {{ $priority ? $this->priorityMeta[$priority]['color'] : 'text-[#81c7ff]' }}"></i>
@@ -396,12 +234,12 @@ new class extends Component
                                 {{-- Schedule date --}}
                                 <div x-data="datepickerComponent('scheduledDate', 'scheduled_at')" x-init="initDatepicker()">
                                     @if(!$scheduled_at)
-                                        <button type="button" x-on:click.prevent="datepicker.show()" class="tn-create-modal__chip">
+                                        <button type="button" x-on:click.prevent="datepicker.show()" class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/[0.62] border border-[#3d4058] rounded-[0.7rem] transition-colors duration-[180ms] motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer">
                                             <i class="fa-regular fa-clock text-[13px] text-[#81c7ff]"></i>
                                             <span>Schedule</span>
                                         </button>
                                     @else
-                                        <span class="tn-create-modal__chip tn-create-modal__chip--active">
+                                        <span class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[0.7rem] font-semibold bg-[#171925]/[0.62] border border-[#3d4058] rounded-[0.7rem] tn-create-modal__chip--active">
                                             <i class="fa-regular fa-clock cursor-pointer text-[13px] text-[#81c7ff]" x-on:click.prevent="datepicker.show()"></i>
                                             <span>{{ $this->formattedScheduledAt }}</span>
                                             <button type="button" wire:click="clearScheduledDate" class="ml-1 text-[#666b85] transition hover:text-[#f5f4ef]" aria-label="Clear schedule">
@@ -415,12 +253,12 @@ new class extends Component
                                 {{-- Due date --}}
                                 <div x-data="datepickerComponent('dueDate', 'due_at')" x-init="initDatepicker()">
                                     @if(!$due_at)
-                                        <button type="button" x-on:click.prevent="datepicker.show()" class="tn-create-modal__chip">
+                                        <button type="button" x-on:click.prevent="datepicker.show()" class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/[0.62] border border-[#3d4058] rounded-[0.7rem] transition-colors duration-[180ms] motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer">
                                             <i class="fa-regular fa-calendar-days text-[13px] text-[#ff896f]"></i>
                                             <span>Deadline</span>
                                         </button>
                                     @else
-                                        <span class="tn-create-modal__chip tn-create-modal__chip--active">
+                                        <span class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[0.7rem] font-semibold bg-[#171925]/[0.62] border border-[#3d4058] rounded-[0.7rem] tn-create-modal__chip--active">
                                             <i class="fa-regular fa-calendar-days cursor-pointer text-[13px] text-[#ff896f]" x-on:click.prevent="datepicker.show()"></i>
                                             <span>{{ $this->formattedDueAt }}</span>
                                             <button type="button" wire:click="clearDueDate" class="ml-1 text-[#666b85] transition hover:text-[#f5f4ef]" aria-label="Clear deadline">
@@ -433,12 +271,12 @@ new class extends Component
                             </div>
                         </div>
 
-                        <div class="tn-create-modal__footer flex items-center justify-between gap-4 pt-4">
+                        <div class="border-t border-[#383a50]/[0.72] flex items-center justify-between gap-4 pt-4">
                             <button
                                 type="button"
                                 wire:click.stop="$toggle('starred')"
                                 wire:loading.class="animate-pulse"
-                                class="flex items-center gap-2 rounded-lg px-2 py-2 text-[11px] font-semibold text-[#85899f] transition hover:bg-[#222438] hover:text-[#e0e0dd] cursor-pointer">
+                                class="flex items-center gap-2 rounded-xl border border-transparent px-2 py-2 text-[11px] font-semibold text-[#85899f] transition hover:border-[#3a3d56] hover:bg-[#202238] hover:text-[#e0e0dd] transform hover:-translate-y-px transition-transform cursor-pointer">
                                 <i class="{{ $starred ? 'fa-solid text-amber-300' : 'fa-regular text-[#737890]' }} fa-star text-[15px]"></i>
                                 <span>{{ $starred ? 'Starred' : 'Add to starred' }}</span>
                             </button>
@@ -446,7 +284,7 @@ new class extends Component
                             <button
                                 type="submit"
                                 x-bind:disabled="!taskName.trim()"
-                                class="tn-create-modal__save">
+                                class="inline-flex min-h-8 items-center gap-2 py-2 px-4 text-[#171825] text-xs font-extrabold bg-[#c7f36b] rounded-xl shadow-[0_8px_22px_rgb(199_243_107_/_0.12)] transition-[background-color,transform,opacity] duration-[180ms] motion-reduce:transition-none enabled:hover:bg-[#d6fa87] enabled:hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-[0.35]">
                                 <span>Save</span>
                             </button>
                         </div>
@@ -455,15 +293,4 @@ new class extends Component
             </div>
         </div>
     @endif
-
-    {{-- Floating add button --}}
-    {{-- <button
-        type="button"
-        wire:click="openModal"
-        aria-label="New task"
-        title="Add new task"
-        class="fixed bottom-6 right-6 z-40 grid h-13 w-13 place-items-center rounded-full bg-lime-300 text-[#171825] shadow-[0_10px_28px_rgba(199,243,107,.2)] transition-all duration-150 hover:-translate-y-1 hover:bg-[#d6fa87] active:scale-95"
-    >
-        <i class="fa-solid fa-plus text-lg"></i>
-    </button> --}}
 </div>
