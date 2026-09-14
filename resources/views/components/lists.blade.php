@@ -4,32 +4,36 @@ use Livewire\Component;
 use App\Models\User;
 use Livewire\Attributes\On;
 
-new class extends Component
-{
+new class extends Component {
     public $lists;
     public $isCreating = false;
-    public $listName = '';
+    public $listName = "";
 
-    public function mount(){
+    public function mount()
+    {
         $this->lists = User::current()->lists()->latest()->get();
     }
 
-    public function createList(){
+    public function createList()
+    {
         $this->validate([
-            'listName' => 'required|string|min:1|max:255',
+            "listName" => "required|string|min:1|max:255",
         ]);
 
-        $list = User::current()->lists()->create([
-            'name' => $this->listName,
-        ]);
+        $list = User::current()
+            ->lists()
+            ->create([
+                "name" => $this->listName,
+            ]);
 
         $this->lists = User::current()->lists()->latest()->get();
-        $this->listName = '';
+        $this->listName = "";
         $this->isCreating = false;
     }
 
-    #[On('list-renamed')]
-    public function refreshLists(){
+    #[On("list-renamed")]
+    public function refreshLists()
+    {
         $this->mount();
     }
 };
