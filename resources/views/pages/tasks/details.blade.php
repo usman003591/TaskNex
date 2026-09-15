@@ -6,8 +6,7 @@ use App\Models\TaskList;
 use App\Models\Task;
 use App\Livewire\Traits\HasPriority;
 
-new class extends Component
-{
+new class extends Component {
     use hasPriority;
     public TaskList $list;
     public Task $task;
@@ -16,10 +15,17 @@ new class extends Component
     public function status(): array
     {
         if ($this->task->is_completed) {
-            return ['label' => 'Completed', 'classes' => 'bg-lime-500/10 text-lime-500 border border-green-500/20'];
+            return [
+                "label" => "Completed",
+                "classes" =>
+                    "bg-lime-500/10 text-lime-500 border border-green-500/20",
+            ];
         }
 
-        return ['label' => 'In Progress', 'classes' => 'bg-[#1C293F] text-[#7BD0FF] border border-[#2B4063]'];
+        return [
+            "label" => "In Progress",
+            "classes" => "bg-[#1C293F] text-[#7BD0FF] border border-[#2B4063]",
+        ];
     }
 };
 ?>
@@ -39,14 +45,14 @@ new class extends Component
             <p class="mt-4 flex items-center gap-2 text-[12px] text-[#85899f]">
                 <i class="fa-regular fa-calendar-check"></i>
                 @if ($task->created_at)
-                Created on {{ $task->created_at->format('d M, Y').' at '.$task->created_at->format('g:i A') }}
+                    Created on {{ $task->created_at->format('d M, Y') . ' at ' . $task->created_at->format('g:i A') }}
                 @endif
                 <span class="px-1 text-[#4f536b]">|</span>
                 <i class="fa-solid fa-arrow-rotate-right fa-rotate-180"></i>
                 @if ($task->updated_at)
-                Updated on {{ $task->updated_at->format('d M, Y').' at '.$task->updated_at->format('g:i A') }}
+                    Updated on {{ $task->updated_at->format('d M, Y') . ' at ' . $task->updated_at->format('g:i A') }}
                 @else
-                Updated just now
+                    Updated just now
                 @endif
             </p>
         </div>
@@ -140,16 +146,15 @@ new class extends Component
                             Description
                         </span>
                     </div>
-                    @if($task->details)
-                    <div
-                        class="mt-2 h-[110px] overflow-y-auto custom-scrollbar">
-                        <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
-                    </div>
+                    @if ($task->details)
+                        <div class="mt-2 h-[110px] overflow-y-auto custom-scrollbar">
+                            <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
+                        </div>
                     @else
-                    <div
-                        class="mt-2 h-[110px] rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-[#666b85] cursor-text transition-colors hover:border-[#5a5e7d]">
-                        No description yet — click to add one.
-                    </div>
+                        <div
+                            class="mt-2 h-[110px] rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-[#666b85] cursor-text transition-colors hover:border-[#5a5e7d]">
+                            No description yet — click to add one.
+                        </div>
                     @endif
                 </div>
             </div>
@@ -169,8 +174,7 @@ new class extends Component
                             <i class="fa-solid fa-circle-info"></i>
                             Status
                         </span>
-                        <span
-                            class="px-2 py-1 rounded-full text-xs font-normal {{ $this->status['classes'] }}">
+                        <span class="px-2 py-1 rounded-full text-xs font-normal {{ $this->status['classes'] }}">
                             {{ $this->status['label'] }}
                         </span>
                     </div>
@@ -180,15 +184,12 @@ new class extends Component
                             <i class="fa-regular fa-flag"></i>
                             Priority
                         </span>
-                        @if ($task->priority && isset($this->priorityMeta[$task->priority]))
-                        <span
-                            class="font-normal text-xs flex items-center px-2 py-1 rounded-full {{ $this->priorityMeta[$task->priority]['classes'] }}">
-                            {{ $this->priorityMeta[$task->priority]['label'] }}
-                        </span>
+                        @if ($task->priority)
+                            <x-priority-badge :priority="$task->priority" />
                         @else
-                        <span class="font-medium text-xs flex items-center py-1 text-gray-500">
-                            Not set
-                        </span>
+                            <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                                Not set
+                            </span>
                         @endif
                     </div>
                     <!-- Due Date -->
@@ -199,13 +200,13 @@ new class extends Component
                         </span>
                         <span class="font-normal text-slate-200">
                             @if ($task->due_at)
-                            <span class="font-medium flex text-xs items-center py-1">
-                                {{ $task->due_at->format('d M, Y g:i A') }}
-                            </span>
+                                <span class="font-medium flex text-xs items-center py-1">
+                                    {{ $task->due_at->format('d M, Y g:i A') }}
+                                </span>
                             @else
-                            <span class="font-medium text-xs flex items-center py-1 text-gray-500">
-                                No deadline
-                            </span>
+                                <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                                    No deadline
+                                </span>
                             @endif
                         </span>
                     </div>
@@ -213,25 +214,26 @@ new class extends Component
                     <!-- Scheduled at -->
                     <div class="flex items-center justify-between py-1.5 border-b border-dotted border-[#1C2638]">
                         <span class="flex items-center gap-2 font-medium">
-                            <i class="fa-regular fa-calendar-check"></i>
+                            <i class="fa-regular fa-clock"></i>
                             Scheduled at
                         </span>
                         <span class="font-normal text-slate-200">
                             @if ($task->scheduled_at)
-                            <span class="font-medium flex text-xs items-center py-1">
-                                {{ $task->scheduled_at->format('d M, Y g:i A') }}
-                            </span>
+                                <span class="font-medium flex text-xs items-center py-1">
+                                    {{ $task->scheduled_at->format('d M, Y g:i A') }}
+                                </span>
                             @else
-                            <span class="font-medium text-xs flex items-center py-1 text-gray-500">
-                                Not scheduled
-                            </span>
+                                <span class="font-medium text-xs flex items-center py-1 text-gray-500">
+                                    Not scheduled
+                                </span>
                             @endif
                         </span>
                     </div>
                     <!-- List / Collection -->
                     <div class="flex items-center justify-between py-1 border-b border-dotted border-[#1C2638]">
                         <span class="flex items-center gap-2 font-medium">
-                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                viewbox="0 0 24 24">
                                 <path
                                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
