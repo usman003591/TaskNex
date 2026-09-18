@@ -148,7 +148,7 @@ new class extends Component
                         @if($this->countCompletedTasks() <= 0) hidden disabled @endif
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#f5f4ef]"
                     >
-                        <i class="fa-solid fa-broom text-[11px]"></i>
+                        <i class="fa-solid fa-list-check"></i>
                         Clear completed tasks
                     </button>
                 </div>
