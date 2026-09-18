@@ -4,39 +4,39 @@ use Livewire\Component;
 use Livewire\Attributes\Computed;
 use App\Models\Task;
 
-new class extends Component
-{
-    use App\Livewire\traits\HasPriority;
+new class extends Component {
     #[Computed]
     public function starredTasks()
     {
-        return Task::where('starred', true)->latest()->get();
+        return Task::where("starred", true)->latest()->get();
     }
 
     public function toggleComplete(int $taskId): void
     {
         $task = Task::findOrFail($taskId);
         $task->update([
-            'is_completed' => !$task->is_completed,         //for inverse
-            'completed_at' => $task->is_completed ? null : now(),
-            ]);
+            "is_completed" => !$task->is_completed, //for inverse
+            "completed_at" => $task->is_completed ? null : now(),
+        ]);
     }
 
     public function toggleStarred(int $taskId): void
     {
         $task = Task::findOrFail($taskId);
         $task->update([
-            'starred' => !$task->starred,         //for inverse
-            ]);
+            "starred" => !$task->starred, //for inverse
+        ]);
     }
 
     public function countStarredTasks(): int
     {
-        return Task::where('starred', true)->count();
+        return Task::where("starred", true)->count();
     }
     public function countCompletedStarredTasks(): int
     {
-        return Task::where('starred', true)->where('is_completed', true)->count();
+        return Task::where("starred", true)
+            ->where("is_completed", true)
+            ->count();
     }
 };
 ?>

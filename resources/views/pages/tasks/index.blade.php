@@ -8,7 +8,6 @@ use Carbon\Carbon;
 
 new class extends Component
 {
-    use App\Livewire\traits\HasPriority;
     public TaskList $list;
 
     public function mount(TaskList $list): void
