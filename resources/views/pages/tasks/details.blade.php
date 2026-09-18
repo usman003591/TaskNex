@@ -7,7 +7,6 @@ use App\Models\Task;
 use App\Livewire\Traits\HasPriority;
 
 new class extends Component {
-    use hasPriority;
     public TaskList $list;
     public Task $task;
 

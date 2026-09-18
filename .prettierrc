@@ -1,21 +1,29 @@
 {
-  "plugins": [
-    "@prettier/plugin-php",
-    "@shufo/prettier-plugin-blade"
-  ],
-  "sortTailwindcssClasses": true,
-  "overrides": [
-    {
-      "files": ["*.blade.php"],
-      "options": {
-        "parser": "blade"
-      }
-    },
-    {
-      "files": ["*.php"],
-      "options": {
-        "parser": "php"
-      }
-    }
-  ]
+    "tabWidth": 4,
+    "useTabs": false,
+    "printWidth": 120,
+    "singleQuote": true,
+    "sortTailwindcssClasses": true,
+    "tailwindStylesheet": "./resources/css/app.css",
+    "plugins": [
+        "@prettier/plugin-php",
+        "@shufo/prettier-plugin-blade"
+    ],
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "blade"
+            }
+        },
+        {
+            "files": [
+                "*.php",
+                "!*.blade.php"
+            ],
+            "options": {
+                "parser": "php"
+            }
+        }
+    ]
 }

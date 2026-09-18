@@ -18,7 +18,7 @@ class Task extends Model
         'is_completed',
         'priority',
         'scheduled_at',
-        'due_at'
+        'due_at',
     ];
 
     protected $casts = [
