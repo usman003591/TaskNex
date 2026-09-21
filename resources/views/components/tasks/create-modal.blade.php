@@ -104,7 +104,7 @@ new class extends Component {
 ?>
 
 <x-modal-frame :open="$open" title="New task" description="Add the next thing worth making room for." icon="fa-solid fa-plus">
-    <form wire:submit="save" x-data="{ taskName: ''}" class="space-y-5 px-5 pb-5 sm:px-6 sm:pb-6">
+    <form wire:submit="save" x-data="{ taskName: ''}" class="space-y-5 p-5 sm:px-6 sm:pb-6">
         {{-- Name --}}
         <div>
             <label for="task-name"
@@ -198,13 +198,13 @@ new class extends Component {
                     @if(!$due_at)
                     <button type="button" x-on:click.prevent="datepicker.show()"
                         class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] transition-colors duration-180 motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer">
-                        <i class="fa-regular fa-calendar-days text-[13px] text-[#ff896f]"></i>
+                        <i class="fa-regular fa-calendar-days text-[13px] text-danger"></i>
                         <span>Deadline</span>
                     </button>
                     @else
                     <span
                         class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] tn-create-modal__chip--active">
-                        <i class="fa-regular fa-calendar-days cursor-pointer text-[13px] text-[#ff896f]"
+                        <i class="fa-regular fa-calendar-days cursor-pointer text-[13px] text-danger"
                             x-on:click.prevent="datepicker.show()"></i>
                         <span>{{ $this->formattedDueAt }}</span>
                         <button type="button" wire:click="clearDueDate"

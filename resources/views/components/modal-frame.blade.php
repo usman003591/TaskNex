@@ -1,7 +1,9 @@
 @props([
     'open' => false,
     'title' => '',
+    'descriptionClasses' => 'text-[12px]',
     'description' => null,
+    'iconColor' => 'text-accent bg-accent/10',
     'icon' => 'fa-solid fa-info',
     'closeMethod' => 'closeModal()',
 ])
@@ -29,21 +31,21 @@
                 x-transition:leave-end="opacity-0 translate-y-4 scale-[.98]"
                 class="relative my-auto w-full max-w-lg overflow-visible bg-[#1c1d2b] border border-[#454860] rounded-xl"
                 role="dialog" aria-modal="true" aria-labelledby="create-task-title">
-                <div class="px-5 pb-7 pt-5 sm:px-6 sm:pt-6">
+                <div class="px-5 pb-3 pt-5 sm:px-6 sm:pt-6">
                     <div class="flex items-start justify-between gap-4">
-                        <div class="flex items-start gap-3">
+                        <div class="flex items-center gap-3">
                             <div
-                                class="grid mt-1 h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent/10 text-accent">
+                                class="grid mt-1 h-10 w-10 shrink-0 place-items-center rounded-xl {{ $iconColor }}">
                                 <i class="{{ $icon }}"></i>
                             </div>
                             <div>
                                 <h2 id="create-task-title"
                                     class="text-xl font-semibold text-text-primary font-['Space_Grotesk',ui-sans-serif,system-ui,sans-serif] tracking-[-0.04em]">
-                                    {{ $title }}
+                                    {{ $title }} <span class="text-accent">.</span>
                                 </h2>
                                 @if ($description)
-                                <p class="mt-1 text-[11px] text-[#85899f]">
-                                    {{ $description }}
+                                <p class="mt-1 {{ $descriptionClasses }} text-[#85899f]">
+                                    {{ $description ?? $slot}}
                                 </p>
                                 @endif
                             </div>

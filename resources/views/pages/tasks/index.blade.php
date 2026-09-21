@@ -48,14 +48,6 @@ new class extends Component
             ]);
     }
 
-    public function deleteList()
-    {
-        $this->list->tasks()->delete();
-        $this->list->delete();
-
-        $this->redirect(route('dashboard'), navigate:true);
-    }
-
     public function deleteCompletedTasks()
     {
         $this->list->tasks()->where('is_completed', true)->delete();
@@ -78,7 +70,7 @@ new class extends Component
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#ff896f]"></span>
+                <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                 Personal collection
             </div>
             <h1 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
@@ -120,15 +112,12 @@ new class extends Component
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
                     class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
-                    style="display: none"
-                >
+                    style="display: none">
                     <button
                         type="button"
-                        wire:click="deleteList"
-                        wire:confirm="Are you sure you want to delete this list?"
+                        wire:click="$dispatch('open-delete-list-confirmation')"
                         x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]"
-                    >
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
                         Delete list
                     </button>
@@ -136,8 +125,7 @@ new class extends Component
                         type="button"
                         wire:click="$dispatch('open-edit-list-modal')"
                         x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary"
-                    >
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
                     </button>
@@ -146,8 +134,7 @@ new class extends Component
                         wire:click="deleteCompletedTasks"
                         x-on:click="optionsDropdown = false"
                         @if($this->countCompletedTasks() <= 0) hidden disabled @endif
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary"
-                    >
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-list-check"></i>
                         Clear completed tasks
                     </button>
@@ -182,9 +169,9 @@ new class extends Component
         </div>
 
         <div class="rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
-            <div class="mb-4 flex items-center justify-between">
+            <div class="mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-bolt text-danger"></i>
                 <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
-                <i class="fa-solid fa-bolt text-[#ff896f]"></i>
             </div>
             <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-text-primary">
                 {{ $this->countTasks() - $this->countCompletedTasks() }}
@@ -230,4 +217,5 @@ new class extends Component
 
     <livewire:lists.edit-modal :list="$list" />
     <livewire:tasks.create-modal :list="$list" />
+    <livewire:lists.delete-confirmation-modal :list="$list" />
 </div>
