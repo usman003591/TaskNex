@@ -32,7 +32,7 @@
         <button
             type="button"
             class="fixed inset-0 z-20 hidden cursor-default border-0 bg-[#0b0c13]/70 backdrop-blur-sm md:hidden"
-            :class="{ '!block': mobileOpen }"
+            :class="{ 'block!': mobileOpen }"
             aria-label="Close navigation"
             x-on:click="closeMobile()"
         ></button>
@@ -56,7 +56,7 @@
                         </svg>
                     </span>
                     <span x-transition.opacity.duration.150ms>
-                        tasknex<span class="text-[#c7f36b]">.</span>
+                        tasknex<span class="text-accent">.</span>
                     </span>
                 </a>
 

@@ -73,7 +73,7 @@ new class extends Component
 };
 ?>
 
-<div class="mx-auto w-full max-w-[1200px] pb-24 text-[#f5f4ef] font-['DM_Sans']">
+<div class="mx-auto w-full max-w-300 pb-24 text-text-primary font-['DM_Sans']">
 
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -82,7 +82,7 @@ new class extends Component
                 Personal collection
             </div>
             <h1 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
-                {{ ucfirst($list->name) }}<span class="text-[#c7f36b]">.</span>
+                {{ ucfirst($list->name) }}<span class="text-accent">.</span>
             </h1>
             <p class="mt-4 text-[13px] text-[#85899f]">
                 {{ $this->countTasks() }} {{ Str::plural('task', $this->countTasks()) }}
@@ -93,11 +93,11 @@ new class extends Component
 
         <div class="flex items-center gap-3 sm:pb-1">
             <div class="hidden text-right sm:block">
-                <div class="font-['Space_Grotesk'] text-lg font-semibold text-[#f5f4ef]">
+                <div class="font-['Space_Grotesk'] text-lg font-semibold text-text-primary">
                     {{ $this->countTasks() - $this->countCompletedTasks() }}
-                    <span class="text-[#666b85]">/ {{ $this->countTasks() }}</span>
+                    <span class="text-text-muted">/ {{ $this->countTasks() }}</span>
                 </div>
-                <div class="text-[10px] uppercase tracking-[.14em] text-[#666b85]">in progress</div>
+                <div class="text-[10px] uppercase tracking-[.14em] text-text-muted">in progress</div>
             </div>
 
             <div class="hidden h-10 w-px bg-[#303249] sm:block"></div>
@@ -119,7 +119,7 @@ new class extends Component
                     x-transition:enter="transition ease-out duration-150"
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
-                    class="absolute right-0 top-11 z-10 min-w-[13rem] overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10_/_0.35)]"
+                    class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
                     style="display: none"
                 >
                     <button
@@ -127,7 +127,7 @@ new class extends Component
                         wire:click="deleteList"
                         wire:confirm="Are you sure you want to delete this list?"
                         x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]"
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]"
                     >
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
                         Delete list
@@ -136,7 +136,7 @@ new class extends Component
                         type="button"
                         wire:click="$dispatch('open-edit-list-modal')"
                         x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#f5f4ef]"
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary"
                     >
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
@@ -146,7 +146,7 @@ new class extends Component
                         wire:click="deleteCompletedTasks"
                         x-on:click="optionsDropdown = false"
                         @if($this->countCompletedTasks() <= 0) hidden disabled @endif
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#f5f4ef]"
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary"
                     >
                         <i class="fa-solid fa-list-check"></i>
                         Clear completed tasks
@@ -161,20 +161,20 @@ new class extends Component
             <div class="relative">
                 <div class="mb-4 flex items-center justify-between">
                     <span class="flex items-center gap-2 text-[11px] font-semibold text-[#a8abbc]">
-                        <i class="fa-solid fa-wand-magic-sparkles text-[#c7f36b]"></i>
+                        <i class="fa-solid fa-wand-magic-sparkles text-accent"></i>
                         Collection pulse
                     </span>
-                    <span class="rounded-full bg-[#c7f36b]/10 px-2 py-1 text-[10px] font-bold text-[#c7f36b]">TODAY</span>
+                    <span class="rounded-full bg-accent/10 px-2 py-1 text-[10px] font-bold text-accent">TODAY</span>
                 </div>
                 <div class="flex items-end gap-3">
                     <span class="font-['Space_Grotesk'] text-4xl font-semibold tracking-[-.06em] text-[#f6f2ea]">
-                        {{ $this->countCompletedTasks() }}<span class="text-[#c7f36b]">.</span>
+                        {{ $this->countCompletedTasks() }}<span class="text-accent">.</span>
                     </span>
                     <span class="mb-1 text-[12px] text-[#85899f]">tasks checked off</span>
                 </div>
                 <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#303249]">
                     <div
-                        class="h-full rounded-full bg-[#c7f36b] transition-all duration-500"
+                        class="h-full rounded-full bg-accent transition-all duration-500"
                         style="width: {{ $this->countTasks() > 0 ? ($this->countCompletedTasks() / $this->countTasks()) * 100 : 0 }}%"
                     ></div>
                 </div>
@@ -186,7 +186,7 @@ new class extends Component
                 <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
                 <i class="fa-solid fa-bolt text-[#ff896f]"></i>
             </div>
-            <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-[#f5f4ef]">
+            <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-text-primary">
                 {{ $this->countTasks() - $this->countCompletedTasks() }}
             </div>
             <div class="mt-1 text-[11px] text-[#85899f]">tasks still waiting for you</div>
@@ -198,7 +198,7 @@ new class extends Component
             <h2 class="font-['Space_Grotesk'] text-[15px] font-semibold tracking-[-.02em]">All tasks</h2>
             <span class="rounded-md bg-[#25273a] px-1.5 py-0.5 text-[10px] font-bold text-[#85899f]">{{ $this->countTasks() }}</span>
         </div>
-        <span class="text-[10px] uppercase tracking-[.14em] text-[#666b85]">Latest first</span>
+        <span class="text-[10px] uppercase tracking-[.14em] text-text-muted">Latest first</span>
     </div>
 
     {{-- Task list --}}
@@ -213,7 +213,7 @@ new class extends Component
     <button
         type="button"
         wire:click="$dispatch('open-create-task-modal')"
-        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-[#c7f36b]/40 hover:bg-[#1b1d2a] hover:text-[#c7f36b] cursor-pointer"
+        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-accent/40 hover:bg-[#1b1d2a] hover:text-accent cursor-pointer"
     >
         <span class="grid h-6 w-6 place-items-center rounded-lg border border-current">
             <i class="fa-solid fa-plus text-[11px]"></i>
@@ -223,7 +223,7 @@ new class extends Component
 
     <div class="mt-7 flex items-center justify-between text-[10px] text-[#5e637a]">
         <span class="flex items-center gap-1.5">
-            <span class="h-1.5 w-1.5 rounded-full bg-[#c7f36b]"></span>
+            <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
             Everything is up to date
         </span>
     </div>
