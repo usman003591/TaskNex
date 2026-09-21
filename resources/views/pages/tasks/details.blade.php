@@ -29,7 +29,7 @@ new class extends Component {
 };
 ?>
 
-<div class="mx-auto w-full max-w-[1200px] pb-24 text-[#f5f4ef] font-['DM_Sans']">
+<div class="mx-auto w-full max-w-300 pb-24 text-text-primary font-['DM_Sans']">
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
@@ -39,7 +39,7 @@ new class extends Component {
             <h1
                 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
                 {{ ucfirst($task->name) }}
-                <span class="text-[#c7f36b]">.</span>
+                <span class="text-accent">.</span>
             </h1>
             <p class="mt-4 flex items-center gap-2 text-[12px] text-[#85899f]">
                 <i class="fa-regular fa-calendar-check"></i>
@@ -96,17 +96,17 @@ new class extends Component {
                     x-transition:enter="transition ease-out duration-150"
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
-                    class="absolute right-0 top-11 z-10 min-w-[13rem] overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10_/_0.35)]"
+                    class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
                     style="display: none">
                     <button type="button" wire:click="deleteList"
                         wire:confirm="Are you sure you want to delete this list?" x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]">
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]">
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
                         Delete list
                     </button>
                     <button type="button" wire:click="$dispatch('open-edit-list-modal')"
                         x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-[180ms] motion-reduce:transition-none hover:bg-[#303249] hover:text-[#f5f4ef]">
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
                     </button>
@@ -120,7 +120,7 @@ new class extends Component {
                 <div class="relative">
                     <div class="mb-2 flex items-center justify-between">
                         <span class="flex items-center gap-2 text-[11px] font-medium text-gray-400">
-                            <i class="fa-solid fa-wand-magic-sparkles text-[#c7f36b]"></i>
+                            <i class="fa-solid fa-wand-magic-sparkles text-accent"></i>
                             Task pulse
                         </span>
                     </div>
@@ -132,7 +132,7 @@ new class extends Component {
                         <p class="text-xs text-gray-400 font-medium mt-0.5">3 of 5 subtasks completed</p>
                     </div>
                     <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-[#303249]">
-                        <div class="h-full rounded-full bg-[#c7f36b] transition-all duration-500" style="width: 60%">
+                        <div class="h-full rounded-full bg-accent transition-all duration-500" style="width: 60%">
                         </div>
                     </div>
                 </div>
@@ -146,12 +146,12 @@ new class extends Component {
                         </span>
                     </div>
                     @if ($task->details)
-                        <div class="mt-2 h-[110px] overflow-y-auto custom-scrollbar">
+                        <div class="mt-2 h-27.5 overflow-y-auto custom-scrollbar">
                             <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
                         </div>
                     @else
                         <div
-                            class="mt-2 h-[110px] rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-[#666b85] cursor-text transition-colors hover:border-[#5a5e7d]">
+                            class="mt-2 h-27.5 rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-text-muted cursor-text transition-colors hover:border-[#5a5e7d]">
                             No description yet — click to add one.
                         </div>
                     @endif

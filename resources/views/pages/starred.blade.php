@@ -41,7 +41,7 @@ new class extends Component {
 };
 ?>
 
-<div class="mx-auto w-full max-w-[1200px] pb-24 text-[#f5f4ef] font-['DM_Sans']">
+<div class="mx-auto w-full max-w-300 pb-24 text-text-primary font-['DM_Sans']">
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
@@ -60,11 +60,11 @@ new class extends Component {
 
         <div class="flex items-center gap-3 sm:pb-1">
             <div class="hidden text-right sm:block">
-                <div class="font-['Space_Grotesk'] text-lg font-semibold text-[#f5f4ef]">
+                <div class="font-['Space_Grotesk'] text-lg font-semibold text-text-primary">
                     {{ $this->countStarredTasks() - $this->countCompletedStarredTasks() }}
-                    <span class="text-[#666b85]">/ {{ $this->countStarredTasks() }}</span>
+                    <span class="text-text-muted">/ {{ $this->countStarredTasks() }}</span>
                 </div>
-                <div class="text-[10px] uppercase tracking-[.14em] text-[#666b85]">in progress</div>
+                <div class="text-[10px] uppercase tracking-[.14em] text-text-muted">in progress</div>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@ new class extends Component {
                 <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
                 <i class="fa-solid fa-bolt text-[#ff896f]"></i>
             </div>
-            <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-[#f5f4ef]">
+            <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-text-primary">
                 {{ $this->countStarredTasks() - $this->countCompletedStarredTasks() }}
             </div>
             <div class="mt-1 text-[11px] text-[#85899f]">important tasks still waiting for you</div>
@@ -110,7 +110,7 @@ new class extends Component {
             <h2 class="font-['Space_Grotesk'] text-[15px] font-semibold tracking-[-.02em]">All tasks</h2>
             <span class="rounded-md bg-[#25273a] px-1.5 py-0.5 text-[10px] font-bold text-[#85899f]">{{ $this->countStarredTasks() }}</span>
         </div>
-        <span class="text-[10px] uppercase tracking-[.14em] text-[#666b85]">Latest first</span>
+        <span class="text-[10px] uppercase tracking-[.14em] text-text-muted">Latest first</span>
     </div>
 
     {{-- Task list --}}

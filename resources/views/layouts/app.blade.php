@@ -132,7 +132,7 @@
                     </button>
                 </div>
 
-                <livewire:lists />
+                <livewire:lists.index />
             </div>
 
             <div class="tn-sidebar__footer">
