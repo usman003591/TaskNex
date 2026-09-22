@@ -2,12 +2,12 @@
 
 use Livewire\Component;
 use Livewire\Attributes\Computed;
-use App\Models\TaskList;
+use App\Models\TaskCollection;
 use App\Models\Task;
 use App\Livewire\Traits\HasPriority;
 
 new class extends Component {
-    public TaskList $list;
+    public TaskCollection $collection;
     public Task $task;
 
     #[Computed]
@@ -33,7 +33,7 @@ new class extends Component {
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#ff896f]"></span>
+                <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                 Personal collection
             </div>
             <h1
@@ -88,11 +88,11 @@ new class extends Component {
 
             <div x-data="{ optionsDropdown: false }" class="relative">
                 <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="tn-icon-button"
-                    :aria-expanded="optionsDropdown" aria-label="List options">
+                    :aria-expanded="optionsDropdown" aria-label="Collection options">
                     <i class="fa-solid fa-ellipsis text-[14px]"></i>
                 </button>
 
-                <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
+                {{-- <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
                     x-transition:enter="transition ease-out duration-150"
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
@@ -100,7 +100,7 @@ new class extends Component {
                     style="display: none">
                     <button type="button" wire:click="deleteList"
                         wire:confirm="Are you sure you want to delete this list?" x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-[#ff896f]">
+                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
                         Delete list
                     </button>
@@ -110,7 +110,7 @@ new class extends Component {
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
                     </button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@ new class extends Component {
                             @endif
                         </span>
                     </div>
-                    <!-- List / Collection -->
+                    <!-- Collection -->
                     <div class="flex items-center justify-between py-1 border-b border-dotted border-[#1C2638]">
                         <span class="flex items-center gap-2 font-medium">
                             <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
@@ -237,11 +237,11 @@ new class extends Component {
                                     d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                             </svg>
-                            List
+                            Collection
                         </span>
                         <span
                             class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-normal bg-yellow-300/10 text-yellow-300 border border-yellow-300/20">
-                            {{ $task->list->name }}
+                            {{ $task->collection->name }}
                         </span>
                     </div>
                 </div>

@@ -96,7 +96,7 @@ new class extends Component {
         {{-- <div class="rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
             <div class="mb-4 flex items-center justify-between">
                 <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
-                <i class="fa-solid fa-bolt text-[#ff896f]"></i>
+                <i class="fa-solid fa-bolt text-danger"></i>
             </div>
             <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-text-primary">
                 {{ $this->countStarredTasks() - $this->countCompletedStarredTasks() }}
@@ -113,12 +113,12 @@ new class extends Component {
         <span class="text-[10px] uppercase tracking-[.14em] text-text-muted">Latest first</span>
     </div>
 
-    {{-- Task list --}}
+    {{-- Task Collection --}}
     <div class="space-y-2">
         @forelse($this->starredTasks as $task)
             <x-task-card :task="$task" checkIconColor="#f5c451"/>
         @empty
-            <x-empty-list-state icon="fa-solid fa-angles-down" title="No starred task yet" subtitle="Tap the add button in a list to create one."/>
+            <x-empty-list-state icon="fa-solid fa-angles-down" title="No starred task yet" subtitle="Tap the add button in a collection to create one."/>
         @endforelse
     </div>
 

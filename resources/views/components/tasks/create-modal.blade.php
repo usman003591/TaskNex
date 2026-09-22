@@ -4,11 +4,11 @@ use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
-use App\Models\TaskList;
+use App\Models\TaskCollection;
 use Carbon\Carbon;
 
 new class extends Component {
-    public TaskList $list;
+    public TaskCollection $collection;
     public bool $starred = false;
     public bool $open = false;
 
@@ -88,7 +88,7 @@ new class extends Component {
     {
         $this->validate();
 
-        $this->list->tasks()->create([
+        $this->collection->tasks()->create([
             "name" => $this->name,
             "details" => $this->details ?? null,
             "scheduled_at" => $this->scheduled_at ?? null,

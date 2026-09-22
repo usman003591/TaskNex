@@ -10,7 +10,7 @@
     data-completed="{{ $task->is_completed ? 'true' : 'false' }}" wire:key="task-{{ $task->id }}">
 
     <div class="flex items-start gap-3 sm:items-center sm:gap-4"
-        x-data="{ goTo() { Livewire.navigate('{{ route('tasks.details', ['list' => $task->list_id, 'task' => $task->id]) }}') } }"
+        x-data="{ goTo() { Livewire.navigate('{{ route('tasks.details', ['collection' => $task->collection_id, 'task' => $task->id]) }}') } }"
         x-on:click="goTo()">
         <button type="button" wire:click.stop="toggleComplete({{ $task->id }})" wire:loading.class="animate-pulse"
             wire:target="toggleComplete({{ $task->id }})" style="--check-icon-color: {{ $checkIconColor }}"
@@ -31,7 +31,7 @@
             @if ($task->due_at || $task->scheduled_at || $task->priority)
             <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
                 @if ($task->scheduled_at)
-                <span class="flex items-center gap-1.5 text-[0.6875rem] text-[#85899f]">
+                <span class="flex items-center gap-1.5 text-[0.6875rem] text-text-muted">
                     <i class="fa-regular fa-clock text-[10px]"></i>
                     {{ $task->scheduled_at->diffForHumans(['short' => true]) }}
                 </span>

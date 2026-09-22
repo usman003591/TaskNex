@@ -22,7 +22,7 @@
 <body class="tn-shell min-h-screen antialiased" wire:navigate.hover>
     <div class="min-h-screen" x-data="{
         mobileOpen: false,
-    
+
         closeMobile() {
             this.mobileOpen = false;
         }
@@ -98,8 +98,8 @@
 
             <div class="tn-sidebar__section flex flex-1 min-h-0 flex-col">
                 <div class="tn-sidebar__label">
-                    <span x-transition.opacity.duration.150ms>Lists</span>
-                    <button type="button" class="tn-sidebar__add" aria-label="Create list">
+                    <span x-transition.opacity.duration.150ms>Collections</span>
+                    <button type="button" class="tn-sidebar__add" aria-label="Create collection">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round">
                             <path d="M12 5v14M5 12h14" />
@@ -107,7 +107,7 @@
                     </button>
                 </div>
 
-                <livewire:lists.index />
+                <livewire:collections.index />
             </div>
 
             <div class="tn-sidebar__footer">

@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Task;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TaskList extends Model
+class TaskCollection extends Model
 {
     use SoftDeletes;
-    protected $table = 'lists';
-
     protected $fillable = [
         'name',
         'user_id',
@@ -23,7 +20,6 @@ class TaskList extends Model
     }
 
     public function tasks(){
-        return $this->hasMany(Task::class, 'list_id');
+        return $this->hasMany(Task::class, 'collection_id');
     }
 }
-

@@ -3,42 +3,42 @@
 use Livewire\Component;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
-use App\Models\TaskList;
+use App\Models\TaskCollection;
 use Carbon\Carbon;
 
 new class extends Component {
-    public TaskList $list;
+    public TaskCollection $collection;
 
-    public function mount(TaskList $list): void
+    public function mount(TaskCollection $collection): void
     {
-        $this->list = $list;
+        $this->collection = $collection;
     }
 
     #[Computed]
     public function tasks()
     {
-        return $this->list->tasks()->where('is_completed', false)->latest()->get();
+        return $this->collection->tasks()->where('is_completed', false)->latest()->get();
     }
 
     #[Computed]
     public function completedTasks()
     {
-        return $this->list->tasks()->where('is_completed', true)->latest()->get();
+        return $this->collection->tasks()->where('is_completed', true)->latest()->get();
     }
 
     public function countTasks(): int
     {
-        return $this->list->tasks()->count();
+        return $this->collection->tasks()->count();
     }
 
     public function countCompletedTasks(): int
     {
-        return $this->list->tasks()->where('is_completed', true)->count();
+        return $this->collection->tasks()->where('is_completed', true)->count();
     }
 
     public function toggleComplete(int $taskId): void
     {
-        $task = $this->list->tasks()->findOrFail($taskId);
+        $task = $this->collection->tasks()->findOrFail($taskId);
         $task->update([
             'is_completed' => !$task->is_completed, //for inverse
             'completed_at' => $task->completed_at ? null : now(),
@@ -47,7 +47,7 @@ new class extends Component {
 
     public function toggleStarred(int $taskId): void
     {
-        $task = $this->list->tasks()->findOrFail($taskId);
+        $task = $this->collection->tasks()->findOrFail($taskId);
         $task->update([
             'starred' => !$task->starred, //for inverse
         ]);
@@ -55,7 +55,7 @@ new class extends Component {
 
     public function deleteCompletedTasks()
     {
-        $this->list->tasks()->where('is_completed', true)->delete();
+        $this->collection->tasks()->where('is_completed', true)->delete();
     } //adding a listener for the child component
 
     #[On('task-created')]
@@ -64,10 +64,10 @@ new class extends Component {
         unset($this->tasks); //computed property cache clear
     }
 
-    #[On('list-renamed')]
-    public function refreshLists()
+    #[On('collection-renamed')]
+    public function refreshCollections()
     {
-        $this->list->refresh(); //computed property cache clear
+        $this->collection->refresh(); //computed property cache clear
     }
 };
 ?>
@@ -82,7 +82,7 @@ new class extends Component {
             </div>
             <h1
                 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
-                {{ ucfirst($list->name) }}<span class="text-accent">.</span>
+                {{ ucfirst($collection->name) }}<span class="text-accent">.</span>
             </h1>
             <p class="mt-4 text-[13px] text-[#85899f]">
                 {{ $this->countTasks() }} {{ Str::plural('task', $this->countTasks()) }}
@@ -104,7 +104,7 @@ new class extends Component {
 
             <div x-data="{ optionsDropdown: false }" class="relative">
                 <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="tn-icon-button"
-                    :aria-expanded="optionsDropdown" aria-label="List options">
+                    :aria-expanded="optionsDropdown" aria-label="Collection options">
                     <i class="fa-solid fa-ellipsis text-[14px]"></i>
                 </button>
 
@@ -114,17 +114,17 @@ new class extends Component {
                     x-transition:enter-end="opacity-100 translate-y-0"
                     class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
                     style="display: none">
-                    <button type="button" wire:click="$dispatch('open-delete-list-confirmation')"
+                    <button type="button" wire:click="$dispatch('open-delete-collection-confirmation')"
                         x-on:click="optionsDropdown = false"
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
-                        Delete list
+                        Delete collection
                     </button>
-                    <button type="button" wire:click="$dispatch('open-edit-list-modal')"
+                    <button type="button" wire:click="$dispatch('open-edit-collection-modal')"
                         x-on:click="optionsDropdown = false"
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-pen text-[11px]"></i>
-                        Rename list
+                        Rename collection
                     </button>
                     <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
                         @if ($this->countCompletedTasks() <= 0) hidden disabled @endif
@@ -164,7 +164,7 @@ new class extends Component {
         <div class="rounded-2xl border border-[#34364c] bg-[#1d1f2e] p-5">
             <div class="mb-4 flex items-center gap-2">
                 <i class="fa-solid fa-bolt text-danger"></i>
-                <span class="text-[11px] font-semibold text-[#a8abbc]">List rhythm</span>
+                <span class="text-[11px] font-semibold text-[#a8abbc]">Collection rhythm</span>
             </div>
             <div class="font-['Space_Grotesk'] text-2xl font-semibold tracking-[-.04em] text-text-primary">
                 {{ $this->countTasks() - $this->countCompletedTasks() }}
@@ -187,7 +187,7 @@ new class extends Component {
         @forelse($this->tasks as $task)
             <x-task-card :task="$task" checkIconColor="#c7f36b" />
         @empty
-            <x-empty-list-state icon="fa-solid fa-angles-down" title="This list is ready for its first task"
+            <x-empty-list-state icon="fa-solid fa-angles-down" title="This collection is ready for its first task"
                 subtitle="Tap the add button to capture what's next." />
         @endforelse
     </div>
@@ -228,7 +228,7 @@ new class extends Component {
         </span>
     </div>
 
-    <livewire:lists.edit-modal :list="$list" />
-    <livewire:tasks.create-modal :list="$list" />
-    <livewire:lists.delete-confirmation-modal :list="$list" />
+    <livewire:collections.edit-modal :collection="$collection" />
+    <livewire:tasks.create-modal :collection="$collection" />
+    <livewire:collections.delete-confirmation-modal :collection="$collection" />
 </div>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('list_id')->constrained('lists')->cascadeOnDelete();
+            $table->foreignId('collection_id')->constrained('task_collections')->cascadeOnDelete();
             $table->string('name');
             $table->text('details')->nullable();
             $table->boolean('starred')->default(false);
@@ -22,13 +22,14 @@ return new class extends Migration
             $table->dateTime('scheduled_at')->nullable();
             $table->dateTime('due_at')->nullable();
             $table->dateTime('completed_at')->nullable();
+            $table->dateTime('starred_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['list_id', 'is_completed']);
-            $table->index(['list_id', 'priority']);
-            $table->index(['list_id', 'due_at']);
-            $table->index(['list_id', 'starred']);
+            $table->index(['collection_id', 'is_completed']);
+            $table->index(['collection_id', 'priority']);
+            $table->index(['collection_id', 'due_at']);
+            $table->index(['collection_id', 'starred']);
             $table->index('due_at');
 
         });

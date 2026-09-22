@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\TaskList;
+use App\Models\TaskCollection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,7 +12,7 @@ class Task extends Model
 
     protected $fillable = [
         'name',
-        'list_id',
+        'collection_id',
         'details',
         'starred',
         'is_completed',
@@ -27,9 +27,9 @@ class Task extends Model
     ];
 
     //relationships
-    public function list()
+    public function collection()
     {
-        return $this->belongsTo(TaskList::class, 'list_id');
+        return $this->belongsTo(TaskCollection::class, 'collection_id');
     }
 
     public function getDueStatusAttribute(): ?array
@@ -50,6 +50,6 @@ class Task extends Model
             return ['label' => 'Due Tomorrow ' . $this->due_at->format('g:i A'), 'color' => 'text-gray-400'];
         }
 
-        return ['label' => 'Due ' . $this->due_at->format('j M Y, g:i A'), 'color' => 'text-gray-400'];
+        return ['label' => 'Due ' . $this->due_at->format('j M Y, g:i A'), 'color' => 'text-text-muted'];
     }
 }

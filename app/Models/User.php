@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\TaskCollection;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -56,8 +57,8 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function lists(){
-        return $this->hasMany(TaskList::class, 'user_id');
+    public function collections(){
+        return $this->hasMany(TaskCollection::class, 'user_id');
     }
 
     public static function current(): self{

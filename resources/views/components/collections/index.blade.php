@@ -5,34 +5,34 @@ use App\Models\User;
 use Livewire\Attributes\On;
 
 new class extends Component {
-    public $lists;
+    public $collections;
     public $isCreating = false;
-    public $listName = "";
+    public $collectionName = "";
 
     public function mount()
     {
-        $this->lists = User::current()->lists()->latest()->get();
+        $this->collections = User::current()->collections()->latest()->get();
     }
 
-    public function createList()
+    public function createCollection()
     {
         $this->validate([
-            "listName" => "required|string|min:1|max:255",
+            "collectionName" => "required|string|min:1|max:255",
         ]);
 
-        $list = User::current()
-            ->lists()
+        $collection = User::current()
+            ->collections()
             ->create([
-                "name" => $this->listName,
+                "name" => $this->collectionName,
             ]);
 
-        $this->lists = User::current()->lists()->latest()->get();
-        $this->listName = "";
+        $this->collections = User::current()->collections()->latest()->get();
+        $this->collectionName = "";
         $this->isCreating = false;
     }
 
-    #[On("list-renamed")]
-    public function refreshLists()
+    #[On("collection-renamed")]
+    public function refreshCollections()
     {
         $this->mount();
     }
@@ -41,34 +41,34 @@ new class extends Component {
 
 <div class="flex flex-1 min-h-0 flex-col">
 
-    <!-- New list toggle: button <-> input -->
+    <!-- New Collection toggle: button <-> input -->
     <div x-data x-on:click.outside="$wire.set('isCreating', false)" class="px-0.5 mb-1 flex">
         @if($isCreating == true)
-        <input type="text" x-ref="listInput" x-init="$nextTick(() => $refs.listInput?.focus())" wire:model="listName"
-            wire:keydown.enter="createList" placeholder="List name"
+        <input type="text" x-ref="collectionInput" x-init="$nextTick(() => $refs.collectionInput?.focus())" wire:model="collectionName"
+            wire:keydown.enter="createCollection" placeholder="Collection name"
             class="w-full rounded-lg bg-gray-800 border border-white/10 px-2.5 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-hidden focus:border-indigo-500" />
-        @error('listName')
+        @error('collectionName')
         <p class="text-xs text-red-400 mt-1 px-1">{{ $message }}</p>
         @enderror
         @else
         <button type="button" wire:click="$set('isCreating', true)"
             class="flex items-center gap-x-3.5 py-2 mt-2.5 px-2.5 w-full text-sm text-gray-300 rounded-lg hover:bg-white/5 hover:text-white focus:outline-hidden focus:bg-sidebar-nav-focus">
             <i class="fa-solid fa-plus text-xs"></i>
-            <span x-transition.opacity.duration.150ms>New list</span>
+            <span x-transition.opacity.duration.150ms>New collection</span>
         </button>
         @endif
     </div>
 
-    <!-- Created lists -->
+    <!-- Created collections -->
     <div class="space-y-1 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
-        @foreach($lists as $list)
-        <a href="{{ route('tasks.index', $list->id) }}" wire:navigate class="flex items-center gap-x-3.5 py-2 pl-3 px-2.5 text-sm rounded-lg focus:outline-hidden transition-colors
-                       {{ request()->route('list')?->id === $list->id
+        @foreach($collections as $collection)
+        <a href="{{ route('tasks.index', $collection->id) }}" wire:navigate class="flex items-center gap-x-3.5 py-2 pl-3 px-2.5 text-sm rounded-lg focus:outline-hidden transition-colors
+                       {{ request()->route('collection')?->id === $collection->id
                             ? 'bg-[#292b42] text-white'
                             : 'text-gray-400 hover:bg-[#222438] hover:text-white' }}">
             <span class="size-1.5 rounded-full bg-accent shrink-0"></span>
             <span x-transition.opacity.duration.150ms class="truncate">
-                {{ $list->name }}</span>
+                {{ $collection->name }}</span>
         </a>
         @endforeach
     </div>

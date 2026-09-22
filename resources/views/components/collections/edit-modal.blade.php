@@ -3,23 +3,23 @@
 use Livewire\Component;
 use Livewire\Attributes\Validate;
 use Livewire\Attributes\On;
-use App\Models\TaskList;
+use App\Models\TaskCollection;
 
 new class extends Component {
-    public Tasklist $list;
+    public TaskCollection $collection;
     public bool $open = false;
     #[Validate("required|string|max:255")]
     public string $name;
 
-    public function mount(TaskList $list)
+    public function mount(TaskCollection $collection)
     {
-        $this->list = $list;
+        $this->collection = $collection;
     }
 
-    #[On("open-edit-list-modal")]
+    #[On("open-edit-collection-modal")]
     public function openModal()
     {
-        $this->name = $this->list->name;
+        $this->name = $this->collection->name;
         return $this->open = true;
     }
 
@@ -32,25 +32,25 @@ new class extends Component {
     public function save()
     {
         $this->validate();
-        $this->list->update(["name" => $this->name]);
-        $this->dispatch("list-renamed");
+        $this->collection->update(["name" => $this->name]);
+        $this->dispatch("collection-renamed");
         $this->closeModal();
     }
 };
 ?>
 
 
-<x-modal-frame :open="$open" title="Rename List" description="Edit the name of the collection." icon="fa-solid fa-edit text-xs">
+<x-modal-frame :open="$open" title="Rename collection" description="Edit the name of the collection." icon="fa-solid fa-edit text-xs">
     <form wire:submit="save" class="space-y-5 px-5 py-3 sm:px-6 sm:pb-6">
 
         {{-- name field --}}
         <div>
-            <label for="list-name"
-                class="block mb-2 ml-[0.15rem] text-[#85899f] text-[0.625rem] font-extrabold tracking-[0.16em] uppercase">List
+            <label for="collection-name"
+                class="block mb-2 ml-[0.15rem] text-[#85899f] text-[0.625rem] font-extrabold tracking-[0.16em] uppercase">Collection
                 name</label>
-            <input id="list-name" type="text" wire:model="name" x-ref="nameInput"
+            <input id="collection-name" type="text" wire:model="name" x-ref="nameInput"
                 class="font-thin w-full text-[#e0e0dd] bg-[#171925]/82 border border-[#3d4058] rounded-xl outline-none py-2 px-4 text-[0.8rem] placeholder:text-text-muted transition-colors duration-180 motion-reduce:transition-none focus:bg-[#171925] focus:border-[#3d4058] focus:outline-none focus:shadow-none focus:ring-0"
-                placeholder="New list" autocomplete="off">
+                placeholder="New Collection" autocomplete="off">
             @error('name')
             <small class="mt-1.5 block px-1 text-xs text-[#ff9b87]">{{ $message }}</small>
             @enderror
