@@ -6,8 +6,7 @@ use Livewire\Attributes\On;
 use App\Models\TaskList;
 use Carbon\Carbon;
 
-new class extends Component
-{
+new class extends Component {
     public TaskList $list;
 
     public function mount(TaskList $list): void
@@ -18,7 +17,13 @@ new class extends Component
     #[Computed]
     public function tasks()
     {
-        return $this->list->tasks()->orderBy('is_completed')->latest()->get();
+        return $this->list->tasks()->where('is_completed', false)->latest()->get();
+    }
+
+    #[Computed]
+    public function completedTasks()
+    {
+        return $this->list->tasks()->where('is_completed', true)->latest()->get();
     }
 
     public function countTasks(): int
@@ -35,32 +40,34 @@ new class extends Component
     {
         $task = $this->list->tasks()->findOrFail($taskId);
         $task->update([
-            'is_completed' => !$task->is_completed,         //for inverse
+            'is_completed' => !$task->is_completed, //for inverse
             'completed_at' => $task->completed_at ? null : now(),
-            ]);
+        ]);
     }
 
     public function toggleStarred(int $taskId): void
     {
         $task = $this->list->tasks()->findOrFail($taskId);
         $task->update([
-            'starred' => !$task->starred,         //for inverse
-            ]);
+            'starred' => !$task->starred, //for inverse
+        ]);
     }
 
     public function deleteCompletedTasks()
     {
         $this->list->tasks()->where('is_completed', true)->delete();
-    }
+    } //adding a listener for the child component
 
-    #[On('task-created')]               //adding a listener for the child component
-    public function refreshTasks(){
-        unset($this->tasks);            //computed property cache clear
+    #[On('task-created')]
+    public function refreshTasks()
+    {
+        unset($this->tasks); //computed property cache clear
     }
 
     #[On('list-renamed')]
-    public function refreshLists(){
-        $this->list->refresh();            //computed property cache clear
+    public function refreshLists()
+    {
+        $this->list->refresh(); //computed property cache clear
     }
 };
 ?>
@@ -73,7 +80,8 @@ new class extends Component
                 <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                 Personal collection
             </div>
-            <h1 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
+            <h1
+                class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">
                 {{ ucfirst($list->name) }}<span class="text-accent">.</span>
             </h1>
             <p class="mt-4 text-[13px] text-[#85899f]">
@@ -95,45 +103,31 @@ new class extends Component
             <div class="hidden h-10 w-px bg-[#303249] sm:block"></div>
 
             <div x-data="{ optionsDropdown: false }" class="relative">
-                <button
-                    type="button"
-                    x-on:click="optionsDropdown = !optionsDropdown"
-                    class="tn-icon-button"
-                    :aria-expanded="optionsDropdown"
-                    aria-label="List options"
-                >
+                <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="tn-icon-button"
+                    :aria-expanded="optionsDropdown" aria-label="List options">
                     <i class="fa-solid fa-ellipsis text-[14px]"></i>
                 </button>
 
-                <div
-                    x-show="optionsDropdown"
-                    x-on:click.outside="optionsDropdown = false"
+                <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
                     x-transition:enter="transition ease-out duration-150"
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
                     class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
                     style="display: none">
-                    <button
-                        type="button"
-                        wire:click="$dispatch('open-delete-list-confirmation')"
+                    <button type="button" wire:click="$dispatch('open-delete-list-confirmation')"
                         x-on:click="optionsDropdown = false"
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
                         <i class="fa-solid fa-trash-can text-[11px]"></i>
                         Delete list
                     </button>
-                    <button
-                        type="button"
-                        wire:click="$dispatch('open-edit-list-modal')"
+                    <button type="button" wire:click="$dispatch('open-edit-list-modal')"
                         x-on:click="optionsDropdown = false"
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-pen text-[11px]"></i>
                         Rename list
                     </button>
-                    <button
-                        type="button"
-                        wire:click="deleteCompletedTasks"
-                        x-on:click="optionsDropdown = false"
-                        @if($this->countCompletedTasks() <= 0) hidden disabled @endif
+                    <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
+                        @if ($this->countCompletedTasks() <= 0) hidden disabled @endif
                         class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
                         <i class="fa-solid fa-list-check"></i>
                         Clear completed tasks
@@ -160,10 +154,9 @@ new class extends Component
                     <span class="mb-1 text-[12px] text-[#85899f]">tasks checked off</span>
                 </div>
                 <div class="mt-4 h-1.5 overflow-hidden rounded-full bg-[#303249]">
-                    <div
-                        class="h-full rounded-full bg-accent transition-all duration-500"
-                        style="width: {{ $this->countTasks() > 0 ? ($this->countCompletedTasks() / $this->countTasks()) * 100 : 0 }}%"
-                    ></div>
+                    <div class="h-full rounded-full bg-accent transition-all duration-500"
+                        style="width: {{ $this->countTasks() > 0 ? ($this->countCompletedTasks() / $this->countTasks()) * 100 : 0 }}%">
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,35 +173,55 @@ new class extends Component
         </div>
     </div>
 
+    {{-- All Tasks --}}
     <div class="mb-4 flex items-center justify-between">
         <div class="flex items-center gap-2">
             <h2 class="font-['Space_Grotesk'] text-[15px] font-semibold tracking-[-.02em]">All tasks</h2>
-            <span class="rounded-md bg-[#25273a] px-1.5 py-0.5 text-[10px] font-bold text-[#85899f]">{{ $this->countTasks() }}</span>
+            <span
+                class="rounded-md bg-[#25273a] px-1.5 py-0.5 text-[10px] font-bold text-[#85899f]">{{ $this->countTasks() }}</span>
         </div>
         <span class="text-[10px] uppercase tracking-[.14em] text-text-muted">Latest first</span>
     </div>
 
-    {{-- Task list --}}
     <div class="space-y-2">
         @forelse($this->tasks as $task)
-            <x-task-card :task="$task" checkIconColor="#c7f36b"/>
+            <x-task-card :task="$task" checkIconColor="#c7f36b" />
         @empty
-            <x-empty-list-state icon="fa-solid fa-angles-down" title="This list is ready for its first task" subtitle="Tap the add button to capture what's next."/>
+            <x-empty-list-state icon="fa-solid fa-angles-down" title="This list is ready for its first task"
+                subtitle="Tap the add button to capture what's next." />
         @endforelse
     </div>
 
-    <button
-        type="button"
-        wire:click="$dispatch('open-create-task-modal')"
-        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-accent/40 hover:bg-[#1b1d2a] hover:text-accent cursor-pointer"
-    >
+    <button type="button" wire:click="$dispatch('open-create-task-modal')"
+        class="mt-4 flex w-full items-center gap-3 rounded-2xl border border-dashed border-[#3b3e55] px-4 py-4 text-left text-[12px] font-medium text-[#737890] transition hover:border-accent/40 hover:bg-[#1b1d2a] hover:text-accent cursor-pointer">
         <span class="grid h-6 w-6 place-items-center rounded-lg border border-current">
             <i class="fa-solid fa-plus text-[11px]"></i>
         </span>
         Add another task
     </button>
 
-    <div class="mt-7 flex items-center justify-between text-[10px] text-[#5e637a]">
+    {{-- Completed Tasks --}}
+    @if ($this->countCompletedTasks() > 0)
+    <div x-data="{ completedTaskAccordionOpen: false }">
+        <div class="mb-4 mt-7 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <h2 class="font-['Space_Grotesk'] text-[15px] font-semibold tracking-[-.02em]">Completed tasks</h2>
+                <span
+                    class="rounded-md bg-[#25273a] px-1.5 py-0.5 text-[10px] font-bold text-[#85899f]">{{ $this->countCompletedTasks() }}</span>
+            </div>
+            <button type="button" x-on:click.prevent="completedTaskAccordionOpen = !completedTaskAccordionOpen" :aria-expanded="completedTaskAccordionOpen"><i class="fa-solid fa-chevron-down tn-icon-button ml-1 text-[11px]" :class="{ 'rotate-180': completedTaskAccordionOpen }"></i></button>
+        </div>
+        <div x-show="completedTaskAccordionOpen" x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 -translate-y-1"
+                        x-transition:enter-end="opacity-100 translate-y-0" class="space-y-2">
+            @foreach($this->completedTasks as $task)
+                <x-task-card :task="$task" checkIconColor="#c7f36b" />
+            @endforeach
+        </div>
+    </div>
+    @endif
+
+    <div class="mt-4 flex items-center justify-end text-[10px] text-[#5e637a]">
         <span class="flex items-center gap-1.5">
             <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
             Everything is up to date
