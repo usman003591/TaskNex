@@ -17,14 +17,18 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Space Grotesk', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
     --color-surface: #11121b;
     --color-surface-sidebar: #171825;
     --color-surface-hover: #202238;
+    --color-surface-raised: #1c1d2b;
     --color-border: #2b2d42;
+    --color-border-strong: #3a3d53;
     --color-accent: #c7f36b;
     --color-danger: #ff896f;
     --color-danger-hover: #ffa08b;
     --color-accent-hover: #d6fa87;
+    --color-info: #81c7ff;
     --color-text-primary: #f5f4ef;
     --color-text-secondary: #aeb0bd;
     --color-text-muted: #9ca3af;
@@ -599,5 +603,74 @@ html::-webkit-scrollbar-thumb:hover{
     .tn-icon-button,
     .tn-share-button {
         transition-duration: .01ms !important;
+    }
+}
+
+
+/* ============================
+   Signup / auth page
+   ============================ */
+html {
+    font-family: var(--font-sans);
+}
+
+body {
+    background: var(--color-surface);
+}
+
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-accent) 76%, transparent);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+@layer components {
+    .field-label {
+        @apply ml-1 text-[10px] font-extrabold tracking-[0.16em] text-text-secondary uppercase;
+    }
+
+    .field-input {
+        @apply h-12 w-full rounded-xl border border-border bg-[#0f111d]/72 pr-4 pl-11 text-text-primary outline-none transition-colors duration-200 placeholder:text-text-muted focus:border-accent/68 focus:bg-[#0f111d]/92;
+    }
+
+    .btn-primary {
+        @apply inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent text-[12px] font-black text-surface-raised shadow-[0_12px_28px_rgb(199_243_107/14%)] transition duration-200 hover:-translate-y-px hover:bg-accent-hover hover:shadow-[0_14px_32px_rgb(199_243_107/20%)];
+    }
+
+    .btn-secondary {
+        @apply inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-border-strong bg-[#1a1c29] text-[12px] font-extrabold text-[#d8d7d5] transition-colors duration-200 hover:border-[#596079] hover:bg-surface-hover;
+    }
+
+    .status-dot {
+        @apply h-1.5 w-1.5 rounded-full bg-current;
+    }
+
+    .task-row {
+        @apply flex items-center gap-3 rounded-xl border border-border bg-[#171925]/70 p-3;
+    }
+
+    .password-check {
+        @apply inline-flex items-center gap-1.5 text-[10px] text-text-muted;
+    }
+
+    .password-check.met {
+        @apply text-accent;
+    }
+
+    .check-dot {
+        @apply grid h-3.5 w-3.5 place-items-center rounded-full border border-[#454860];
+    }
+
+    .password-check.met .check-dot {
+        @apply border-accent bg-accent text-surface-raised;
     }
 }
