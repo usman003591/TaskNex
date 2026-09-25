@@ -8,6 +8,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -19,25 +20,14 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role_id',
-        'picture',
-        'status',
-        'last_login_at',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role_id', 'picture', 'status', 'last_login_at'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the attributes that should be cast.
@@ -53,15 +43,18 @@ class User extends Authenticatable
     }
 
     //Relationships
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(Role::class);
     }
 
-    public function collections(){
-        return $this->hasMany(TaskCollection::class, 'user_id');
+    public function collections()
+    {
+        return $this->hasMany(TaskCollection::class);
     }
 
-    public static function current(): self{
-        return static::first();
+    public function tasks()
+    {
+        return $this->hasManyThrough(Task::class, TaskCollection::class, 'user_id', 'collection_id');
     }
 }

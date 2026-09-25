@@ -111,7 +111,7 @@
             </div>
 
             <div class="tn-sidebar__footer">
-                <a href="{{ url('/settings') }}" class="tn-sidebar__footer-link" wire:navigate title="Settings">
+                {{-- <a href="{{ url('/settings') }}" class="tn-sidebar__footer-link" wire:navigate title="Settings">
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
@@ -120,7 +120,7 @@
                             transform="translate(1 1) scale(.92)" />
                     </svg>
                     <span x-transition.opacity.duration.150ms>Settings</span>
-                </a>
+                </a> --}}
 
                 <div class="tn-profile">
                     <div class="tn-profile__avatar" aria-hidden="true">
@@ -128,7 +128,7 @@
                     </div>
                     <div class="min-w-0 flex-1" x-transition.opacity.duration.150ms>
                         <div class="tn-profile__name">{{ auth()->user()->name ?? 'Maya Chen' }}</div>
-                        <div class="tn-profile__meta">Personal workspace</div>
+                        <div class="tn-profile__meta">{{ auth()->user()->email ?? 'Personal Workspace' }}</div>
                     </div>
                     <button type="button" class="tn-icon-button" aria-label="Open profile menu">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"

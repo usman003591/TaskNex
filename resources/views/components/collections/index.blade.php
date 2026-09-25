@@ -6,35 +6,37 @@ use Livewire\Attributes\On;
 
 new class extends Component {
     public $collections;
-    public $isCreating = false;
-    public $collectionName = "";
+    public bool $isCreating = false;
+    public string $collectionName = "";
 
     public function mount()
     {
-        $this->collections = User::current()->collections()->latest()->get();
+        $this->loadCollections();
+    }
+
+    public function loadCollections(){
+        $this->collections = auth()->user()->collections()->latest()->get();
     }
 
     public function createCollection()
     {
         $this->validate([
-            "collectionName" => "required|string|min:1|max:255",
+            "collectionName" => "required|string|max:255",
         ]);
 
-        $collection = User::current()
-            ->collections()
-            ->create([
-                "name" => $this->collectionName,
+        $collection = auth()->user()->collections()->create([
+                "name" => trim($this->collectionName),
             ]);
 
-        $this->collections = User::current()->collections()->latest()->get();
+        $this->loadCollections();
         $this->collectionName = "";
         $this->isCreating = false;
     }
 
     #[On("collection-renamed")]
-    public function refreshCollections()
+    public function refreshCollection()
     {
-        $this->mount();
+        $this->loadCollections();
     }
 };
 ?>
@@ -42,7 +44,7 @@ new class extends Component {
 <div class="flex flex-1 min-h-0 flex-col">
 
     <!-- New Collection toggle: button <-> input -->
-    <div x-data x-on:click.outside="$wire.set('isCreating', false)" class="px-0.5 mb-1 flex">
+    <div x-data x-on:click.outside="$wire.set('isCreating', false)" class="px-0.5 mb-1">
         @if($isCreating == true)
         <input type="text" x-ref="collectionInput" x-init="$nextTick(() => $refs.collectionInput?.focus())" wire:model="collectionName"
             wire:keydown.enter="createCollection" placeholder="Collection name"

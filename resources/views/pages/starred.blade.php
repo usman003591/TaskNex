@@ -8,33 +8,45 @@ new class extends Component {
     #[Computed]
     public function starredTasks()
     {
-        return Task::where("starred", true)->latest()->get();
+        return auth()->user()->tasks()->where("starred", true)->latest()->get();
     }
 
     public function toggleComplete(int $taskId): void
     {
-        $task = Task::findOrFail($taskId);
+        $task = auth()->user()->tasks()->findOrFail($taskId);
         $task->update([
             "is_completed" => !$task->is_completed, //for inverse
             "completed_at" => $task->is_completed ? null : now(),
         ]);
+
+        unset(
+            $this->starredTasks,
+            $this->countStarredTasks,
+            $this->countCompletedStarredTasks
+        );
     }
 
     public function toggleStarred(int $taskId): void
     {
-        $task = Task::findOrFail($taskId);
+        $task = auth()->user()->tasks()->findOrFail($taskId);
         $task->update([
             "starred" => !$task->starred, //for inverse
         ]);
+
+        unset(
+            $this->starredTasks,
+            $this->countStarredTasks,
+            $this->countCompletedStarredTasks
+        );
     }
 
     public function countStarredTasks(): int
     {
-        return Task::where("starred", true)->count();
+        return auth()->user()->tasks()->where("starred", true)->count();
     }
     public function countCompletedStarredTasks(): int
     {
-        return Task::where("starred", true)
+        return auth()->user()->tasks()->where("starred", true)
             ->where("is_completed", true)
             ->count();
     }
@@ -45,7 +57,7 @@ new class extends Component {
     <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
-                <span class="h-1.5 w-1.5 rounded-full bg-[#ff896f]"></span>
+                <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                 Personal collection
             </div>
             <h1 class="font-['Space_Grotesk'] text-[clamp(2.25rem,5vw,4rem)] font-semibold leading-none tracking-[-.065em] text-[#f7f4ed]">

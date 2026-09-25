@@ -472,7 +472,7 @@
 
 .tn-sidebar__footer {
     margin-top: auto;
-    padding-top: 1rem;
+    /* padding-top: 1rem; */
 }
 
 .tn-sidebar__footer-link {

@@ -11,7 +11,7 @@ new class extends Component {
 
     public function mount(TaskCollection $collection): void
     {
-        $this->collection = $collection;
+        $this->collection = auth()->user()->collections()->findOrFail($collection->id);
     }
 
     #[Computed]
@@ -26,11 +26,13 @@ new class extends Component {
         return $this->collection->tasks()->where('is_completed', true)->latest()->get();
     }
 
+    #[Computed]
     public function countTasks(): int
     {
         return $this->collection->tasks()->count();
     }
 
+    #[Computed]
     public function countCompletedTasks(): int
     {
         return $this->collection->tasks()->where('is_completed', true)->count();
@@ -43,6 +45,13 @@ new class extends Component {
             'is_completed' => !$task->is_completed, //for inverse
             'completed_at' => $task->completed_at ? null : now(),
         ]);
+
+        unset(
+            $this->tasks,
+            $this->completedTasks,
+            $this->countTasks,
+            $this->countCompletedTasks
+        );
     }
 
     public function toggleStarred(int $taskId): void
@@ -56,18 +65,29 @@ new class extends Component {
     public function deleteCompletedTasks()
     {
         $this->collection->tasks()->where('is_completed', true)->delete();
-    } //adding a listener for the child component
 
-    #[On('task-created')]
+        unset(
+            $this->completedTasks,
+            $this->countTasks,
+            $this->countCompletedTasks
+        );
+    }
+
+    #[On('task-created')]                           //adding a listener for the child component
     public function refreshTasks()
     {
-        unset($this->tasks); //computed property cache clear
+        unset(
+            $this->tasks,
+            $this->completedTasks,
+            $this->countTasks,
+            $this->countCompletedTasks
+        );
     }
 
     #[On('collection-renamed')]
-    public function refreshCollections()
+    public function refreshCollection()
     {
-        $this->collection->refresh(); //computed property cache clear
+        $this->collection->refresh();
     }
 };
 ?>
