@@ -1,9 +1,32 @@
 <?php
-
+use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 new class extends Component {
-    //
+    public int $role_id;
+    public string $name = '';
+    public string $email = '';
+    public string $password = '';
+    public string $password_confirmation = '';
+    public string $picture = '';
+
+    public function register(CreatesNewUsers $creator)
+    {
+        $user = $creator->create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => $this->password,
+            'password_confirmation' => $this->password_confirmation,
+            'picture' => null,
+            'role_id' => 1,
+        ]);
+
+        Auth::login($user);
+        session()->regenerate();
+
+        return redirect(route('dashboard'));
+    }
 };
 ?>
 
@@ -42,7 +65,7 @@ new class extends Component {
         </h1>
 
         <div id="form-view">
-            <form class="grid gap-4" id="signup-form" novalidate>
+            <form class="grid gap-4" id="signup-form" wire:submit="register" novalidate>
                 <div class="grid gap-2">
                     <label class="field-label" for="signup-name">Your name</label>
                     <div class="relative">
@@ -52,9 +75,12 @@ new class extends Component {
                             <path d="M20 21a8 8 0 0 0-16 0"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <input class="field-input" id="signup-name" name="name" placeholder="Maya Chen"
+                        <input class="field-input" id="signup-name" wire:model="name" placeholder="Maya Chen"
                             autocomplete="name">
                     </div>
+                    @error('name')
+                        <small class="block px-1 text-xs text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="grid gap-2">
@@ -66,9 +92,12 @@ new class extends Component {
                             <rect x="3" y="5" width="18" height="14" rx="2"></rect>
                             <path d="m3 7 9 6 9-6"></path>
                         </svg>
-                        <input class="field-input" id="signup-email" type="email" name="email"
+                        <input class="field-input" id="signup-email" type="email" wire:model="email"
                             placeholder="maya@somewhere.good" autocomplete="email">
                     </div>
+                    @error('email')
+                        <small class="block px-1 text-xs text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="grid gap-2">
@@ -90,7 +119,7 @@ new class extends Component {
                             <rect x="4" y="11" width="16" height="10" rx="2"></rect>
                             <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
                         </svg>
-                        <input class="field-input pr-12" id="signup-password" type="password" name="password"
+                        <input class="field-input pr-12" id="signup-password" type="password" wire:model="password"
                             placeholder="At least 8 characters" autocomplete="new-password">
                         <button
                             class="absolute top-1/2 right-3 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-md text-text-muted hover:bg-surface-hover hover:text-text-primary"
@@ -103,6 +132,9 @@ new class extends Component {
                             </svg>
                         </button>
                     </div>
+                    @error('password')
+                        <small class="block px-1 text-xs text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="grid gap-2">
                     <div class="flex items-center justify-between">
@@ -116,7 +148,7 @@ new class extends Component {
                             <rect x="4" y="11" width="16" height="10" rx="2"></rect>
                             <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
                         </svg>
-                        <input class="field-input pr-12" id="signup-password" type="password" name="password"
+                        <input class="field-input pr-12" id="signup-password" type="password" wire:model="password_confirmation"
                             placeholder="Re-enter password" autocomplete="confirm-password">
                         <button
                             class="absolute top-1/2 right-3 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-md text-text-muted hover:bg-surface-hover hover:text-text-primary"
