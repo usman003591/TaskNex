@@ -141,7 +141,7 @@ new class extends Component {
                 <div class="relative">
                     <div class="mb-2 flex items-center justify-between">
                         <span class="flex items-center gap-2 text-[11px] font-medium text-gray-400">
-                            <i class="fa-solid fa-align-left text-[#81c7ff]"></i>
+                            <i class="fa-solid fa-align-left text-info"></i>
                             Description
                         </span>
                     </div>

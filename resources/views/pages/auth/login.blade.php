@@ -1,32 +1,13 @@
 <?php
-use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Layout;
+
 use Livewire\Component;
+use Livewire\Attributes\Layout;
+
 
 new #[Layout('layouts.auth-layout')]
-class extends Component {
-    public string $name = '';
-    public string $email = '';
-    public string $password = '';
-    public string $password_confirmation = '';
-    public bool $terms = false;
-
-    public function register(CreatesNewUsers $creator)
-    {
-        $user = $creator->create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => $this->password,
-            'password_confirmation' => $this->password_confirmation,
-            'terms' => $this->terms,
-        ]);
-
-        Auth::login($user);
-        session()->regenerate();
-
-        return redirect(route('dashboard'));
-    }
+class extends Component
+{
+    //
 };
 ?>
 
@@ -44,44 +25,23 @@ class extends Component {
                     class="text-accent">.</span></span>
         </button>
         <div class="text-xs text-slate-400 flex items-center gap-2">
-            <span class="">Already have an account?</span>
+            <span class="">Don't have an account?</span>
             <a href="#signin"
                 class="text-accent font-semibold hover:underline underline-offset-2 transition-colors cursor-pointer">Sign
-                in</a>
+                up</a>
         </div>
 
 
     </header>
 
     <div class="mx-auto flex w-full max-w-120 flex-1 flex-col justify-center pt-16 pb-8 max-[480px]:pt-13">
-        {{-- <div
-            class="mb-4 flex items-center gap-2 text-[10px] font-extrabold tracking-[0.2em] text-danger uppercase">
-            <span class="status-dot"></span>
-            Your next chapter
-        </div> --}}
         <h1
             class="font-display mb-12 max-w-97.5 text-[clamp(2.5rem,5vw,4rem)] leading-[0.98] font-semibold tracking-[-0.075em] max-[480px]:text-[2.7rem]">
-            Sign up<span class="text-accent">.</span>
+            Sign in<span class="text-accent">.</span>
         </h1>
 
         <div id="form-view">
             <form class="grid gap-4" id="signup-form" wire:submit="register" novalidate>
-                <div class="grid gap-2">
-                    <label class="field-label" for="signup-name">Your name</label>
-                    <div class="relative">
-                        <svg class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-text-muted"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M20 21a8 8 0 0 0-16 0"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <input class="field-input" id="signup-name" wire:model="name" placeholder="Maya Chen"
-                            autocomplete="name">
-                    </div>
-                    @error('name')
-                        <small class="block px-1 text-xs text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
 
                 <div class="grid gap-2">
                     <label class="field-label" for="signup-email">Email address</label>
@@ -131,27 +91,6 @@ class extends Component {
                         <small class="block px-1 text-xs text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="grid gap-2">
-                    <div class="flex items-center justify-between">
-                        <label class="field-label" for="confirm-password">Confirm Password</label>
-
-                    </div>
-                    <div class="relative" x-data="{ showPassword: false }">
-                        <svg class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-text-muted"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="4" y="11" width="16" height="10" rx="2"></rect>
-                            <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
-                        </svg>
-                        <input class="field-input pr-12" id="confirm-password" :type="showPassword ? 'text' : 'password'" wire:model="password_confirmation"
-                            placeholder="Re-enter password" autocomplete="new-password">
-                        <button
-                            class="absolute top-1/2 right-3 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-md text-text-muted hover:bg-surface-hover hover:text-text-primary" @click="showPassword = !showPassword"
-                            id="password-toggle" type="button" aria-label="Show password">
-                            <i class="text-xs transform scale-y-90" :class="showPassword ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "></i>
-                        </button>
-                    </div>
-                </div>
 
                 <label
                     class="flex cursor-pointer items-start gap-3 pt-3 text-[11px] leading-[1.8] text-text-secondary transition-colors duration-200">
@@ -166,12 +105,7 @@ class extends Component {
                     </span>
 
                     <span>
-                        I agree to the
-                        <button class="font-bold underline-offset-2 text-accent hover:underline hover:text-accent-hover"
-                            type="button" data-notice="Terms opened">terms</button>
-                        and
-                        <button class="font-bold text-accent underline-offset-2 hover:underline hover:text-accent-hover"
-                            type="button" data-notice="Privacy policy opened">privacy policy</button>.
+                        Remember me
                     </span>
                 </label>
                 @error('terms')
@@ -204,33 +138,10 @@ class extends Component {
                 </button>
             </form>
         </div>
-
-        {{-- <div class=" rounded-2xl border border-accent/25 bg-[#1c2a20]/70 p-6 shadow-[0_18px_50px_rgb(0_0_0/18%)]"
-            id="success-view">
-            <div class="mb-5 grid h-12 w-12 place-items-center rounded-2xl bg-accent/12 text-accent">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="m5 12 4 4L19 6"></path>
-                </svg>
-            </div>
-            <h2 class="font-display mb-2 text-2xl tracking-[-0.04em]">Your space is ready.</h2>
-            <p class="text-[13px] leading-[1.85] text-[#9ca290]">We saved the first step for <strong
-                    id="success-email"></strong>. Your TaskNex workspace is ready when you are.</p>
-            <button class="btn-primary mt-6 w-auto px-4" type="button" data-notice="Workspace opened">
-                Open your workspace
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M5 12h14"></path>
-                    <path d="m13 6 6 6-6 6"></path>
-                </svg>
-            </button>
-        </div> --}}
     </div>
 
     <footer
         class="flex items-center justify-between border-t border-[#25273a] pt-5 max-[480px]:flex-col max-[480px]:items-start max-[480px]:gap-3">
         <span class="text-[11px] text-text-muted">© 2025 TaskNex.</span>
-        {{-- <span class="inline-flex items-center gap-1.5 text-[11px] text-text-muted"><span
-                class="status-dot text-accent"></span>Private by default</span> --}}
     </footer>
 </section>
