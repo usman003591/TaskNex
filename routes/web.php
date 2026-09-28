@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/signup', [AuthController::class, 'signup'])->name('signup');
-
 Route::middleware('guest')->group(function () {
     Route::livewire('/signup', 'pages::auth.signup')->name('signup');
     Route::livewire('/login', 'pages::auth.login')->name('login');

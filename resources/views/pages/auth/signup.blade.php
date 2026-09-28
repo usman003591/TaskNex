@@ -45,7 +45,7 @@ class extends Component {
         </button>
         <div class="text-xs text-slate-400 flex items-center gap-2">
             <span class="">Already have an account?</span>
-            <a href="#signin"
+            <a href="{{ route('login') }}"
                 class="text-accent font-semibold hover:underline underline-offset-2 transition-colors cursor-pointer">Sign
                 in</a>
         </div>
@@ -192,7 +192,7 @@ class extends Component {
 
                 <div
                     class="flex items-center gap-3 py-1 before:h-px before:flex-1 before:bg-border before:content-[''] after:h-px after:flex-1 after:bg-border after:content-['']">
-                    <span class="text-[10px] tracking-[0.16em] text-text-muted uppercase">or continue with</span>
+                    <span class="text-[10px] tracking-[0.16em] text-text-muted uppercase">OR</span>
                 </div>
 
                 <button class="btn-secondary cursor-pointer" type="button"

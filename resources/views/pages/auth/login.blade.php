@@ -26,7 +26,7 @@ class extends Component
         </button>
         <div class="text-xs text-slate-400 flex items-center gap-2">
             <span class="">Don't have an account?</span>
-            <a href="#signin"
+            <a href="{{ route('signup') }}"
                 class="text-accent font-semibold hover:underline underline-offset-2 transition-colors cursor-pointer">Sign
                 up</a>
         </div>
@@ -63,14 +63,9 @@ class extends Component
                 <div class="grid gap-2">
                     <div class="flex items-center justify-between">
                         <label class="field-label" for="signup-password">Password</label>
-                        <span class="mr-1 inline-flex items-center gap-1 text-[10px] text-text-muted">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <rect x="4" y="11" width="16" height="10" rx="2"></rect>
-                                <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
-                            </svg>
-                            Password must be strong
-                        </span>
+                        <a href="#forgot" class="mr-1 inline-flex items-center text-[10px] text-accent hover:underline hover:text-accent-hover">
+                            Forgot Password
+                        </a>
                     </div>
                     <div class="relative" x-data="{ showPassword: false }">
                         <svg class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-text-muted"
@@ -116,7 +111,7 @@ class extends Component
                     id="error-message" role="alert"></p>
 
                 <button class="btn-primary cursor-pointer" type="submit">
-                    Create your account
+                    Sign into your account
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 12h14"></path>
@@ -126,7 +121,7 @@ class extends Component
 
                 <div
                     class="flex items-center gap-3 py-1 before:h-px before:flex-1 before:bg-border before:content-[''] after:h-px after:flex-1 after:bg-border after:content-['']">
-                    <span class="text-[10px] tracking-[0.16em] text-text-muted uppercase">or continue with</span>
+                    <span class="text-[10px] tracking-[0.16em] text-text-muted uppercase">OR</span>
                 </div>
 
                 <button class="btn-secondary cursor-pointer" type="button"
@@ -134,7 +129,7 @@ class extends Component
                     <span
                         class="grid h-5 w-5 place-items-center rounded-full bg-text-primary text-[10px] font-black text-[#283244]"><i
                             class="fa-brands fa-google"></i></span>
-                    Continue with Google
+                    Login with Google
                 </button>
             </form>
         </div>
