@@ -1,13 +1,68 @@
 <?php
 
-use Livewire\Component;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Events\Lockout;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
-
+use Livewire\Component;
 
 new #[Layout('layouts.auth-layout')]
 class extends Component
 {
-    //
+    public string $email = '';
+    public string $password = '';
+    public bool $remember = false;  //user ko login rakhy ga jab tak wo khud logout na kry
+
+    public function login()
+    {
+        $this->validate([
+            'email'    => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
+
+        $this->ensureIsNotRateLimited();
+
+        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
+            RateLimiter::hit($this->throttleKey(), 60); //$key is mn wrong attempt ko count 1 sy increase krta h or decayseconds check usko btaty hn k kitny second bad reset krna h isko. Yani agar koi 1 baar galat try kare, aur phir 60 second tak dobara try na kare, to counter wapas 0 ho jayega. 60 seconds = 1 minute window.
+
+            throw ValidationException::withMessages([
+                'password' => __('auth.failed'),
+            ]);
+        }
+
+        RateLimiter::clear($this->throttleKey()); //if Login gets successful, then clear the failed-attempts
+
+        //session() current session ka access deta hai.
+        //regenerate() session ka ID badal deta hai, lekin session ka data (jo abhi save hai, jaise Auth::attempt ne jo "logged in" flag set kiya) wahi rehta hai.
+        session()->regenerate();
+
+        return redirect()->intended(route('dashboard')); //intended() checks that if the user wanted to access the protected page in guest mode if found any intended URL then he will redirected to that URL otherwise to the dashboard
+    }
+
+    protected function ensureIsNotRateLimited(): void //can be accessed only from inside the class
+    {
+        // check karta hai ke is $key ka counter 5 se zyada ya barabar ho chuka hai ya nahi. true/false return karta hai.
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+            return;
+        }
+
+        event(new Lockout(request()));
+
+        $seconds = RateLimiter::availableIn($this->throttleKey()); //batata hai ke ab kitne seconds baad dobara try kiya ja sakta hai
+
+        throw ValidationException::withMessages([
+            'password' => __('auth.throttle', [
+                'seconds' => $seconds,
+            ]),
+        ]);
+    }
+
+    protected function throttleKey(): string
+    {
+        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());        //creates a key based on email and IP
+    }
 };
 ?>
 
@@ -41,7 +96,7 @@ class extends Component
         </h1>
 
         <div id="form-view">
-            <form class="grid gap-4" id="signup-form" wire:submit="register" novalidate>
+            <form class="grid gap-4" id="signup-form" wire:submit="login" novalidate>
 
                 <div class="grid gap-2">
                     <label class="field-label" for="signup-email">Email address</label>
@@ -89,7 +144,7 @@ class extends Component
 
                 <label
                     class="flex cursor-pointer items-start gap-3 pt-3 text-[11px] leading-[1.8] text-text-secondary transition-colors duration-200">
-                    <input class="peer sr-only" id="terms" type="checkbox" wire:model="terms">
+                    <input class="peer sr-only" id="terms" type="checkbox" wire:model="remember">
                     <span
                         class="mt-0.5 grid h-4 w-4 flex-none place-items-center rounded-[5px] border border-[#596079] text-surface-raised peer-checked:border-accent peer-checked:bg-accent"
                         aria-hidden="true">
@@ -103,9 +158,8 @@ class extends Component
                         Remember me
                     </span>
                 </label>
-                @error('terms')
-                    <small class="block px-1 text-xs text-danger">{{ $message }}</small>
-                @enderror
+
+
 
                 <p class="hidden rounded-lg border border-danger/25 bg-danger/8 px-3 py-2 text-[11px] font-bold text-[#ffad9c]"
                     id="error-message" role="alert"></p>
