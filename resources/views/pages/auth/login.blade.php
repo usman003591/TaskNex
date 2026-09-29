@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Cache\LockTimeoutException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -15,24 +17,45 @@ class extends Component
     public string $password = '';
     public bool $remember = false;  //user ko login rakhy ga jab tak wo khud logout na kry
 
+    private const LOCKOUTS = [60, 300, 900];
+
     public function login()
     {
         $this->validate([
-            'email'    => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'email'    => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'max:255'],
         ]);
 
-        $this->ensureIsNotRateLimited();
+        $email = Str::lower($this->email);
+        $password = $this->password;
+        $id = hash('sha256', $email . '|' . request()->ip());
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey(), 60); //$key is mn wrong attempt ko count 1 sy increase krta h or decayseconds check usko btaty hn k kitny second bad reset krna h isko. Yani agar koi 1 baar galat try kare, aur phir 60 second tak dobara try na kare, to counter wapas 0 ho jayega. 60 seconds = 1 minute window.
+        $this->reset('password'); // password ko '' kr deta h
 
-            throw ValidationException::withMessages([
-                'password' => __('auth.failed'),
-            ]);
+        try {
+            // Is email+IP ke liye ek waqt mein sirf ek attempt (parallel requests se bypass nahi hoga)
+            $loggedIn = Cache::lock("login-mutex:$id", 10)->block(5, function () use ($email, $password, $id) {
+                $this->abortIfLocked($id);
+
+                if (Auth::attempt(['email' => $email, 'password' => $password], $this->remember)) {
+                    Cache::forget("login-fails:$id");
+                    Cache::forget("login-lock:$id");
+
+                    return true;
+                }
+
+                $this->recordFailure($id);
+                $this->abortIfLocked($id); // 5vi galti par lockout ka message
+
+                return false;
+            });
+        } catch (LockTimeoutException) {
+            $this->throttled(5);
         }
 
-        RateLimiter::clear($this->throttleKey()); //if Login gets successful, then clear the failed-attempts
+        if (! $loggedIn) {
+            throw ValidationException::withMessages(['password' => __('auth.failed')]);
+        }
 
         //session() current session ka access deta hai.
         //regenerate() session ka ID badal deta hai, lekin session ka data (jo abhi save hai, jaise Auth::attempt ne jo "logged in" flag set kiya) wahi rehta hai.
@@ -41,27 +64,49 @@ class extends Component
         return redirect()->intended(route('dashboard')); //intended() checks that if the user wanted to access the protected page in guest mode if found any intended URL then he will redirected to that URL otherwise to the dashboard
     }
 
-    protected function ensureIsNotRateLimited(): void //can be accessed only from inside the class
+    protected function recordFailure(string $id): void
     {
-        // check karta hai ke is $key ka counter 5 se zyada ya barabar ho chuka hai ya nahi. true/false return karta hai.
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        RateLimiter::hit('login-ip:' . request()->ip(), 900);
+
+        $fails = Cache::get("login-fails:$id", 0) + 1;
+
+        if ($fails < 5) {
+            Cache::put("login-fails:$id", $fails, 60); // har galti par 60s ka window dobara shuru
             return;
         }
 
-        event(new Lockout(request()));
+        $level = (Cache::get("login-lock:$id")['level'] ?? 0) + 1;
 
-        $seconds = RateLimiter::availableIn($this->throttleKey()); //batata hai ke ab kitne seconds baad dobara try kiya ja sakta hai
+        Cache::put("login-lock:$id", [
+            'level' => $level,
+            'until' => now()->addSeconds(self::LOCKOUTS[min($level, count(self::LOCKOUTS)) - 1])->timestamp,
+        ], now()->addDay()); // level 24 ghante yaad rahe ga
 
-        throw ValidationException::withMessages([
-            'password' => __('auth.throttle', [
-                'seconds' => $seconds,
-            ]),
-        ]);
+        Cache::forget("login-fails:$id");
     }
 
-    protected function throttleKey(): string
+    protected function abortIfLocked(string $id): void
     {
-        return Str::transliterate(Str::lower($this->email) . '|' . request()->ip());        //creates a key based on email and IP
+        $ip   = 'login-ip:' . request()->ip();
+        $left = max(
+            (Cache::get("login-lock:$id")['until'] ?? 0) - now()->timestamp,
+            RateLimiter::tooManyAttempts($ip, 20) ? RateLimiter::availableIn($ip) : 0,
+        );
+
+        if ($left > 0) {
+            $this->throttled($left);
+        }
+    }
+
+    protected function throttled(int $seconds): never
+    {
+        event(new Lockout(request()));
+
+        [$n, $unit] = $seconds < 60 ? [$seconds, 'second'] : [(int) ceil($seconds / 60), 'minute'];
+
+        throw ValidationException::withMessages([
+            'password' => __('auth.throttle', ['time' => "$n " . Str::plural($unit, $n)]),
+        ]);
     }
 };
 ?>
