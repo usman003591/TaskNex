@@ -230,7 +230,7 @@
 .tn-brand {
     display: inline-flex;
     align-items: center;
-    gap: .75rem;
+    gap: .25rem;
     color: var(--tn-ink);
     font-family: "Space Grotesk", var(--font-sans);
     font-size: 1.0625rem;
@@ -240,22 +240,15 @@
 }
 
 .tn-brand__mark {
-    display: grid;
-    width: 2.25rem;
-    height: 2.25rem;
-    place-items: center;
-    color: #171825;
-    background: var(--tn-lime);
-    border-radius: .7rem;
-    box-shadow: 0 0 1.5rem rgb(199 243 107 / 16%);
-    transform: rotate(-8deg);
-    transition: transform 180ms ease, box-shadow 180ms ease;
+    width: 2rem;
+    height: 2rem;
+    border-radius: .5rem;
+    transition: transform 180ms ease;
 }
 
 .tn-brand:hover .tn-brand__mark,
 .tn-brand:focus-visible .tn-brand__mark {
-    box-shadow: 0 0 1.75rem rgb(199 243 107 / 28%);
-    transform: rotate(0deg);
+    transform: scale(1.05);
 }
 
 .tn-icon-button {

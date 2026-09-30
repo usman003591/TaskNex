@@ -22,12 +22,7 @@ new class extends Component
 <aside id="tasknex-sidebar" class="tn-sidebar" :class="{ 'open': mobileOpen }">
             <div class="tn-sidebar__header">
                 <a href="{{ route('dashboard') }}" class="tn-brand" wire:navigate aria-label="TaskNex dashboard">
-                    <span class="tn-brand__mark" aria-hidden="true">
-                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 3v18M3 12h18" />
-                        </svg>
-                    </span>
+                    <img src="{{ asset('images/logo.png') }}" alt="TaskNex Logo" class="tn-brand__mark">
                     <span x-transition.opacity.duration.150ms>
                         tasknex<span class="text-accent">.</span>
                     </span>

@@ -114,13 +114,11 @@ class extends Component
 <section
     class="relative flex min-h-dvh w-full flex-col px-5 py-7 min-[901px]:order-2 min-[901px]:px-12 min-[901px]:pt-12 min-[1081px]:px-15 min-[901px]:basis-1/2">
     <header class="flex items-center justify-between">
-        <button type="button" class="group inline-flex items-center gap-3 bg-transparent p-0 text-left"
+        <button type="button" class="group inline-flex items-center gap-1 bg-transparent p-0 text-left"
             data-notice="Welcome back to your workspace" aria-label="Open TaskNex home">
-            <span
-                class="grid h-10 w-10 rotate-[-8deg] place-items-center rounded-[11px] bg-accent text-surface-raised shadow-[0_0_24px_rgb(199_243_107/16%)] transition-transform duration-200 group-hover:rotate-0"
-                aria-hidden="true">
-                <i class="fa-solid fa-plus"></i>
-            </span>
+            <img src="{{ asset('images/logo.png') }}" alt="TaskNex Logo"
+                class="h-9 w-9 transition-transform duration-200"
+            >
             <span class="font-display text-3xl font-extrabold tracking-tighter">tasknex<span
                     class="text-accent">.</span></span>
         </button>
