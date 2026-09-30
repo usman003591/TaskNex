@@ -34,7 +34,7 @@
             :class="{ 'block!': mobileOpen }" aria-label="Close navigation" x-on:click="closeMobile()"></button>
 
         {{-- TaskNex sidebar --}}
-        <livewire:livewire.app-sidebar />
+        <livewire:app-sidebar />
 
         {{-- Main content --}}
         <div class="tn-main min-h-screen">

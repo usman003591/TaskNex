@@ -65,7 +65,7 @@ class extends Component {
         <div id="form-view">
             <form class="grid gap-4" id="signup-form" wire:submit="register" novalidate>
                 <div class="grid gap-2">
-                    <label class="field-label" for="signup-name">Your name</label>
+                    <label class="field-label" for="signup-name">Full name</label>
                     <div class="relative">
                         <svg class="pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-text-muted"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"

@@ -141,7 +141,7 @@ new class extends Component {
                         class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] transition-colors duration-180 motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer {{ $priority ? 'tn-create-modal__chip--active' : '' }}"
                         :aria-expanded="priorityDropdownOpen">
                         <i
-                            class="fa-regular fa-flag text-[13px] {{ $priority ? $this->priorityMeta[$priority]['color'] : 'text-[#81c7ff]' }}"></i>
+                            class="fa-regular fa-flag text-[13px] {{ $priority ? $this->priorityMeta[$priority]['color'] : 'text-info' }}"></i>
                         <span>{{ $priority ? $this->priorityMeta[$priority]['label'] : 'Priority' }}</span>
                         <i class="fa-solid fa-chevron-down ml-1 text-[9px] text-text-muted transition-transform"
                             :class="{ 'rotate-180': priorityDropdownOpen }"></i>
@@ -175,13 +175,13 @@ new class extends Component {
                     @if(!$scheduled_at)
                     <button type="button" x-on:click.prevent="datepicker.show()"
                         class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] transition-colors duration-180 motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer">
-                        <i class="fa-regular fa-clock text-[13px] text-[#81c7ff]"></i>
+                        <i class="fa-regular fa-clock text-[13px] text-info"></i>
                         <span>Schedule</span>
                     </button>
                     @else
                     <span
                         class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] tn-create-modal__chip--active">
-                        <i class="fa-regular fa-clock cursor-pointer text-[13px] text-[#81c7ff]"
+                        <i class="fa-regular fa-clock cursor-pointer text-[13px] text-info"
                             x-on:click.prevent="datepicker.show()"></i>
                         <span>{{ $this->formattedScheduledAt }}</span>
                         <button type="button" wire:click="clearScheduledDate"

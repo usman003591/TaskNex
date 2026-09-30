@@ -248,7 +248,7 @@ new class extends Component {
         </span>
     </div>
 
-    <livewire:collections.edit-modal :collection="$collection" />
-    <livewire:tasks.create-modal :collection="$collection" />
-    <livewire:collections.delete-confirmation-modal :collection="$collection" />
+    <livewire:collections.modals.rename :collection="$collection" />
+    <livewire:tasks.modals.create :collection="$collection" />
+    <livewire:collections.modals.delete-confirmation :collection="$collection" />
 </div>

@@ -1,7 +1,6 @@
 <?php
 
 use Livewire\Component;
-use App\Models\User;
 use Livewire\Attributes\On;
 
 new class extends Component {
