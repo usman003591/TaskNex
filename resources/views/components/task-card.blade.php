@@ -28,17 +28,17 @@
                 {{ $task->name }}
             </div>
 
-            @if ($task->due_at || $task->scheduled_at || $task->priority)
-            <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+            @if ($task->due_at || $task->scheduled_at)
+            <div class="mt-2 flex flex-wrap items-center gap-x-8 gap-y-1.5">
                 @if ($task->scheduled_at)
-                <span class="flex items-center gap-1.5 text-[0.6875rem] text-text-muted">
+                <span class="flex items-center gap-2 text-[0.6875rem] text-text-muted">
                     <i class="fa-regular fa-clock text-[10px]"></i>
                     {{ $task->scheduled_at->diffForHumans(['short' => true]) }}
                 </span>
                 @endif
 
                 @if ($task->due_at)
-                <span class="flex items-center gap-1.5 text-[0.6875rem] {{ $task->due_status['color'] }}">
+                <span class="flex items-center gap-2 text-[0.6875rem] {{ $task->due_status['color'] }}">
                     <i class="fa-regular fa-calendar-days text-[10px]"></i>
                     {{ $task->due_status['label'] }}
                 </span>

@@ -272,7 +272,6 @@
 
 .tn-icon-button:focus-visible,
 .tn-nav-link:focus-visible,
-.tn-sidebar__footer-link:focus-visible,
 .tn-share-button:focus-visible,
 .tn-brand:focus-visible {
     outline: 2px solid var(--tn-lime);
@@ -433,10 +432,6 @@
     color: var(--tn-lime);
 }
 
-.tn-nav-link[data-collection="true"][data-active="true"] svg,
-.tn-nav-link[data-collection="true"].active svg {
-    color: var(--tn-coral);
-}
 
 .tn-nav-link__icon {
     display: grid;
@@ -454,40 +449,9 @@
     white-space: nowrap;
 }
 
-.tn-nav-link__count {
-    color: var(--tn-dim);
-    font-size: .6875rem;
-    font-variant-numeric: tabular-nums;
-}
-
-.tn-nav-link[data-active="true"] .tn-nav-link__count,
-.tn-nav-link.active .tn-nav-link__count {
-    color: var(--tn-lime);
-}
-
 .tn-sidebar__footer {
     margin-top: auto;
     /* padding-top: 1rem; */
-}
-
-.tn-sidebar__footer-link {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    width: 100%;
-    padding: .65rem .75rem;
-    color: var(--tn-muted);
-    font-size: .8125rem;
-    text-align: left;
-    background: transparent;
-    border: 0;
-    border-radius: .75rem;
-    transition: color 180ms ease, background-color 180ms ease;
-}
-
-.tn-sidebar__footer-link:hover {
-    color: var(--tn-ink);
-    background: var(--tn-panel-hover);
 }
 
 .tn-profile {
@@ -613,12 +577,6 @@ body {
     background: var(--color-surface);
 }
 
-/* button:focus-visible,
-input:focus-visible {
-    outline: 2px solid color-mix(in srgb, var(--color-accent) 76%, transparent);
-    outline-offset: 3px;
-} */
-
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -647,25 +605,5 @@ input:focus-visible {
 
     .status-dot {
         @apply h-1.5 w-1.5 rounded-full bg-current;
-    }
-
-    .task-row {
-        @apply flex items-center gap-3 rounded-xl border border-border bg-[#171925]/70 p-3;
-    }
-
-    .password-check {
-        @apply inline-flex items-center gap-1.5 text-[10px] text-text-muted;
-    }
-
-    .password-check.met {
-        @apply text-accent;
-    }
-
-    .check-dot {
-        @apply grid h-3.5 w-3.5 place-items-center rounded-full border border-[#454860];
-    }
-
-    .password-check.met .check-dot {
-        @apply border-accent bg-accent text-surface-raised;
     }
 }
