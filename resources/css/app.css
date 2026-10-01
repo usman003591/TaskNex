@@ -366,7 +366,7 @@
     justify-content: space-between;
     margin: 0 .75rem .7rem;
     color: var(--tn-dim);
-    font-size: .625rem;
+    font-size: .65rem;
     font-weight: 800;
     letter-spacing: .18em;
     text-transform: uppercase;
@@ -397,10 +397,10 @@
 .tn-nav-link {
     position: relative;
     display: flex;
-    min-height: 2.7rem;
+    min-height: 2rem;
     align-items: center;
     gap: .75rem;
-    padding: .65rem .75rem;
+    padding: .5rem .75rem;
     color: #9699ad;
     font-size: .8125rem;
     font-weight: 600;
@@ -427,7 +427,9 @@
 }
 
 .tn-nav-link[data-active="true"] svg,
-.tn-nav-link.active svg {
+.tn-nav-link.active svg,
+.tn-nav-link[data-active="true"] .tn-nav-link__icon i,
+.tn-nav-link.active .tn-nav-link__icon i {
     color: var(--tn-lime);
 }
 
