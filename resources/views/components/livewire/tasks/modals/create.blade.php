@@ -151,7 +151,7 @@ new class extends Component {
                         x-transition:enter="transition ease-out duration-150"
                         x-transition:enter-start="opacity-0 -translate-y-1"
                         x-transition:enter-end="opacity-100 translate-y-0"
-                        class="absolute left-0 top-11 z-30 min-w-36 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] py-1.5 shadow-2xl"
+                        class="absolute left-0 top-11 z-30 min-w-36 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-2xl"
                         style="display: none">
                         <button type="button" wire:click="$set('priority', null)"
                             x-on:click="priorityDropdownOpen = false"

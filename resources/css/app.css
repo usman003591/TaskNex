@@ -184,7 +184,7 @@
     --tn-dim: #666b85;
     --tn-lime: #c7f36b;
     --tn-coral: #ff896f;
-    --tn-sidebar-width: 280px;
+    --tn-sidebar-width: 300px;
     --tn-navbar-height: 76px;
 }
 
@@ -394,12 +394,13 @@
 }
 
 .tn-nav-link {
+    width: 100%;
     position: relative;
     display: flex;
     min-height: 2rem;
     align-items: center;
     gap: .75rem;
-    padding: .5rem .75rem;
+    padding: .6rem .75rem;
     color: #9699ad;
     font-size: .8125rem;
     font-weight: 600;
@@ -434,7 +435,7 @@
 
 
 .tn-nav-link__icon {
-    display: grid;
+    display: flex;
     width: 1.15rem;
     flex: 0 0 1.15rem;
     place-items: center;

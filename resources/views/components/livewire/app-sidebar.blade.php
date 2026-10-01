@@ -92,7 +92,7 @@ new class extends Component
                         <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
                             x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1"
                             x-transition:enter-end="opacity-100 translate-y-0"
-                            class="absolute left-0 bottom-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438]"
+                            class="absolute left-0 bottom-11 z-10 min-w-52 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-2xl"
                             style="display: none">
                             <button type="button" wire:click="$dispatch('open-delete-collection-confirmation')"
                                 x-on:click="optionsDropdown = false"

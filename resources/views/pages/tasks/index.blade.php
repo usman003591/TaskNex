@@ -94,8 +94,8 @@ new class extends Component {
 
 <div class="mx-auto w-full max-w-300 pb-24 text-text-primary font-['DM_Sans']">
 
-    <div class="mb-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+    <div class="mb-8 flex items-start justify-between gap-4 sm:items-end sm:gap-6">
+        <div class="min-w-0">
             <div class="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[.2em] text-[#7f849d]">
                 <span class="h-1.5 w-1.5 rounded-full bg-danger"></span>
                 Personal collection
@@ -111,7 +111,7 @@ new class extends Component {
             </p>
         </div>
 
-        <div class="flex items-center gap-3 sm:pb-1">
+        <div class="mt-6 flex shrink-0 items-center gap-3 sm:mt-0 sm:pb-1">
             <div class="hidden text-right sm:block">
                 <div class="font-['Space_Grotesk'] text-lg font-semibold text-text-primary">
                     {{ $this->countTasks() - $this->countCompletedTasks() }}
@@ -133,6 +133,7 @@ new class extends Component {
                     x-transition:enter-start="opacity-0 -translate-y-1"
                     x-transition:enter-end="opacity-100 translate-y-0"
                     class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
+                    class="absolute right-0 top-11 z-40 w-52 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
                     style="display: none">
                     <button type="button" wire:click="$dispatch('open-delete-collection-confirmation')"
                         x-on:click="optionsDropdown = false"

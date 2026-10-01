@@ -76,7 +76,7 @@ new class extends Component {
         </div>
 
         <!-- Created collections -->
-        <div class="space-y-1 flex-1 min-h-0 overflow-y-auto custom-scrollbar -mx-1 px-1">
+        <div class="space-y-1 flex-1 min-h-0 overflow-y-auto custom-scrollbar px-0.5 -mx-1">
             @foreach($collections as $collection)
             @php($isActive = $activeId === $collection->id)
 
