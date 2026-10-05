@@ -150,9 +150,8 @@ new class extends Component {
                             <p class="text-[13px] leading-relaxed text-gray-400 font-medium">{{ $task->details }}</p>
                         </div>
                     @else
-                        <div
-                            class="mt-2 h-27.5 rounded-xl border border-dashed border-[#454860] bg-[#171925]/60 px-4 py-3.5 text-[13px] text-text-muted cursor-text transition-colors hover:border-[#5a5e7d]">
-                            No description yet — click to add one.
+                        <div class="mt-2 h-27.5 overflow-y-auto custom-scrollbar">
+                            <p class="text-[13px] text-center h-full leading-relaxed text-text-muted/60 font-normal italic">No description provided</p>
                         </div>
                     @endif
                 </div>
