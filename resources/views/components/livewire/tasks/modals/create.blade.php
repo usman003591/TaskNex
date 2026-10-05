@@ -136,39 +136,30 @@ new class extends Component {
                 Task options</div>
             <div class="flex flex-wrap gap-2">
                 {{-- Priority --}}
-                <div x-data="{ priorityDropdownOpen: false }" class="relative">
-                    <button type="button" x-on:click.prevent="priorityDropdownOpen = !priorityDropdownOpen"
-                        class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] transition-colors duration-180 motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer {{ $priority ? 'tn-create-modal__chip--active' : '' }}"
-                        :aria-expanded="priorityDropdownOpen">
-                        <i
-                            class="fa-regular fa-flag text-[13px] {{ $priority ? $this->priorityMeta[$priority]['color'] : 'text-info' }}"></i>
-                        <span>{{ $priority ? $this->priorityMeta[$priority]['label'] : 'Priority' }}</span>
-                        <i class="fa-solid fa-chevron-down ml-1 text-[9px] text-text-muted transition-transform"
-                            :class="{ 'rotate-180': priorityDropdownOpen }"></i>
-                    </button>
+                <x-dropdown align="left" width="w-40">
+                    <x-slot:trigger>
+                        <button type="button"
+                            class="inline-flex min-h-8 items-center gap-2 py-1 px-3 text-[#85899f] text-[0.7rem] font-semibold bg-[#171925]/62 border border-[#3d4058] rounded-[0.7rem] transition-colors duration-180 motion-reduce:transition-none hover:text-[#e0e0dd] hover:bg-[#222438] hover:border-[#565a76] cursor-pointer {{ $priority ? 'tn-create-modal__chip--active' : '' }}">
+                            <i
+                                class="fa-regular fa-flag text-[13px] {{ $priority ? $this->priorityMeta[$priority]['color'] : 'text-info' }}"></i>
+                            <span>{{ $priority ? $this->priorityMeta[$priority]['label'] : 'Priority' }}</span>
+                            <i class="fa-solid fa-chevron-down ml-1 text-[9px] text-text-muted transition-transform"></i>
+                        </button>
+                    </x-slot:trigger>
 
-                    <div x-show="priorityDropdownOpen" x-on:click.outside="priorityDropdownOpen = false"
-                        x-transition:enter="transition ease-out duration-150"
-                        x-transition:enter-start="opacity-0 -translate-y-1"
-                        x-transition:enter-end="opacity-100 translate-y-0"
-                        class="absolute left-0 top-11 z-30 min-w-36 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-2xl"
-                        style="display: none">
-                        <button type="button" wire:click="$set('priority', null)"
-                            x-on:click="priorityDropdownOpen = false"
-                            class="flex w-full items-center gap-2.5 px-3.5 py-[0.6rem] text-xs transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] cursor-pointer">
-                            <i class="fa-regular fa-flag text-[11px] text-text-muted"></i>
-                            No priority
-                        </button>
-                        @foreach ($this->priorityMeta as $key => $value)
-                        <button type="button" wire:click="$set('priority', {{ $key }})"
-                            x-on:click="priorityDropdownOpen = false"
-                            class="flex w-full items-center gap-2.5 px-3.5 py-[0.6rem] text-xs transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] {{ $value['color'] }} cursor-pointer">
-                            <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
-                            {{ $value['label'] }}
-                        </button>
-                        @endforeach
-                    </div>
-                </div>
+                    <x-dropdown-item icon="fa-regular fa-flag"
+                        wire:click="$set('priority', null)">
+                        No priority
+                    </x-dropdown-item>
+                    @foreach ($this->priorityMeta as $key => $value)
+                    <x-dropdown-item
+                        wire:click="$set('priority', {{ $key }})"
+                        class="{{ $value['color'] }}">
+                        <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+                        {{ $value['label'] }}
+                    </x-dropdown-item>
+                    @endforeach
+                </x-dropdown>
 
                 {{-- Schedule date --}}
                 <div x-data="datepickerComponent('scheduledDate', 'scheduled_at')" x-init="initDatepicker()">

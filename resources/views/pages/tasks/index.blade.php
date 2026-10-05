@@ -122,39 +122,28 @@ new class extends Component {
 
             <div class="hidden h-10 w-px bg-[#303249] sm:block"></div>
 
-            <div x-data="{ optionsDropdown: false }" class="relative">
-                <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="tn-icon-button"
-                    :aria-expanded="optionsDropdown" aria-label="Collection options">
-                    <i class="fa-solid fa-ellipsis text-[14px]"></i>
-                </button>
+            <x-dropdown align="right">
+                <x-slot:trigger>
+                    <button type="button" class="tn-icon-button" aria-label="Collection options">
+                        <i class="fa-solid fa-ellipsis text-[14px]"></i>
+                    </button>
+                </x-slot:trigger>
 
-                <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
-                    x-transition:enter="transition ease-out duration-150"
-                    x-transition:enter-start="opacity-0 -translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
-                    class="absolute right-0 top-11 z-40 w-52 max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
-                    style="display: none">
-                    <button type="button" wire:click="$dispatch('open-delete-collection-confirmation')"
-                        x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
-                        <i class="fa-solid fa-trash-can text-[11px]"></i>
-                        Delete collection
-                    </button>
-                    <button type="button" wire:click="$dispatch('open-edit-collection-modal')"
-                        x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
-                        <i class="fa-solid fa-pen text-[11px]"></i>
-                        Rename collection
-                    </button>
-                    <button type="button" wire:click="deleteCompletedTasks" x-on:click="optionsDropdown = false"
-                        @if ($this->countCompletedTasks() <= 0) hidden disabled @endif
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
-                        <i class="fa-solid fa-list-check"></i>
-                        Clear completed tasks
-                    </button>
-                </div>
-            </div>
+                <x-dropdown-item icon="fa-solid fa-trash-can" hover-color="hover:text-danger"
+                    wire:click="$dispatch('open-delete-collection-confirmation')">
+                    Delete collection
+                </x-dropdown-item>
+                <x-dropdown-item icon="fa-solid fa-pen"
+                    wire:click="$dispatch('open-edit-collection-modal')">
+                    Rename collection
+                </x-dropdown-item>
+                <x-dropdown-item icon="fa-solid fa-list-check"
+                    wire:click="deleteCompletedTasks"
+                    :hidden="$this->countCompletedTasks() <= 0"
+                    :disabled="$this->countCompletedTasks() <= 0">
+                    Clear completed tasks
+                </x-dropdown-item>
+            </x-dropdown>
         </div>
     </div>
 

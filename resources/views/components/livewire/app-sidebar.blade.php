@@ -85,28 +85,22 @@ new class extends Component
                         <div class="tn-profile__name">{{ auth()->user()->name ?? 'Maya Chen' }}</div>
                         <div class="tn-profile__meta">{{ auth()->user()->email ?? 'Personal Workspace' }}</div>
                     </div>
-                    <div x-data="{ optionsDropdown: false }" class="relative">
-                        <button type="button" class="tn-icon-button" aria-label="Open profile menu" x-on:click="optionsDropdown = !optionsDropdown" :aria-expanded="optionsDropdown">
-                            <i class="fa-solid fa-ellipsis text-[14px]"></i>
-                        </button>
-                        <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
-                            x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1"
-                            x-transition:enter-end="opacity-100 translate-y-0"
-                            class="absolute left-0 bottom-11 z-10 min-w-52 overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-2xl"
-                            style="display: none">
-                            <button type="button" wire:click="$dispatch('open-delete-collection-confirmation')"
-                                x-on:click="optionsDropdown = false"
-                                class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-green-300">
-                                <i class="fa-solid fa-pen text-[11px]"></i>
-                                Profile Settings
+                    <x-dropdown align="right" position="top">
+                        <x-slot:trigger>
+                            <button type="button" class="tn-icon-button" aria-label="Open profile menu">
+                                <i class="fa-solid fa-ellipsis text-[14px]"></i>
                             </button>
-                            <button type="button" wire:click="logout" x-on:click="optionsDropdown = false"
-                                class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
-                                <i class="fa-solid fa-arrow-right-from-bracket text-[11px]"></i>
-                                Logout
-                            </button>
-                        </div>
-                    </div>
+                        </x-slot:trigger>
+
+                        <x-dropdown-item icon="fa-solid fa-pen" hover-color="hover:text-green-300"
+                            wire:click="$dispatch('open-delete-collection-confirmation')">
+                            Profile Settings
+                        </x-dropdown-item>
+                        <x-dropdown-item icon="fa-solid fa-arrow-right-from-bracket"
+                            wire:click="logout">
+                            Logout
+                        </x-dropdown-item>
+                    </x-dropdown>
                 </div>
             </div>
         </aside>
