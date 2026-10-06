@@ -137,12 +137,11 @@ new class extends Component {
                     wire:click="$dispatch('open-edit-collection-modal')">
                     Rename collection
                 </x-dropdown-item>
-                <x-dropdown-item icon="fa-solid fa-list-check"
-                    wire:click="deleteCompletedTasks"
-                    :hidden="$this->countCompletedTasks() <= 0"
-                    :disabled="$this->countCompletedTasks() <= 0">
+                @if ($this->countCompletedTasks() > 0)
+                <x-dropdown-item wire:click="deleteCompletedTasks" ...>
                     Clear completed tasks
                 </x-dropdown-item>
+                @endif
             </x-dropdown>
         </div>
     </div>

@@ -17,7 +17,7 @@
         default  => 'right-0',
     };
 
-    $panelClasses = "absolute {$alignClasses} {$positionClasses} z-40 {$width} max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]";
+    $panelClasses = "absolute {$alignClasses} {$positionClasses} z-40 {$width} max-w-[calc(100vw-2rem)] overflow-hidden rounded-xl border border-[#383a50] bg-[#222438] shadow-[0_20px_18px_rgb(4_5_10/0.35)]";
 @endphp
 
 <div x-data="{ open: false }" class="relative {{ $triggerClass }}" @if($id) id="{{ $id }}" @endif>
@@ -37,7 +37,7 @@
         x-transition:leave-end="opacity-0 {{ $position === 'top' ? 'translate-y-1' : '-translate-y-1' }}"
         class="{{ $panelClasses }}"
         style="display: none">
-        <div x-on:click="open = false">
+        <div x-on:click="open = false" class="divide-y divide-white/10">
             {{ $slot }}
         </div>
     </div>
