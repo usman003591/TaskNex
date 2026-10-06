@@ -192,9 +192,9 @@
     min-height: 100dvh;
     color: var(--tn-ink);
     background-color: var(--tn-bg);
-    background-image:
+    /* background-image:
         radial-gradient(circle at 78% -18%, rgb(199 243 107 / 8%), transparent 30rem),
-        radial-gradient(circle at 10% 110%, rgb(255 137 111 / 6%), transparent 24rem);
+        radial-gradient(circle at 10% 110%, rgb(255 137 111 / 6%), transparent 24rem); */
 }
 
 .tn-navbar {
