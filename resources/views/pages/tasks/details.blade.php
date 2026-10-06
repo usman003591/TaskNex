@@ -56,9 +56,9 @@ new class extends Component {
             </p>
         </div>
 
-        <div class="flex items-center gap-3 sm:pb-1">
+        <div class="flex items-center gap-2 sm:pb-1">
             <button
-                class="pressable p-2 text-amber-400 hover:text-amber-300 bg-[#162030] hover:bg-[#1E2A3F] border border-[#25334A] rounded-xl transition-colors"
+                class="pressable p-2 text-amber-400 hover:text-amber-300 bg-surface-raised border border-border rounded-xl transition-colors"
                 title="Favorite task">
                 <svg class="w-4 h-4 fill-amber-400 stroke-amber-400" viewbox="0 0 24 24">
                     <path
@@ -67,7 +67,7 @@ new class extends Component {
                 </svg>
             </button>
             <button
-                class="pressable px-3 py-2 text-xs font-medium text-slate-300 hover:text-white bg-[#162030] hover:bg-[#1E2A3F] border border-[#25334A] rounded-xl flex items-center gap-1.5 transition-colors">
+                class="pressable px-3 py-2 text-xs font-medium text-text-secondary hover:text-emerald-500 hover:bg-emerald-900/10 hover:border-emerald-900/60 bg-surface-raised border border-border rounded-xl flex items-center gap-1.5 transition-colors cursor-pointer">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                     <path
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
@@ -76,7 +76,7 @@ new class extends Component {
                 <span>Edit</span>
             </button>
             <button
-                class="pressable p-2 text-slate-400 hover:text-rose-400 bg-[#162030] hover:bg-rose-950/30 border border-[#25334A] hover:border-rose-900/60 rounded-xl transition-colors"
+                class="pressable p-2 text-text-secondary hover:text-rose-400 bg-surface-raised hover:bg-rose-950/30 border border-border hover:border-rose-900/60 rounded-xl transition-colors cursor-pointer"
                 title="Delete task">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
                     <path
@@ -84,34 +84,7 @@ new class extends Component {
                         stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
                 </svg>
             </button>
-            <div class="hidden h-10 w-px bg-[#303249] sm:block"></div>
-
-            <div x-data="{ optionsDropdown: false }" class="relative">
-                <button type="button" x-on:click="optionsDropdown = !optionsDropdown" class="tn-icon-button"
-                    :aria-expanded="optionsDropdown" aria-label="Collection options">
-                    <i class="fa-solid fa-ellipsis text-[14px]"></i>
-                </button>
-
-                {{-- <div x-show="optionsDropdown" x-on:click.outside="optionsDropdown = false"
-                    x-transition:enter="transition ease-out duration-150"
-                    x-transition:enter-start="opacity-0 -translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    class="absolute right-0 top-11 z-10 min-w-52 overflow-hidden rounded-[0.85rem] border border-[#383a50] bg-[#222438] shadow-[0_18px_40px_rgb(4_5_10/0.35)]"
-                    style="display: none">
-                    <button type="button" wire:click="deleteList"
-                        wire:confirm="Are you sure you want to delete this list?" x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-danger">
-                        <i class="fa-solid fa-trash-can text-[11px]"></i>
-                        Delete list
-                    </button>
-                    <button type="button" wire:click="$dispatch('open-edit-list-modal')"
-                        x-on:click="optionsDropdown = false"
-                        class="flex w-full items-center gap-2.5 px-3.5 py-[0.7rem] text-left text-xs text-[#c4c5ce] transition-colors duration-180 motion-reduce:transition-none hover:bg-[#303249] hover:text-text-primary">
-                        <i class="fa-solid fa-pen text-[11px]"></i>
-                        Rename list
-                    </button>
-                </div> --}}
-            </div>
+            {{-- <div class="hidden h-10 w-px bg-[#303249] sm:block"></div> --}}
         </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
